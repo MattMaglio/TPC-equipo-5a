@@ -1,0 +1,358 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="webApp.Site" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+
+        html, body {
+            height: 100%;   
+            width: 100%;     
+            margin: 0;       
+            padding: 0;      
+            box-sizing: border-box; 
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        footer {
+    margin-top: auto; 
+    background-color: #000; 
+    color: #fff; 
+    padding: 20px 0; 
+}
+
+
+        .header-top-area {
+            background-color: #000;
+            color: #fff;
+        }
+
+            .header-top-area a {
+                color: #fff;
+                text-decoration: none; /* Eliminar subrayado */
+            }
+
+            .header-top-area .dropdown-menu {
+                background-color: #333;
+            }
+
+            .header-top-area .dropdown-item {
+                color: #fff;
+            }
+
+                .header-top-area .dropdown-item:hover {
+                    background-color: #444;
+                }
+
+            .header-top-area .list-inline-item:hover {
+                background-color: #444; /* Gris tenue al pasar el mouse sobre el div */
+            }
+
+        .main-header-area {
+            background-color: #f7f7f7; /* Fondo gris tenue */
+            padding: 15px 0;
+        }
+
+        .navbar-nav .nav-link {
+            color: #333; /* Color de texto */
+            padding: 10px 15px; /* Espaciado */
+        }
+
+            .navbar-nav .nav-link:hover {
+                background-color: #e0e0e0; /* Color de fondo en hover */
+                border-radius: 5px; /* Bordes redondeados */
+            }
+
+        .search-box {
+            display: flex; /* Para alinear en una fila */
+            align-items: center; /* Centrar verticalmente */
+        }
+
+            .search-box input {
+                border-radius: 5px 0 0 5px; /* Bordes redondeados a la izquierda */
+                border: 1px solid #ccc;
+                padding: 10px;
+                width: 80%; /* Ajustar el ancho */
+            }
+
+            .search-box button {
+                border-radius: 0 5px 5px 0; /* Bordes redondeados a la derecha */
+                border: 1px solid #ccc;
+                background-color: #e0e0e0; /* Color de fondo */
+                padding: 10px 15px;
+            }
+
+                .search-box button:hover {
+                    background-color: #d0d0d0; /* Color en hover */
+                }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <header class="header-area">
+            <div class="header-top-area py-2">
+                <div class="container">
+                    <div class="row justify-content-between">
+                        <div class="col-md-6 d-none d-md-block">
+                            <ul class="list-inline mb-0">
+                                <li class="list-inline-item dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language</a>
+                                    <div class="dropdown-menu">
+
+                                        <a class="dropdown-item" href="#">English</a>
+                                        <a class="dropdown-item" href="#">Spanish</a>
+
+
+                                    </div>
+                                </li>
+                                <li class="list-inline-item dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Currency</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">USD</a>
+                                        <a class="dropdown-item" href="#">Euro</a>
+                                        <a class="dropdown-item" href="#">ARS</a>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <ul class="list-inline mb-0">
+                                <li class="list-inline-item"><a href="#">My Account</a></li>
+                                <li class="list-inline-item"><a href="#">Login</a></li>
+                                <li class="list-inline-item">
+                                    <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-header-area py-3">
+                <div class="container">
+                    <div class="row align-items-center">
+
+                        <div class="col-lg-2 col-md-3 col-sm-6">
+                            <div class="logo">
+                                <a href="#" style="display: flex; align-items: center; text-decoration: none; color: #333;">
+                                    <img width="48" height="48" class="img-fluid" src="https://img.icons8.com/badges/48/shop-arrow.png" alt="xEcommerce" />
+                                    <span style="margin-left: 10px; font-size: 20px; font-weight: bold;">xEcommerce</span>
+                                </a>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-7 col-md-6 col-sm-12">
+                            <nav class="navbar navbar-expand-lg navbar-light">
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarNav">
+                                    <ul class="navbar-nav">
+                                        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Shop</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">About us</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="search-box">
+                                <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                                <button class="btn" type="button"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-menu-area d-md-none">
+                <div class="container">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobileMenu" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="mobileMenu">
+                            <ul class="navbar-nav">
+                                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Shop</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">About us</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+
+
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+
+
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+
+
+
+        <footer style="background-color: #000; color: #fff; padding: 40px 0;">
+            <div style="padding: 20px 0;">
+                <div class="container">
+                    <div style="display: flex;">
+                        <div style="flex: 1; margin-right: 20px;">
+                            <div>
+                                <img src="https://img.icons8.com/badges/48/shop-arrow.png" alt="xEcommerce" width="48" height="48" />
+                                <span style="margin-left: 10px; font-size: 24px; font-weight: bold;">xEcommerce</span>
+                            </div>
+                            <div>
+                                <p>
+                                    Gerli & Camino Gral Chamizo<br>
+                                    Bs As, Argentina
+                        <p>TELEPHONE- +540110303456<br>
+                            Email- admin@xecommerce.com</p>
+                            </div>
+                        </div>
+                        <div style="flex: 1; margin-right: 20px;">
+                            <h5>Services</h5>
+                            <ul style="list-style-type: none; padding: 0;">
+                                <li><a href="#" style="color: #fff;">About us</a></li>
+                                <li><a href="#" style="color: #fff;">Return Policy</a></li>
+                                <li><a href="#" style="color: #fff;">Contact Us</a></li>
+                                <li><a href="#" style="color: #fff;">Terms &amp; Condition</a></li>
+
+                            </ul>
+                        </div>
+                        <div style="flex: 1; margin-right: 20px;">
+                            <h5>Account</h5>
+                            <ul style="list-style-type: none; padding: 0;">
+                                <li><a href="#" style="color: #fff;">Your Account</a></li>
+                                <li><a href="checkout.html" style="color: #fff;">Checkout</a></li>
+                                <li><a href="#" style="color: #fff;">Login</a></li>
+                                <li><a href="#" style="color: #fff;">Register</a></li>
+                            </ul>
+                        </div>
+
+
+                        <div style="flex: 1;">
+                            <h5>Get Social</h5>
+                            <p>Connected with our social media and<br>
+                                get updates regularly.</p>
+
+                            <ul style="list-style-type: none; padding: 0; display: flex; gap: 15px;">
+                                <li>
+                                    <a href="https://www.facebook.com" style="color: #fff;">
+                                        <img width="50" height="50" src="https://img.icons8.com/color/50/facebook.png" alt="Facebook" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.twitter.com" style="color: #fff;">
+                                        <img width="50" height="50" src="https://img.icons8.com/color/50/twitter.png" alt="Twitter" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.google-plus.com" style="color: #fff;">
+                                        <img width="50" height="50" src="https://img.icons8.com/color/50/google-plus.png" alt="Google Plus" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com" style="color: #fff;">
+                                        <img width="50" height="50" src="https://img.icons8.com/color/50/instagram-new.png" alt="Instagram" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.pinterest.com" style="color: #fff;">
+                                        <img width="50" height="50" src="https://img.icons8.com/color/50/pinterest.png" alt="Pinterest" />
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div style="background-color: #222; padding: 5px 0;">
+                <div class="container">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>
+                            <p style="color: #fff"><span style="color: #fff;"></span>2024 ® Equipo 5a</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <img src="" alt="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+
+
+
+
+
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
