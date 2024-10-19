@@ -146,15 +146,15 @@
             transition: 0.2s;
         }
         .switcher .switcher-input:checked + .switcher-indicator {
-    background-color: #000; /* Cambia el fondo a negro */
+    background-color: #000; 
 }
 
 .switcher .switcher-input:checked + .switcher-indicator .switcher-yes {
-    background-color: #000; /* Color de la casilla marcada */
+    background-color: #000;
 }
 
 .switcher .switcher-input:checked + .switcher-indicator .switcher-no {
-    background-color: transparent; /* Eliminar el color de la casilla no marcada */
+    background-color: transparent; 
 }
 
 
