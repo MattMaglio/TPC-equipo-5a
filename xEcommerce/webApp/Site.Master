@@ -218,8 +218,8 @@
                                     <ul class="navbar-nav">
                                         <li class="nav-item"><a class="nav-link" href="Default.aspx">Home</a></li>
                                         <li class="nav-item"><a class="nav-link" href="ShopFullGrid.aspx">Products</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Shop</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">About us</a></li>
+                                        
+                                        <li class="nav-item"><a class="nav-link" href="AboutUS.aspx">About us</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
 
                                     </ul>
@@ -245,8 +245,8 @@
                             <ul class="navbar-nav">
                                 <li class="nav-item"><a class="nav-link" href="Default.aspx">Home</a></li>
                                 <li class="nav-item"><a class="nav-link" href="ShopFullGrid.aspx">Products</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">Shop</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">About us</a></li>
+                                
+                                <li class="nav-item"><a class="nav-link" href="AboutUs.aspx">About us</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
 
 
