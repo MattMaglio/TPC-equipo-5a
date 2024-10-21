@@ -8,25 +8,50 @@
     <title></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
 
+
+    <style>
         html, body {
-            height: 100%;   
-            width: 100%;     
-            margin: 0;       
-            padding: 0;      
-            box-sizing: border-box; 
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
         }
 
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #333;
+            background-color: #fff;
+        }
+
+
+
+
+
 
         footer {
-    margin-top: auto; 
-    background-color: #000; 
-    color: #fff; 
-    padding: 20px 0; 
-}
+            margin-top: auto;
+            background-color: #000;
+            color: #fff;
+            padding: 20px 0;
+        }
+
+
+
+
+        .header-top-area .dropdown.show .dropdown-menu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+
 
 
         .header-top-area {
@@ -36,11 +61,15 @@
 
             .header-top-area a {
                 color: #fff;
-                text-decoration: none; /* Eliminar subrayado */
+                text-decoration: none;
             }
 
             .header-top-area .dropdown-menu {
                 background-color: #333;
+                display: none;
+                opacity: 0;
+                transition: opacity 0.2s ease, transform 0.2s ease;
+                transform: translateY(-10px);
             }
 
             .header-top-area .dropdown-item {
@@ -52,45 +81,45 @@
                 }
 
             .header-top-area .list-inline-item:hover {
-                background-color: #444; /* Gris tenue al pasar el mouse sobre el div */
+                background-color: #444;
             }
 
         .main-header-area {
-            background-color: #f7f7f7; /* Fondo gris tenue */
+            background-color: #f7f7f7;
             padding: 15px 0;
         }
 
         .navbar-nav .nav-link {
-            color: #333; /* Color de texto */
-            padding: 10px 15px; /* Espaciado */
+            color: #333;
+            padding: 10px 15px;
         }
 
             .navbar-nav .nav-link:hover {
-                background-color: #e0e0e0; /* Color de fondo en hover */
-                border-radius: 5px; /* Bordes redondeados */
+                background-color: #e0e0e0;
+                border-radius: 5px;
             }
 
         .search-box {
-            display: flex; /* Para alinear en una fila */
-            align-items: center; /* Centrar verticalmente */
+            display: flex;
+            align-items: center;
         }
 
             .search-box input {
-                border-radius: 5px 0 0 5px; /* Bordes redondeados a la izquierda */
+                border-radius: 5px 0 0 5px;
                 border: 1px solid #ccc;
                 padding: 10px;
-                width: 80%; /* Ajustar el ancho */
+                width: 80%;
             }
 
             .search-box button {
-                border-radius: 0 5px 5px 0; /* Bordes redondeados a la derecha */
+                border-radius: 0 5px 5px 0;
                 border: 1px solid #ccc;
-                background-color: #e0e0e0; /* Color de fondo */
+                background-color: #e0e0e0;
                 padding: 10px 15px;
             }
 
                 .search-box button:hover {
-                    background-color: #d0d0d0; /* Color en hover */
+                    background-color: #d0d0d0;
                 }
     </style>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -104,7 +133,32 @@
                 <div class="container">
                     <div class="row justify-content-between">
                         <div class="col-md-6 d-none d-md-block">
+
+
                             <ul class="list-inline mb-0">
+                                <li class="list-inline-item dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">English</a>
+                                        <a class="dropdown-item" href="#">Spanish</a>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Currency</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">USD</a>
+                                        <a class="dropdown-item" href="#">Euro</a>
+                                        <a class="dropdown-item" href="#">ARS</a>
+                                    </div>
+                                </li>
+                            </ul>
+
+                                           <%--VER DESPLEGABLE!!!!
+                                
+                                
+                                
+                                
+                                <ul class="list-inline mb-0">
                                 <li class="list-inline-item dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language</a>
                                     <div class="dropdown-menu">
@@ -124,12 +178,14 @@
 
                                     </div>
                                 </li>
-                            </ul>
+                            </ul>--%>
+
+
                         </div>
                         <div class="col-md-6 text-right">
                             <ul class="list-inline mb-0">
-                                <li class="list-inline-item"><a href="#">My Account</a></li>
-                                <li class="list-inline-item"><a href="#">Login</a></li>
+                                <li class="list-inline-item"><a href="MyAccount.aspx">My Account</a></li>
+                                <li class="list-inline-item"><a href="Login.aspx">Login</a></li>
                                 <li class="list-inline-item">
                                     <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
                                 </li>
@@ -144,7 +200,7 @@
 
                         <div class="col-lg-2 col-md-3 col-sm-6">
                             <div class="logo">
-                                <a href="#" style="display: flex; align-items: center; text-decoration: none; color: #333;">
+                                <a href="Default.aspx" style="display: flex; align-items: center; text-decoration: none; color: #333;">
                                     <img width="48" height="48" class="img-fluid" src="https://img.icons8.com/badges/48/shop-arrow.png" alt="xEcommerce" />
                                     <span style="margin-left: 10px; font-size: 20px; font-weight: bold;">xEcommerce</span>
                                 </a>
@@ -160,7 +216,7 @@
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbarNav">
                                     <ul class="navbar-nav">
-                                        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="Default.aspx">Home</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#">Shop</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#">About us</a></li>
@@ -223,8 +279,10 @@
                                 <p>
                                     Gerli & Camino Gral Chamizo<br>
                                     Bs As, Argentina
-                        <p>TELEPHONE- +540110303456<br>
-                            Email- admin@xecommerce.com</p>
+                        <p>
+                            TELEPHONE- +540110303456<br>
+                            Email- admin@xecommerce.com
+                                </p>
                             </div>
                         </div>
                         <div style="flex: 1; margin-right: 20px;">
@@ -250,8 +308,10 @@
 
                         <div style="flex: 1;">
                             <h5>Get Social</h5>
-                            <p>Connected with our social media and<br>
-                                get updates regularly.</p>
+                            <p>
+                                Connected with our social media and<br>
+                                get updates regularly.
+                            </p>
 
                             <ul style="list-style-type: none; padding: 0; display: flex; gap: 15px;">
                                 <li>
@@ -314,6 +374,10 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
     </form>
 </body>
 </html>
