@@ -1,4 +1,4 @@
--- Set de datos
+-- Set de datos pre-cargados en el sistema.
 USE XECOMMERCE;
 GO
 

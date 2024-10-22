@@ -13,11 +13,16 @@
     <div class="row mb-4">
         <div class="col-md-4">
             <h5>Filter by Category</h5>
+            <asp:DropDownList ID="ddlCategoria" runat="server">
+
+            </asp:DropDownList>
+            <!--
             <select class="form-control" id="categoryFilter">
                 <option value="">All</option>
                 <option value="category1">Category 1</option>
                 <option value="category2">Category 2</option>
             </select>
+            -->
         </div>
         <div class="col-md-4">
             <h5>Filter by Brand</h5>
