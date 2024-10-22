@@ -42,7 +42,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Articulo.cs" />
+    <Compile Include="Categoria.cs" />
+    <Compile Include="Ciudad.cs" />
+    <Compile Include="Cliente.cs" />
+    <Compile Include="Color.cs" />
+    <Compile Include="Currier.cs" />
+    <Compile Include="DetalleDeFactura.cs" />
+    <Compile Include="DetalleDePago.cs" />
+    <Compile Include="Direccion.cs" />
+    <Compile Include="EntidadFinanciera.cs" />
+    <Compile Include="Envio.cs" />
+    <Compile Include="EstadoDeEnvio.cs" />
+    <Compile Include="Factura.cs" />
+    <Compile Include="Imagen.cs" />
+    <Compile Include="Marca.cs" />
+    <Compile Include="MedioDePago.cs" />
+    <Compile Include="NivelDeAccesso.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provincia.cs" />
+    <Compile Include="Talle.cs" />
+    <Compile Include="Tipo.cs" />
+    <Compile Include="Usuario.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\bootstrap-grid.css.map" />
