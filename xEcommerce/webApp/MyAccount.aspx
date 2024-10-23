@@ -188,7 +188,7 @@
                         <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-info">Info</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-social-links">Social links</a>
+<%--                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-social-links">Social links</a>--%>
                         <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-notifications">Notifications</a>
                     </div>
                 </div>
@@ -280,7 +280,7 @@
     <input type="text" class="form-control" value="new adress...">
 </div>
 
-                                    <div class="form-group">
+                                    <%--<div class="form-group">
     <label class="form-label">Credit Cards stored</label>
                                     <br />
     <select class="custom-select">
@@ -296,7 +296,7 @@
     <input type="text" class="form-control" value="new credit card...">
 </div>
 
-
+--%>
 
 
                                 
@@ -316,7 +316,7 @@
                             </div>
 
                         </div>
-                        <div class="tab-pane fade" id="account-social-links">
+                      <%--  <div class="tab-pane fade" id="account-social-links">
                             <div class="card-body pb-2">
 
                                 <div class="form-group">
@@ -341,7 +341,7 @@
                                 </div>
 
                             </div>
-                        </div>
+                        </div>--%>
                         
                         <div class="tab-pane fade" id="account-notifications">
                             <div class="card-body pb-2">
