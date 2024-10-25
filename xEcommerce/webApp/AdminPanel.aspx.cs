@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Model;
+using DataPersistence;
+using ApplicationService;
 
 namespace webApp
 {
@@ -16,22 +19,15 @@ namespace webApp
             {
                 // Inicializa el formulario como no visible al cargar la página
                 addArticleForm.Visible = false;
-                
+                LoadArticle();
             }
-            /* ACA VAMOS A CARGAR EL DGV PARA MOSTRAR ARTICULOS, CLIENTES, USUARIOS ECT
 
-             ArticuloAS articulo = new ArticuloAS();
 
-            if (!IsPostBack)
-            {
-             dgvPanelAdmin.DataSource = articulo.listar(); // ARTICULO
-             dgvPanelAdmin.DataBind();
+            /* dgvPanelAdmin.DataSource = clients.listar(); // CLIENTES
+             dgvPanelAdmin.DataBind(); 
 
-            dgvPanelAdmin.DataSource = clients.listar(); // CLIENTES
-            dgvPanelAdmin.DataBind(); 
-
-            dgvPanelAdmin.DataSource = sell.listar(); // VENTAS
-            dgvPanelAdmin.DataBind(); */
+             dgvPanelAdmin.DataSource = sell.listar(); // VENTAS
+             dgvPanelAdmin.DataBind(); */
         }
 
         protected void btnViewSell_Click(object sender, EventArgs e)
@@ -45,21 +41,21 @@ namespace webApp
 
         protected void btnViewArticles_Click(object sender, EventArgs e)
         {
-            //METODO QUE VAMOS A UTILIZAR PARA LA CARGA DE LOS ARTICULOS
-            /*ArticuloAS articulo = new ArticuloAS();
-            dgvArticles.DataSource = articulo.listar();
-            dgvArticles.DataBind();*/
-           // Response.Redirect(Request.RawUrl); //redirige a la misma pagina
+            //BOTON PÁRA VER EL  GRIDVIEW LOS ARTICULOS
+            addArticleForm.Visible = false; // Ocultar el formulario
+            LoadArticle(); // Cargar y mostrar artículos en el GridView
         }
 
         protected void btnTwoForOne_Click(object sender, EventArgs e)
         {
+            // BOTON PARAA AGREGAR PROMOCION
            // apllyPromotion("2x1");
         }
 
         protected void btnTenPercentOff_Click(object sender, EventArgs e)
         {
-           // apllyPromotion("10%");
+            // BOTON PARAA AGREGAR PROMOCION
+            // apllyPromotion("10%");
         }
         private void apllyPromotion(string promotion)
         {
@@ -68,11 +64,11 @@ namespace webApp
 
         protected void btnAddArticle_Click(object sender, EventArgs e)
         {
-            // aparece el formulario cuando se ejecuta el boton
-           
-            addArticleForm.Visible = true;
+            //BOTON PARA AGREGAR ARTICULOS
+            addArticleForm.Visible = true; 
+            dgvArticles.Visible = false; 
 
-           // Response.Redirect(Request.RawUrl);
+            // Response.Redirect(Request.RawUrl);
         }
 
         protected void txtImageUrl_TextChanged(object sender, EventArgs e)
@@ -149,26 +145,14 @@ namespace webApp
                 deleteArticle(idArticle); //
             }*/
         }
-        private void LoadArticle(string idArticle)
+        private void LoadArticle()
         {
-            //capturar el id del articulo
-
-
-
-            /* if (article != null)
-             {
-                 //asignamos valores del formulario
-                 txtIdArticle.Text = article.ID;
-                 txtName.Text = article.Name;
-                 txtStock.Text = article.Stock.ToString();
-                 txtPrice.Text = article.Price.ToString();
-                 txtColor.Text = article.Color;
-                 txtImageUrl.Text = article.ImageUrl; // URL de la imagen
-
-                 // Asegúrate de hacer visible el formulario para editar
-                 pnlArticleForm.Visible = true; // Cambia esto según cómo tengas el formulario
-             }
-            */
+            // Carga el GridView con artículos
+            ArticuloAS articulo = new ArticuloAS();
+            dgvArticles.DataSource = articulo.listar(); // Obtener lista de artículos
+            dgvArticles.DataBind(); // Asociar la fuente de datos al GridView
+            dgvArticles.Visible = true; // Asegúrate de que el GridView sea visible
+            
         }
 
     }

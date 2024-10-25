@@ -8,17 +8,17 @@ namespace Model
 {
     public class Articulo
     {
-        private int Id { get; set; }
-        private string Codigo { get; set; }
-        private string Nombre { get; set; }
-        private string Descripcion { get; set; }
-        private Tipo Tipo { get; set; }
-        private Categoria Categoria { get; set; }
-        private Marca Marca { get; set; }
-        private Color Color { get; set; }
+        public int Id { get; set; }
+        public string Codigo { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public Tipo Tipo { get; set; }
+        public Categoria Categoria { get; set; }
+        public Marca Marca { get; set; }
+        public Color Color { get; set; }
         private Talle Talle { get; set; }
-        private List <Imagen> Imagen { get; set; }
-        private int Stock { get; set; }
-        private float Precio { get; set; }
+        public List <Imagen> Imagen { get; set; }
+        public int Stock { get; set; }
+        public float Precio { get; set; }
     }
 }

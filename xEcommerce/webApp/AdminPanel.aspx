@@ -5,13 +5,13 @@
     <asp:ScriptManager runat="server" ></asp:ScriptManager>
 <style>
 
- .custom-width {
+        .custom-width {
             max-width: 200px; 
-            margin-left: -60px;
+            margin-left: -40px;
         }
         .h2{
             max-width: 400px; 
-            margin-left: -60px; 
+            margin-left: -40px; 
         }   
         .accordion-button::after {
             filter: invert(1); /* Invertir el color, para pasar de negro a blanco */
@@ -33,7 +33,7 @@
             align-items: flex-start; /* Alinea los elementos al inicio */
         }
         .left-panel {
-            width: 40%; /* Panel izquierdo */
+            width: 50%; /* Panel izquierdo */
         }
         .right-panel {
             width: 300%; /* Panel derecho */
@@ -44,8 +44,17 @@
         }
         .form-container {
             max-width: 400px;
-            width: 100%; 
+            width: 100%;
+          
         }
+        .dgviewArticles{
+             max-width: 400px;
+            width: 100%; 
+            margin-left: -100%;
+            padding: 0; 
+        }
+
+
 </style>
 
      <div class="container mt-4">
@@ -66,41 +75,10 @@
                         <ul class="list-group mb-3">
                             <li class="list-group-item">
                                 <asp:Button Text="View articles" CssClass="btn btn-dark w-100" OnClick="btnViewArticles_Click" ID="btnViewArticles" runat="server" />
-                                 <!-- GRID PARA MOSTRAR Los articulos -->
-                   <asp:GridView ID="dgvArticles" OnRowCommand="dgvArticles_RowCommand" runat="server" CssClass="table table-bordered mt-4" Visible="false" AutoGenerateColumns="False">
-                                        <Columns>
-                                            <asp:BoundField DataField="idArticle" HeaderText="ID article" />
-                                            <asp:BoundField DataField="Category" HeaderText="Category" />
-                                            <asp:BoundField DataField="Brand" HeaderText="Brand" />
-                                            <asp:BoundField DataField="Stock" HeaderText="Stock" />
-                                            <asp:BoundField DataField="Price" HeaderText="Price" />
-                                            <asp:TemplateField HeaderText="Image"> 
-                                                <ItemTemplate>
-                                                    <asp:Image ID="imgArticle" runat="server" ImageUrl='<%# Eval("ImageUrl") %>' AlternateText="Article Image" Width="100px" Height="100px" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Update">
-                                                <ItemTemplate>
-                                                    <asp:Button Text="Update" CssClass="btn btn-warning" CommandName="Update" CommandArgument='<%# Eval("idArticle") %>' runat="server" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Delete">
-                                                <ItemTemplate>
-                                                    <asp:Button Text="Delete" CssClass="btn btn-danger" CommandName="Delete" CommandArgument='<%# Eval("idArticle") %>' runat="server" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                        </Columns>
-                                    </asp:GridView>
                             </li>
-
-
-   <li class="list-group-item">
-    <asp:Button Text="Add Article" CssClass="btn btn-dark w-100" ID="btnAddArticle" OnClick="btnAddArticle_Click" runat="server" />
-       
-</li>
-
-
-                           
+                               <li class="list-group-item">
+                                <asp:Button Text="Add Article" CssClass="btn btn-dark w-100" ID="btnAddArticle" OnClick="btnAddArticle_Click" runat="server" />
+                            </li>  
                         </ul>
                     </div>
                 </div>
@@ -292,7 +270,36 @@
                     <asp:Button ID="btnSaveArticle" runat="server" CssClass="btn btn-success mt-3" OnClick="btnSaveArticle_Click" Text="Save Article" />
                 </div>
             </div>
+         <div class="dgviewArticles">
+                           <!-- GRID PARA MOSTRAR Los articulos -->
+                    <asp:GridView ID="dgvArticles" OnRowCommand="dgvArticles_RowCommand" runat="server" CssClass="table table-bordered mt-4" Visible="false" AutoGenerateColumns="False">
+                     <Columns>
+                         <asp:BoundField DataField="Id" HeaderText="ID Article " />
+                         <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
+                         <asp:BoundField DataField="Categoria.Descripcion" HeaderText="Category" />
+                         <asp:BoundField DataField="Marca.Descripcion" HeaderText="Brand" />
+                         <asp:BoundField DataField="Tipo.Descripcion" HeaderText="Tipo" />
+                         <asp:BoundField DataField="Stock" HeaderText="Stock" />
+                         <asp:BoundField DataField="Precio" HeaderText="Price" />
+                        <asp:TemplateField HeaderText="Image">
+                    <ItemTemplate>
+                        <asp:Button Text="Ver imágenes" CssClass="btn btn-primary" CommandName="ShowImages" CommandArgument='<%# Eval("Id") %>' runat="server" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+                         <asp:TemplateField HeaderText="Update">
+                         <ItemTemplate>
+                         <asp:Button Text="Update" CssClass="btn btn-warning" CommandName="Update" CommandArgument='<%# Eval("Id") %>' runat="server" />
+                         </ItemTemplate>
+                         </asp:TemplateField>
+                         <asp:TemplateField HeaderText="Delete">
+                         <ItemTemplate>
+                         <asp:Button Text="Delete" CssClass="btn btn-danger" CommandName="Delete" CommandArgument='<%# Eval("Id") %>' runat="server" />
+                         </ItemTemplate>
+                         </asp:TemplateField>
+                     </Columns>
+                 </asp:GridView>
         </div>
+         </div>
     </div>
     </asp:Content>
 
