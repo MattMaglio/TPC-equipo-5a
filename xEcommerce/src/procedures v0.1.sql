@@ -241,3 +241,20 @@ SELECT Id,
 FROM Catalogo.ImagenArticulos
 ;
 GO
+
+CREATE PROCEDURE [Catalogo].[ListarArticulosConImagen] AS
+BEGIN
+    SELECT 
+        a.Id AS ProductId,
+        a.Codigo AS Code,
+        a.Descripcion AS Name,
+        i.UrlImagen AS ImageUrl
+        
+    FROM 
+        Catalogo.Articulos a
+    LEFT JOIN 
+        Catalogo.ImagenArticulos i ON a.Id = i.IdArticulo
+    WHERE 
+        a.Estado = 1;
+END;
+GO
