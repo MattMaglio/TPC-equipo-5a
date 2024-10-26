@@ -114,13 +114,13 @@ namespace webApp
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl addArticleForm;
 
         /// <summary>
-        /// txtIdArticle control.
+        /// txtCodeArticle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdArticle;
+        protected global::System.Web.UI.WebControls.TextBox txtCodeArticle;
 
         /// <summary>
         /// txtName control.
@@ -132,6 +132,15 @@ namespace webApp
         protected global::System.Web.UI.WebControls.TextBox txtName;
 
         /// <summary>
+        /// txtDescripcion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
+
+        /// <summary>
         /// ddListBrand control.
         /// </summary>
         /// <remarks>
@@ -141,13 +150,40 @@ namespace webApp
         protected global::System.Web.UI.WebControls.DropDownList ddListBrand;
 
         /// <summary>
-        /// txtSize control.
+        /// ddListSize control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSize;
+        protected global::System.Web.UI.WebControls.DropDownList ddListSize;
+
+        /// <summary>
+        /// ddListColors control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddListColors;
+
+        /// <summary>
+        /// ddListType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddListType;
+
+        /// <summary>
+        /// ddListCategory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddListCategory;
 
         /// <summary>
         /// txtStock control.
@@ -168,49 +204,76 @@ namespace webApp
         protected global::System.Web.UI.WebControls.TextBox txtPrice;
 
         /// <summary>
-        /// txtColor control.
+        /// txtUrlImage1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtColor;
+        protected global::System.Web.UI.WebControls.TextBox txtUrlImage1;
 
         /// <summary>
-        /// ddListType control.
+        /// fileImg1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddListType;
+        protected global::System.Web.UI.WebControls.FileUpload fileImg1;
 
         /// <summary>
-        /// txtImageUrl control.
+        /// Image2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtImageUrl;
+        protected global::System.Web.UI.WebControls.Image Image2;
 
         /// <summary>
-        /// fileUploadImg control.
+        /// txtImageUrl2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileUploadImg;
+        protected global::System.Web.UI.WebControls.TextBox txtImageUrl2;
 
         /// <summary>
-        /// btnUpload control.
+        /// fileImg2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpload;
+        protected global::System.Web.UI.WebControls.FileUpload fileImg2;
+
+        /// <summary>
+        /// Image1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image Image1;
+
+        /// <summary>
+        /// txtImageUrl3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtImageUrl3;
+
+        /// <summary>
+        /// fileImg3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fileImg3;
 
         /// <summary>
         /// imgPreview control.

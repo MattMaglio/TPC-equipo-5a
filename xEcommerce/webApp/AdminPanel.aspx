@@ -4,91 +4,204 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager runat="server" ></asp:ScriptManager>
 <style>
+    /* Ajustes generales */
+    .container {
+        display: flex;
+        flex-wrap: wrap; /* SE ENVUELEN SI NO HAY SUFICIENTE ESPACIO */
+        justify-content: space-between;
+        padding: 10px;
+    }
 
-        .custom-width {
-            max-width: 200px; 
-            margin-left: -40px;
-        }
-        .h2{
-            max-width: 400px; 
-            margin-left: -40px; 
-        }   
-        .accordion-button::after {
-            filter: invert(1); /* Invertir el color, para pasar de negro a blanco */
-        }
-        .accordion-button.collapsed::after {
-            filter: invert(0); /* Vuelve a su color original cuando está colapsado */
-        }
-        .list-group-item {
-            padding: 0; /* Elimina el padding para que el botón ocupe todo el ancho */
-        }
-        .list-group-item a {
-            display: block; /* Asegura que el enlace sea un bloque */
-            width: 100%; 
-            text-align: center; /* Centra el texto dentro del botón */
-        }
+    .left-panel, .right-panel {
+        padding: 10px;
+    }
+
+    /* AJUSTE DEL TAMAÑO DEL PANEL IZQUIERDO */
+    .left-panel {
+        width: 100%; 
+        max-width: 300px; 
+    }
+
+    .right-panel {
+        width: 100%; /* Ocupa EL 100% DE PANTALLAS CHICAS */
+        max-width: 700px; /* MAX PARA PANTALLAS GRANDES */
+        margin-top: 20px;
+    }
+
+    /* Flexibilidad en los formularios y grids */
+    .form-article{
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 10px;
+        margin-top: -30px;
+    }
+    .dgviewArticles{
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0;
+        display: flex;
+        justify-content: center; /* Centra horizontalmente */
+        align-items: center;     /* Centra verticalmente */
+        height: 100vh; 
+        margin-top: -150px;
+    }
+
+    /* RESPONSIVE CON MEDIA QUERYS */
+    @media (min-width: 768px) {
         .container {
-            display: flex; 
-            justify-content: space-between; /* Espacia los elementos */
-            align-items: flex-start; /* Alinea los elementos al inicio */
-        }
-        .left-panel {
-            width: 50%; /* Panel izquierdo */
-        }
-        .right-panel {
-            width: 300%; /* Panel derecho */
-            display: flex;
-            justify-content: center; /* Centra horizontalmente el formulario */
-            align-items: center; /* Centra verticalmente el formulario */
-            padding-left: 20px; /* Espacio entre los paneles */
-        }
-        .form-container {
-            max-width: 400px;
-            width: 100%;
-          
-        }
-        .dgviewArticles{
-             max-width: 400px;
-            width: 100%; 
-            margin-left: -100%;
-            padding: 0; 
+            flex-direction: row; /* Alinea los paneles en fila para pantallas grandes */
         }
 
+        .left-panel {
+            width: 30%; /* Ajusta el ancho de los paneles para pantallas grandes */
+        }
+
+        .right-panel {
+            width: 65%; /* Ajusta el ancho del panel derecho en pantallas grandes */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column; /* Apila los paneles en pantallas pequeñas */
+        }
+
+        .left-panel, .right-panel {
+            width: 100%; /* Ancho completo en pantallas pequeñas */
+        }
+    }
+
+    /* AJUSTES BOTONES Y ACORDEON */
+    .accordion-button::after {
+        filter: invert(1);
+    }
+
+    .accordion-button.collapsed::after {
+        filter: invert(0);
+    }
+
+    .list-group-item {
+        padding: 0;
+    }
+
+    .list-group-item a {
+        display: block;
+        text-align: center;
+    }
+
+    .bn5 {
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: rgb(255, 255, 255);
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+}
+
+.bn5:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowingbn5 20s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowingbn5 {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.bn5:active {
+  color: #000;
+}
+
+.bn5:active:after {
+  background: transparent;
+}
+
+.bn5:hover:before {
+  opacity: 1;
+}
+
+.bn5:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #191919;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
 
 </style>
+
 
      <div class="container mt-4">
         <div class="left-panel">
         <h2 class="h2">Admin Panel</h2>
 
-        <!-- Menú Desplegable Vertical con Acordeón -->
+        <!--MENU DESPEGABLE CON ACORDEON -->
         <div class="accordion custom-width" id="adminAccordion">
-            <!-- Sección Artículos -->
+            <!--SECCION ARTICULOS -->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingArticles">
                     <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseArticles" aria-expanded="false" aria-controls="collapseArticles">
-                        Artícles
+                        Articulos
                     </button>
                 </h2>
                 <div id="collapseArticles" class="accordion-collapse collapse" aria-labelledby="headingArticles" data-bs-parent="#adminAccordion">
                     <div class="accordion-body">
                         <ul class="list-group mb-3">
                             <li class="list-group-item">
-                                <asp:Button Text="View articles" CssClass="btn btn-dark w-100" OnClick="btnViewArticles_Click" ID="btnViewArticles" runat="server" />
+                                <asp:Button Text="Ver articulos" CssClass="btn btn-dark w-100" OnClick="btnViewArticles_Click" ID="btnViewArticles" runat="server" />
                             </li>
                                <li class="list-group-item">
-                                <asp:Button Text="Add Article" CssClass="btn btn-dark w-100" ID="btnAddArticle" OnClick="btnAddArticle_Click" runat="server" />
+                                <asp:Button Text="Agregar articulo" CssClass="btn btn-dark w-100" ID="btnAddArticle" OnClick="btnAddArticle_Click" runat="server" />
                             </li>  
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Seccion users -->
+            <!-- SECCION USUARIOS -->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingClients">
                     <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseClients" aria-expanded="true" aria-controls="collapseClients">
-                        Users
+                       Usuarios
                     </button>
                 </h2>
                 <div id="collapseClients" class="accordion-collapse collapse" aria-labelledby="headingClients" data-bs-parent="#adminAccordion">
@@ -99,7 +212,7 @@
                             <!-- GRID PARA MOSTRAR LOS  USERS -->
                         <asp:GridView ID="dgvClients" runat="server" CssClass="table table-bordered mt-4" Visible="false">
                             <Columns>
-                                <asp:BoundField DataField="IdUser" HeaderText="ID User" />
+                                <asp:BoundField DataField="IdUser" HeaderText="ID Usuario" />
                                 <asp:BoundField DataField="LastName" HeaderText="Apellido" />
                                 <asp:BoundField DataField="Name" HeaderText="Nombre" />
                                 <asp:BoundField DataField="Dni" HeaderText="DNI" />
@@ -108,10 +221,10 @@
                         </asp:GridView>
                                </li>
                             <li class="list-group-item">
-                                <a href="UpdateUser.aspx" class="btn btn-dark w-100">Update</a>
+                                <a href="UpdateUser.aspx" class="btn btn-dark w-100">Modificar</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="DeleteUser.aspx" class="btn btn-dark w-100">Delete</a>
+                                <a href="DeleteUser.aspx" class="btn btn-dark w-100">Eliminar</a>
                             </li>
                         </ul>
                     </div>
@@ -122,7 +235,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingSell">
                     <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSell" aria-expanded="false" aria-controls="collapseSell">
-                        Sales
+                        Ventas
                     </button>
                 </h2>
                 <div id="collapseSell" class="accordion-collapse collapse" aria-labelledby="headingSell" data-bs-parent="#adminAccordion">
@@ -133,9 +246,9 @@
                                     <!-- GRID PARA MOSTRAR LAS VENTAS -->
                                     <asp:GridView ID="dgvSell" runat="server" CssClass="table table-bordered mt-4" Visible="false">
                                 <Columns>
-                                    <asp:BoundField DataField="SellID" HeaderText="ID Sell" />
-                                    <asp:BoundField DataField="User" HeaderText="User" />
-                                    <asp:BoundField DataField="Date" HeaderText="Date" />
+                                    <asp:BoundField DataField="SellID" HeaderText="ID Venta" />
+                                    <asp:BoundField DataField="User" HeaderText="Usuario" />
+                                    <asp:BoundField DataField="Date" HeaderText="Fecha" />
                                     <asp:BoundField DataField="Total" HeaderText="Total" />
                                    <asp:TemplateField HeaderText="Status">
                                     <ItemTemplate>
@@ -146,10 +259,10 @@
                             </asp:GridView>
                                 </li>
                             <li class="list-group-item">
-                                <a href="modificarCliente.aspx" class="btn btn-dark w-100">Canceled</a>
+                                <a href="modificarCliente.aspx" class="btn btn-dark w-100">Cancelados</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="eliminarCliente.aspx" class="btn btn-dark w-100">Successful</a>
+                                <a href="eliminarCliente.aspx" class="btn btn-dark w-100">Exitosos</a>
                             </li>
                         </ul>
                     </div>
@@ -160,7 +273,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingPromotions">
                     <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePromotions" aria-expanded="false" aria-controls="collapsePromotions">
-                        Add Promotions
+                        Agregar promociones
                     </button>
                 </h2>
                 <div id="collapsePromotions" class="accordion-collapse collapse" aria-labelledby="headingPromotions" data-bs-parent="#adminAccordion">
@@ -180,28 +293,28 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingSearch">
                     <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
-                        Search
+                        Buscar
                     </button>
                 </h2>
                 <div id="collapseSearch" class="accordion-collapse collapse" aria-labelledby="headingSearch" data-bs-parent="#adminAccordion">
                     <div class="accordion-body">
-                        <!-- ACORDEON para Filtrar por Categoría y Marca -->
+                        <!-- ACORDEON para Filtrar POR CAT Y MARCA-->
                         <div class="accordion" id="filterAccordion">
                             <!-- SECCION CATEGORIA -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingCategory">
                                  <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCategory" aria-expanded="false" aria-controls="collapseCategory">
-                                     Category
+                                    Categoria
                                      </button>
                                      </h2>
                                 <div id="collapseCategory" class="accordion-collapse collapse" aria-labelledby="headingCategory" data-bs-parent="#filterAccordion">
                                     <div class="accordion-body">
                                           <!-- CHECKLIST CATEGORIA -->
                                         <asp:CheckBoxList ID="CheckBoxListCategories" runat="server" CssClass="list-group">
-                                        <asp:ListItem Text="Pants" Value="Pants"></asp:ListItem>
-                                        <asp:ListItem Text="T-shirt" Value="T-shirt"></asp:ListItem>
-                                        <asp:ListItem Text="Sweatshirt" Value="Sweatshirt"></asp:ListItem>
-                                        <asp:ListItem Text="Jeans" Value="Jeans"></asp:ListItem>
+                                        <asp:ListItem Text="Formal" Value="Formal"></asp:ListItem>
+                                        <asp:ListItem Text="Deportiva" Value="Deportiva"></asp:ListItem>
+                                        <asp:ListItem Text="Casual" Value="Casual"></asp:ListItem>
+                                        <asp:ListItem Text="Acessorios" Value="Accesorios"></asp:ListItem>
                                     </asp:CheckBoxList>
                                     </div>
                                 </div>
@@ -211,7 +324,7 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingBrand">
                                     <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBrand" aria-expanded="false" aria-controls="collapseBrand">
-                                        Brand
+                                        Marca
                                     </button>
                                 </h2>
                                 <div id="collapseBrand" class="accordion-collapse collapse" aria-labelledby="headingBrand" data-bs-parent="#filterAccordion">
@@ -234,40 +347,52 @@
     </div>    
     
      <div class="right-panel">
-            <div class="form-container">
+            <div class="form-article">
                 <div class="mt-3" runat="server" id="addArticleForm" Visible="false">
-                    <h4>Add New Article</h4>
-                    <asp:TextBox runat="server" ID="txtIdArticle"  Placeholder="ID" CssClass="form-control"  />
-                    <asp:TextBox ID="txtName" runat="server" CssClass="form-control" Placeholder="Name"></asp:TextBox>
-                    <asp:DropDownList ID="ddListBrand" runat="server" CssClass="form-control">
-                    
-                        <asp:ListItem Text="Select Brand" Value=""></asp:ListItem>
-                        <asp:ListItem Text="Adidas" Value="Adidas"></asp:ListItem>
-                        <asp:ListItem Text="Nike" Value="Nike"></asp:ListItem>
-                        <asp:ListItem Text="Umbro" Value="Umbro"></asp:ListItem>
-                        <asp:ListItem Text="Puma" Value="Puma"></asp:ListItem>
+                    <h4>Agregar nuevo articulo</h4>
+                    <asp:TextBox runat="server" ID="txtCodeArticle"  Placeholder="Codigo" CssClass="form-control"  />
+                    <asp:TextBox ID="txtName" runat="server" CssClass="form-control" Placeholder="Nombre"></asp:TextBox>
+                    <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" Placeholder="Descripcion"></asp:TextBox>
+                     <!-- DROP DOWN LIST MARCAS -->
+                    <asp:DropDownList ID="ddListBrand" runat="server" CssClass="form-control"> 
+ 
                     </asp:DropDownList>
-
-                    <asp:TextBox ID="txtSize" runat="server" CssClass="form-control" Placeholder="Size"></asp:TextBox>
-                    <asp:TextBox ID="txtStock" runat="server" CssClass="form-control" Placeholder="Stock" TextMode="Number"></asp:TextBox>
-                    <asp:TextBox ID="txtPrice" runat="server" CssClass="form-control" Placeholder="Price" TextMode="Number"></asp:TextBox>
-                    <asp:TextBox ID="txtColor" runat="server" CssClass="form-control" Placeholder="Color"></asp:TextBox>
+                         <!-- DROP DOWN LIST TALLES -->
+                    <asp:DropDownList runat="server" ID="ddListSize" CssClass="form-control">
+                       
+                    </asp:DropDownList>
+                         <!-- DROP DOWN LIST COLORES -->
+                    <asp:DropDownList runat="server" ID="ddListColors" CssClass="form-control">
+                      
+                    </asp:DropDownList>        
+                     <!-- DROP DOWN LIST TIPOS -->
                     <asp:DropDownList ID="ddListType" runat="server" CssClass="form-control">
-                        <asp:ListItem Text="Select Type" Value=""></asp:ListItem>
-                        <asp:ListItem Text="Pants" Value="Pants"></asp:ListItem>
-                        <asp:ListItem Text="T-shirt" Value="T-shirt"></asp:ListItem>
-                        <asp:ListItem Text="Sweatshirt" Value="Sweatshirt"></asp:ListItem>
-                        <asp:ListItem Text="Jeans" Value="Jeans"></asp:ListItem>
+                      
                     </asp:DropDownList>
+                     <!-- DROP DOWN LIST CATEGORIA -->
+                <asp:DropDownList ID="ddListCategory" runat="server" CssClass="form-control">
+                 
+                </asp:DropDownList>
+                    <asp:TextBox ID="txtStock" runat="server" CssClass="form-control" Placeholder="Stock" TextMode="Number"></asp:TextBox>
+                    <asp:TextBox ID="txtPrice" runat="server" CssClass="form-control" Placeholder="Precio" TextMode="Number"></asp:TextBox>
                     <asp:UpdatePanel runat="server">
              <ContentTemplate>
-                    <asp:TextBox ID="txtImageUrl" runat="server" OnTextChanged="txtImageUrl_TextChanged" CssClass="form-control mt-3" Placeholder="Pega aquí la URL de la imagen"></asp:TextBox>
-                    <asp:FileUpload ID="fileUploadImg" runat="server" CssClass="form-control mt-3" />
-                 <asp:Button ID="btnUpload" runat="server" CssClass="btn btn-primary mt-3" Text="Upload Image" />
-                  <asp:Image ID="imgPreview" ImageUrl="https://img.freepik.com/foto-gratis/icono-imagen-lado-frontal_187299-39480.jpg?semt=ais_hybrid" runat="server" CssClass="img-thumbnail mt-3" Width="28%" />
+                    <asp:TextBox ID="txtUrlImage1" runat="server" CssClass="form-control mt-3" Placeholder="URL de la imagen 1"></asp:TextBox>
+                    <asp:FileUpload ID="fileImg1" runat="server" CssClass="form-control mt-3" />
+                    <asp:Image ID="Image2" ImageUrl="https://img.freepik.com/foto-gratis/icono-imagen-lado-frontal_187299-39480.jpg?semt=ais_hybrid" runat="server" CssClass="img-thumbnail mt-3" Width="10%" />
+                   
+                 <asp:TextBox ID="txtImageUrl2" runat="server" CssClass="form-control mt-3" Placeholder="URL de la imagen 2"></asp:TextBox>
+                    <asp:FileUpload ID="fileImg2" runat="server" CssClass="form-control mt-3" />
+                    <asp:Image ID="Image1" ImageUrl="https://img.freepik.com/foto-gratis/icono-imagen-lado-frontal_187299-39480.jpg?semt=ais_hybrid" runat="server" CssClass="img-thumbnail mt-3" Width="10%" />
+                 
+                 <asp:TextBox ID="txtImageUrl3" runat="server" CssClass="form-control mt-3" Placeholder="URL de la imagen 3"></asp:TextBox>
+                   <asp:FileUpload ID="fileImg3" runat="server" CssClass="form-control mt-3" />
+                 <asp:Image ID="imgPreview" ImageUrl="https://img.freepik.com/foto-gratis/icono-imagen-lado-frontal_187299-39480.jpg?semt=ais_hybrid" runat="server" CssClass="img-thumbnail mt-3" Width="10%" />
              </ContentTemplate>
          </asp:UpdatePanel>
-                    <asp:Button ID="btnSaveArticle" runat="server" CssClass="btn btn-success mt-3" OnClick="btnSaveArticle_Click" Text="Save Article" />
+                    <asp:Button ID="btnSaveArticle" runat="server" CssClass="bn5" OnClick="btnSaveArticle_Click" Text="Guardar articulo" />
+                    <a type="button" class="bn5" href="AdminPanel.aspx">Cancelar</a>
+                   
                 </div>
             </div>
          <div class="dgviewArticles">

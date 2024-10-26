@@ -16,7 +16,7 @@ namespace Model
         public Categoria Categoria { get; set; }
         public Marca Marca { get; set; }
         public Color Color { get; set; }
-        private Talle Talle { get; set; }
+        public Talle Talle { get; set; }
         public List <Imagen> Imagen { get; set; }
         public int Stock { get; set; }
         public float Precio { get; set; }

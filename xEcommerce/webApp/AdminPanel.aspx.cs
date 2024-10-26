@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using Model;
 using DataPersistence;
 using ApplicationService;
+using System.Data.SqlTypes;
 
 namespace webApp
 {
@@ -18,8 +19,9 @@ namespace webApp
             if (!IsPostBack)
             {
                 // Inicializa el formulario como no visible al cargar la página
-                addArticleForm.Visible = false;
-                LoadArticle();
+                // addArticleForm.Visible = false;
+                //LoadArticle();
+               
             }
 
 
@@ -42,8 +44,8 @@ namespace webApp
         protected void btnViewArticles_Click(object sender, EventArgs e)
         {
             //BOTON PÁRA VER EL  GRIDVIEW LOS ARTICULOS
-            addArticleForm.Visible = false; // Ocultar el formulario
-            LoadArticle(); // Cargar y mostrar artículos en el GridView
+           // addArticleForm.Visible = false; // Ocultar el formulario
+           // LoadArticle(); // Cargar y mostrar artículos en el GridView
         }
 
         protected void btnTwoForOne_Click(object sender, EventArgs e)
@@ -65,8 +67,38 @@ namespace webApp
         protected void btnAddArticle_Click(object sender, EventArgs e)
         {
             //BOTON PARA AGREGAR ARTICULOS
-            addArticleForm.Visible = true; 
-            dgvArticles.Visible = false; 
+            addArticleForm.Visible = true;
+            dgvArticles.Visible = false;
+            MarcaAS marca = new MarcaAS();
+            ddListBrand.DataSource = marca.listar();
+            ddListBrand.DataValueField = "Id";
+            ddListBrand.DataTextField = "Descripcion";
+            ddListBrand.DataBind();
+
+            CategoriaAS categoria = new CategoriaAS();
+            ddListCategory.DataSource = categoria.listar();
+            ddListCategory.DataValueField = "Id";
+            ddListCategory.DataTextField = "Descripcion";
+            ddListCategory.DataBind();
+
+            ColorAS color = new ColorAS();
+            ddListColors.DataSource = color.listar();
+            ddListColors.DataValueField = "Id";
+            ddListColors.DataTextField = "Descripcion";
+            ddListColors.DataBind();
+
+            TipoAS tipo = new TipoAS();
+            ddListType.DataSource = tipo.listar();
+            ddListType.DataValueField = "Id";
+            ddListType.DataTextField = "Descripcion";
+            ddListType.DataBind();
+
+            TallesAS talle = new TallesAS();
+            ddListSize.DataSource = talle.listar();
+            ddListSize.DataValueField = "Id";
+            ddListSize.DataTextField = "Descripcion";
+            ddListSize.DataBind();
+
 
             // Response.Redirect(Request.RawUrl);
         }
@@ -78,37 +110,58 @@ namespace webApp
 
         protected void btnSaveArticle_Click(object sender, EventArgs e)
         {
-            //CAPTURAMOS LOS DATOS DE LA CARGA DE NUEVO ARTICULO
-            /* string idArticle = txtIdArticle.Text;
-            string name = txtName.Text;
-            string brand = ddListBrand.SelectedValue; // MARCA
-            string size = txtSize.Text;
-            int stock = int.Parse(txtStock.Text); 
-            decimal price = decimal.Parse(txtPrice.Text);
-            string color = txtColor.Text;
-            string guy = ddListType.SelectedValue; //TIPO
-            string image = txtImageUrl.Text;
-            bool fileImage = fileUploadImg.HasFiles; // verificamos si se subio el archivo
+            try
+            {   //CAPTURAMOS LOS VALORES INGESADOS EN EL FORMULARIO
+                Articulo articulo = new Articulo();
+                ArticuloAS data = new ArticuloAS();
 
-            if (fileImage)
+                articulo.Codigo = txtCodeArticle.Text;
+                articulo.Nombre = txtName.Text;
+                articulo.Stock = int.Parse(txtStock.Text);
+                articulo.Precio = float.Parse(txtPrice.Text);
+
+                articulo.Marca = new Marca();
+                articulo.Talle = new Talle();
+                articulo.Color = new Color();
+                articulo.Tipo = new Tipo();
+                articulo.Categoria = new Categoria();
+
+                articulo.Marca.Id = int.Parse(ddListType.SelectedValue);
+                articulo.Talle.Id = int.Parse(ddListSize.SelectedValue);
+                articulo.Color.Id = int.Parse(ddListColors.SelectedValue);
+                articulo.Tipo.Id = int.Parse(ddListType.SelectedValue);
+                articulo.Categoria.Id = int.Parse(ddListCategory.SelectedValue);
+
+                List<Imagen> imageList = new List<Imagen>();
+
+                if (!string.IsNullOrEmpty(txtUrlImage1.Text))
+                {
+                    Imagen imagen1 = new Imagen();
+                    imagen1.UrlImagen = txtUrlImage1.Text;
+                    imageList.Add(imagen1);
+                }
+                if (!string.IsNullOrEmpty(txtImageUrl2.Text))
+                {
+                    Imagen imagen2 = new Imagen();
+                    imagen2.UrlImagen = txtImageUrl2.Text;
+                    imageList.Add(imagen2);
+                }
+                if (!string.IsNullOrEmpty(txtImageUrl3.Text))
+                {
+                    Imagen imagen3 = new Imagen();
+                    imagen3.UrlImagen = txtImageUrl3.Text;
+                    imageList.Add(imagen3);
+                }
+                // FALTA REALIZAR LA FUNCION-SP PARA AGREGAR EL ARTICULO A LA DB
+
+            }
+            catch (Exception ex)
             {
-                string filePath = Server.MapPath("RUTA PARA GUARDAR LOS ARCHIVOS") + fileUploadImg.FileName;
-                fileUploadImg.SaveAs(filePath); // guarda img en la ruta
+                Session.Add("Error", ex); //DESPUES LO MANDAMOS A UNA PAGINA DE ERROR
+                throw;
             }
 
-            Article newArticle = new Article() // opcion para guardar el articulo nuevo
-            ID = idArticle
-            Name = name;
-            Brand = brand;
-            Size = size;
-            Stock = stock;
-            Price = price;
-            Color = color;
-            Type = type;
-            Image = image;
-            saveNewArticle(article);
 
-             */
         }
          protected string GetStatusIcon(object status)
         {
@@ -148,11 +201,10 @@ namespace webApp
         private void LoadArticle()
         {
             // Carga el GridView con artículos
-            ArticuloAS articulo = new ArticuloAS();
-            dgvArticles.DataSource = articulo.listar(); // Obtener lista de artículos
-            dgvArticles.DataBind(); // Asociar la fuente de datos al GridView
-            dgvArticles.Visible = true; // Asegúrate de que el GridView sea visible
-            
+          /*  ArticuloAS articulo = new ArticuloAS();
+            dgvArticles.DataSource = articulo.listar(); 
+            dgvArticles.DataBind(); 
+            dgvArticles.Visible = true; */
         }
 
     }

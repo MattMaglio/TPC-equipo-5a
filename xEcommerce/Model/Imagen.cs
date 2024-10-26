@@ -8,8 +8,8 @@ namespace Model
 {
     public class Imagen
     {
-        private int Id { get; set; }
-        private string IdArticulo { get; set; }
-        private string Nombre { get; set; }
+        public int Id { get; set; }
+        public string IdArticulo { get; set; }
+        public string UrlImagen { get; set; }
     }
 }
