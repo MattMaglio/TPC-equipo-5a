@@ -77,10 +77,11 @@
     </div>
 </section>
 
-<section class="featured-products py-5">
+
+    <section class="featured-products py-5">
     <div class="container">
         <h2 class="text-center mb-4">Featured Products</h2>
-        <p>ACA VAN LAS CARDS QUE LEVANTA DE DB</p>
+       
         <div class="row">
             <asp:Repeater ID="rptFeaturedProducts" runat="server">
                 <ItemTemplate>
@@ -89,7 +90,7 @@
                             <asp:Image ID="imgProduct" runat="server" ImageUrl='<%# Eval("ImageUrl") %>' AlternateText='<%# Eval("Name") %>' CssClass="card-img-top" />
                             <div class="product-card-body">
                                 <h5 class="card-title"><%# Eval("Name") %></h5>
-                                <p class="card-text">$<%# Eval("Price", "{0:F2}") %></p>
+                                <%--<p class="card-text">$<%# Eval("Price", "{0:F2}") %></p>--%>
                                 <asp:Button ID="btnAddToCart" runat="server" Text="Add to Cart" CommandArgument='<%# Eval("ProductId") %>' CssClass="btn btn-primary" />
                             </div>
                         </div>
@@ -100,6 +101,14 @@
     </div>
 </section>
 
+
+
+
+
+
+
+
+    
 <section class="newsletter py-5">
     <div class="container text-center">
         <h2>Join Our Community</h2>
