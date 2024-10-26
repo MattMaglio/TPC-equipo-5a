@@ -51,13 +51,13 @@
     <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="https://images.pexels.com/photos/5490198/pexels-photo-5490198.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" style="height: 70vh; object-fit: cover;" class="d-block w-100" alt="Hero Image 1" />
+                <img src="https://images.pexels.com/photos/5490198/pexels-photo-5490198.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" style="height: 60vh; object-fit: cover;" class="d-block w-100" alt="Hero Image 1" />
             </div>
             <div class="carousel-item">
-                <img src="/images/hero2.jpg" class="d-block w-100" alt="Hero Image 2" />
+                <img src="https://images.pexels.com/photos/1884581/pexels-photo-1884581.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" style="height: 60vh; object-fit: cover;"  class ="d-block w-100" alt="Hero Image 2" />
             </div>
             <div class="carousel-item">
-                <img src="/images/hero3.jpg" class="d-block w-100" alt="Hero Image 3" />
+                <img src="https://images.pexels.com/photos/5698848/pexels-photo-5698848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1g" style="height: 60vh; object-fit: cover;"  class="d-block w-100" alt="Hero Image 3" />
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
@@ -72,8 +72,8 @@
     <div class="container py-5">
         <h1 class="display-4 fw-bold">Elevate Your Style</h1>
         <p class="lead">Discover our latest collection of premium clothing. Designed for comfort, style, and confidence.</p>
-        <asp:HyperLink ID="lnkShopNow" runat="server" Text="Shop Now" NavigateUrl="~/shop.aspx" CssClass="btn btn-light me-2" />
-        <asp:HyperLink ID="lnkLearnMore" runat="server" Text="Learn More" NavigateUrl="~/about.aspx" CssClass="btn btn-outline-light" />
+        <asp:HyperLink ID="lnkShopNow" runat="server" Text="Shop Now" NavigateUrl="ShopFullGrid.aspx" CssClass="btn btn-light me-2" />
+        <asp:HyperLink ID="lnkLearnMore" runat="server" Text="Learn More" NavigateUrl="AboutUs.aspx" CssClass="btn btn-outline-light" />
     </div>
 </section>
 
