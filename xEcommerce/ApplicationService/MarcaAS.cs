@@ -9,24 +9,24 @@ using System.Threading.Tasks;
 
 namespace ApplicationService
 {
-    public class CategoriaAS
+    public  class MarcaAS
     {
-        public List<Categoria> listar()
+        public List<Marca> listar()
         {
             SqlDataReader result;
-            List<Categoria> lista = new List<Categoria>();
+            List<Marca> lista = new List<Marca>();
             DataAccess data = new DataAccess();
             DataManipulator query = new DataManipulator();
 
             try
             {
-                query.configSqlProcedure("Catalogo.ListarCategorias");
+                query.configSqlProcedure("Catalogo.ListarMarcas");
                 query.configSqlConexion(data.getConnection());
                 data.openConnection();
                 result = query.exectQuerry();
                 while (result.Read())
                 {
-                    Categoria aux = new Categoria();
+                    Marca aux = new Marca();
                     aux.Id = (int)result["Id"];
                     aux.Codigo = (string)result["Codigo"];
                     aux.Descripcion = (string)result["Descripcion"];
@@ -39,7 +39,6 @@ namespace ApplicationService
             catch (Exception ex)
             {
 
-
                 // Manejo de error para conexión
                 Console.WriteLine("Error de conexión: " + ex.Message);
                 return lista; // Retorna lista vacía en caso de error
@@ -49,6 +48,5 @@ namespace ApplicationService
                 data.closeConnection();
             }
         }
-
     }
 }

@@ -241,3 +241,18 @@ SELECT Id,
 FROM Catalogo.ImagenArticulos
 ;
 GO
+
+CREATE PROCEDURE Catalogo.ListarMarcas
+AS
+BEGIN
+    -- Selecciona todas las filas de la tabla Catalogo.Marcas
+    SELECT id, codigo, Descripcion, Estado FROM Catalogo.Marcas;
+END;
+
+CREATE PROCEDURE Catalogo.ListarColores AS
+SELECT Id,
+    Codigo,
+    Descripcion,
+    Estado
+FROM Catalogo.Colores
+
