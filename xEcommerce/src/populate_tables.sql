@@ -110,3 +110,48 @@ INSERT INTO Catalogo.MediosPago (Id, IdEntidadFinanciera, Codigo, Descripcion) V
 (1, NULL, 'EFEC', 'Efectivo'),
 (2, NULL, 'MPAG', 'Mercado Pago');
 
+INSERT INTO Catalogo.Talles(Id,Codigo, Descripcion, Estado) VALUES
+(1,'XS', 'Extra small', 1),
+(2,'S', 'Small', 1),
+(3,'M', 'Medium', 1),
+(4,'L', 'Large', 1),
+(5,'XL', 'Extra large', 1),
+(6,'XXL', 'Double extra large', 1),
+(7,'XXXL', 'Triple extra large', 1);
+
+
+INSERT INTO Catalogo.Marcas (Id, Codigo, Descripcion) VALUES 
+(1, 'ADDAS', 'Adidas'), 
+(2, 'NKE', 'Nike'), 
+(3, 'PUM', 'Puma'), 
+(4, 'EVRLTS', 'Everlast'),
+(5, 'UMBR', 'Umbro')
+;
+
+INSERT INTO Catalogo.Tipos (Id, Codigo, Descripcion) VALUES 
+(1, 'CAMI-C-TA', 'Camisetas'), 
+(2, 'PANTA', 'Pantalon'), 
+(3, 'CAM', 'Camisa'), 
+(4, 'VSTD', 'Vestido'),
+(5,'REM','Remera'),
+(6,'BUZ','Buzo'),
+(7,'CAMP','Campera'),
+(8,'JNS','Jeans')
+;
+
+	INSERT INTO Catalogo.Categorias (Id, Codigo, Descripcion) VALUES 
+(1, 'DEP', 'Deportiva'), 
+(2, 'FRML', 'Formal'), 
+(3, 'ACCS', 'Accesorios'), 
+(4, 'CAZZU', 'Casual')
+;
+
+INSERT INTO Catalogo.Colores(Id, Codigo, Descripcion) VALUES 
+(1, 'RJO','Rojo'), 
+(2, 'AZL','Azul'), 
+(3, 'VRD', 'Verde'), 
+(4, 'AMA', 'Amarrillo'),
+(5, 'NGRO', 'Negro'),
+(6, 'BLCO','Blanco'),
+(7, 'DRDO','Dorado')
+;
