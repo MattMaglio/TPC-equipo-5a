@@ -189,7 +189,7 @@
                                 <li class="list-inline-item"><a href="MyAccount.aspx">My Account</a></li>
                                 <li class="list-inline-item"><a href="Login.aspx">Login</a></li>
                                 <li class="list-inline-item">
-                                    <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+                                    <a href="Sales.aspx"><i class="fas fa-shopping-cart"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -288,16 +288,16 @@
                                   
 
                             TELEPHONE- +540110303456<br>
-                            Email- admin@xecommerce.com
+                            Email: admin@xecommerce.com
                                 </p>
                             </div>
                         </div>
                         <div style="flex: 1; margin-right: 20px;">
                             <h5>Services</h5>
                             <ul style="list-style-type: none; padding: 0;">
-                                <li><a href="#" style="color: #fff;">About us</a></li>
+                                <li><a href="AboutUs.aspx" style="color: #fff;">About us</a></li>
                                 <li><a href="#" style="color: #fff;">Return Policy</a></li>
-                                <li><a href="#" style="color: #fff;">Contact Us</a></li>
+                                <li><a href="Contact.aspx" style="color: #fff;">Contact Us</a></li>
                                 <li><a href="#" style="color: #fff;">Terms &amp; Condition</a></li>
 
                             </ul>
@@ -305,10 +305,10 @@
                         <div style="flex: 1; margin-right: 20px;">
                             <h5>Account</h5>
                             <ul style="list-style-type: none; padding: 0;">
-                                <li><a href="#" style="color: #fff;">Your Account</a></li>
-                                <li><a href="checkout.html" style="color: #fff;">Checkout</a></li>
-                                <li><a href="#" style="color: #fff;">Login</a></li>
-                                <li><a href="#" style="color: #fff;">Register</a></li>
+                                <li><a href="MyAccount.aspx" style="color: #fff;">Your Account</a></li>
+                                <li><a href="Sales.aspx" style="color: #fff;">Checkout</a></li>
+                                <li><a href="Login.aspx" style="color: #fff;">Login</a></li>
+                                <li><a href="Register.aspx" style="color: #fff;">Register</a></li>
                             </ul>
                         </div>
 

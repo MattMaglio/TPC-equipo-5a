@@ -65,6 +65,13 @@ FROM Catalogo.Marcas
 ;
 GO
 
+CREATE PROCEDURE Catalogo.ListarColores AS
+SELECT Id,
+    Codigo,
+    Descripcion,
+    Estado
+FROM Catalogo.Colores
+
 CREATE PROCEDURE Catalogo.BuscarTipos @cod_tipo VARCHAR(10) AS
 SELECT Id,
     Codigo,
@@ -242,19 +249,18 @@ FROM Catalogo.ImagenArticulos
 ;
 GO
 
-CREATE PROCEDURE [Catalogo].[ListarArticulosConImagen] AS
+CREATE PROCEDURE Catalogo.ListarArticulosConImagen AS
 BEGIN
-    SELECT 
+    SELECT
         a.Id AS ProductId,
         a.Codigo AS Code,
         a.Descripcion AS Name,
         i.UrlImagen AS ImageUrl
-        
-    FROM 
+    FROM
         Catalogo.Articulos a
-    LEFT JOIN 
+    LEFT JOIN
         Catalogo.ImagenArticulos i ON a.Id = i.IdArticulo
-    WHERE 
+    WHERE
         a.Estado = 1;
 END;
 GO
