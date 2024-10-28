@@ -13,32 +13,31 @@
     <div class="row mb-4">
         <div class="col-md-4">
             <h5>Filter by Category</h5>
-            <asp:DropDownList ID="ddlCategoria" runat="server">
+            <asp:DropDownList ID="ddlCategoria" runat="server" class="form-control">
 
             </asp:DropDownList>
-            <!--
-            <select class="form-control" id="categoryFilter">
-                <option value="">All</option>
-                <option value="category1">Category 1</option>
-                <option value="category2">Category 2</option>
-            </select>
-            -->
+           
         </div>
         <div class="col-md-4">
             <h5>Filter by Brand</h5>
-            <select class="form-control" id="brandFilter">
-                <option value="">All</option>
-                <option value="brand1">Brand 1</option>
-                <option value="brand2">Brand 2</option>
-            </select>
+    <asp:DropdownList ID="ddlMarca" runat="server" class="form-control">
+
+ </asp:DropdownList>
+
+
+
         </div>
         <div class="col-md-4">
             <h5>Filter by Product Type</h5>
-            <select class="form-control" id="typeFilter">
-                <option value="">All</option>
-                <option value="type1">Type 1</option>
-                <option value="type2">Type 2</option>
-            </select>
+
+               <asp:DropdownList ID="ddlTipo" runat="server" class="form-control">
+
+</asp:DropdownList>
+
+
+
+
+           
         </div>
     </div>
     <br />

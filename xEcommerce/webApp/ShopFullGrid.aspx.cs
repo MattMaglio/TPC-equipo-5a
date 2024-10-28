@@ -20,6 +20,22 @@ namespace webApp
             ddlCategoria.DataValueField = "Id";
             ddlCategoria.DataTextField = "Descripcion";
             ddlCategoria.DataBind();
+
+            MarcaAS MarcAS = new MarcaAS();
+            List<Marca> listMarcas = MarcAS.listar();
+
+            ddlMarca.DataSource = listMarcas;
+            ddlMarca.DataValueField = "Id";
+            ddlMarca.DataTextField = "Descripcion";
+            ddlMarca.DataBind();
+
+            TipoAS TipAS = new TipoAS();
+            List<Tipo> listTipos = TipAS.listar();
+
+            ddlTipo.DataSource = listTipos;
+            ddlTipo.DataValueField = "Id";
+            ddlTipo.DataTextField = "Descripcion";
+            ddlTipo.DataBind();
         }
     }
 }
