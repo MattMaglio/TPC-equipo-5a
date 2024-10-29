@@ -69,22 +69,22 @@ namespace webApp
         protected global::System.Web.UI.WebControls.GridView dgvSell;
 
         /// <summary>
-        /// btnTwoForOne control.
+        /// btnReportPrueba control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnTwoForOne;
+        protected global::System.Web.UI.WebControls.Button btnReportPrueba;
 
         /// <summary>
-        /// btnTenPercentOff control.
+        /// btnReportStock control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnTenPercentOff;
+        protected global::System.Web.UI.WebControls.Button btnReportStock;
 
         /// <summary>
         /// CheckBoxListCategories control.

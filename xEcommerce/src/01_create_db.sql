@@ -57,13 +57,15 @@ CREATE TABLE Catalogo.Talles (
     Estado BIT NOT NULL DEFAULT 1
 );
 
+
 CREATE TABLE Catalogo.Articulos (
     Id INT NOT NULL PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
+    Descripcion VARCHAR(25) NOT NULL,
     IdTipo INT,
     IdMarca INT,
     IdCategoria INT,
-    Descripcion VARCHAR(255) NOT NULL,
+    Detalle VARCHAR(255) NOT NULL,
     Estado BIT NOT NULL DEFAULT 1,
     FOREIGN KEY (IdTipo) REFERENCES Catalogo.Tipos(Id),
     FOREIGN KEY (IdMarca) REFERENCES Catalogo.Marcas(Id),

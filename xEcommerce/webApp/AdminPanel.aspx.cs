@@ -48,16 +48,14 @@ namespace webApp
            // LoadArticle(); // Cargar y mostrar artículos en el GridView
         }
 
-        protected void btnTwoForOne_Click(object sender, EventArgs e)
+        protected void btnReportPrueba_Click(object sender, EventArgs e)
         {
-            // BOTON PARAA AGREGAR PROMOCION
-           // apllyPromotion("2x1");
+            
         }
 
-        protected void btnTenPercentOff_Click(object sender, EventArgs e)
+        protected void btnReportStock_Click(object sender, EventArgs e)
         {
-            // BOTON PARAA AGREGAR PROMOCION
-            // apllyPromotion("10%");
+            // Ver reporte de stock
         }
         private void apllyPromotion(string promotion)
         {
@@ -105,7 +103,7 @@ namespace webApp
 
         protected void txtImageUrl_TextChanged(object sender, EventArgs e)
         {
-            imgPreview.ImageUrl = txtImageUrl.Text;
+            //imgPreview.ImageUrl = txtImageUrl.Text;
         }
 
         protected void btnSaveArticle_Click(object sender, EventArgs e)
@@ -116,7 +114,7 @@ namespace webApp
                 ArticuloAS data = new ArticuloAS();
 
                 articulo.Codigo = txtCodeArticle.Text;
-                articulo.Nombre = txtName.Text;
+                articulo.Descripcion = txtName.Text;
                 articulo.Stock = int.Parse(txtStock.Text);
                 articulo.Precio = float.Parse(txtPrice.Text);
 

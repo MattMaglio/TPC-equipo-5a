@@ -269,21 +269,21 @@
                 </div>
             </div>
 
-                              <!-- Sección Promociones -->
+                            <!-- Sección Promociones -->
             <div class="accordion-item">
-                <h2 class="accordion-header" id="headingPromotions">
-                    <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePromotions" aria-expanded="false" aria-controls="collapsePromotions">
-                        Agregar promociones
+                <h2 class="accordion-header" id="headingReports">
+                    <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReports" aria-expanded="false" aria-controls="collapseReports">
+                        Listados
                     </button>
                 </h2>
-                <div id="collapsePromotions" class="accordion-collapse collapse" aria-labelledby="headingPromotions" data-bs-parent="#adminAccordion">
+                <div id="collapseReports" class="accordion-collapse collapse" aria-labelledby="headingReports" data-bs-parent="#adminAccordion">
                     <div class="accordion-body">
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <asp:Button Text="2 x 1" CssClass="btn btn-dark w-100" ID="btnTwoForOne" OnClick="btnTwoForOne_Click" runat="server"/>
+                                <asp:Button Text="Listado de prueba" CssClass="btn btn-dark w-100" ID="btnReportPrueba" OnClick="btnReportPrueba_Click" runat="server"/>
                             </li>
                             <li class="list-group-item">
-                                <asp:Button Text="10% off" CssClass="btn btn-dark w-100" ID="btnTenPercentOff" runat="server" OnClick="btnTenPercentOff_Click"/>
+                                <asp:Button Text="Listado de Stock" CssClass="btn btn-dark w-100" ID="btnReportStock" runat="server" OnClick="btnReportStock_Click"/>
                             </li>
                         </ul>
                     </div>
