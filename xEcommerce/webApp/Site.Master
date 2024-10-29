@@ -30,11 +30,6 @@
             background-color: #fff;
         }
 
-
-
-
-
-
         footer {
             margin-top: auto;
             background-color: #000;
@@ -42,18 +37,11 @@
             padding: 20px 0;
         }
 
-
-
-
         .header-top-area .dropdown.show .dropdown-menu {
             display: block;
             opacity: 1;
             transform: translateY(0);
         }
-
-
-
-
 
         .header-top-area {
             background-color: #000;
@@ -129,7 +117,6 @@
 <body>
    
     <form id="form1" runat="server">
-
         <header class="header-area">
             <div class="header-top-area py-2">
                 <div class="container">

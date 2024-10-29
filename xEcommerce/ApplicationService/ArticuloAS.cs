@@ -22,7 +22,7 @@ namespace ApplicationService
 
             try
             {
-                query.configSqlProcedure("ListarArticulos");
+                query.configSqlProcedure("Catalogo.ListarArticulos");
                 query.configSqlConexion(conexion.getConnection());
                 conexion.openConnection();
                 result = query.exectQuerry();
@@ -30,8 +30,11 @@ namespace ApplicationService
                 {
                     Articulo aux = new Articulo();
                     aux.Id = (int)result["Id"];  // Id del artículo
-                    aux.Descripcion = result["NombreArticulo"].ToString();
-                    //aux.Stock = (int)result["Stock"];
+
+                    aux.Codigo = result["Codigo"].ToString();
+                    aux.Descripcion = result["Descripcion"].ToString();
+                    aux.Detalle = result["Detalle"].ToString();
+                    //aux.Estado = result["Estado"]
 
                     aux.Marca = new Marca();
                     aux.Tipo = new Tipo();
