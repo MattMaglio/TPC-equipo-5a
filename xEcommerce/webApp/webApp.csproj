@@ -109,7 +109,8 @@
     <Content Include="MyAccount.aspx" />
     <Content Include="ProductDetail.aspx" />
     <Content Include="Register.aspx" />
-    <Content Include="report\wfreport.aspx" />
+    <Content Include="wfreport_stockyprecios.aspx" />
+    <Content Include="report\wfreport_test.aspx" />
     <Content Include="Sales.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -191,12 +192,19 @@
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
-    <Compile Include="report\wfreport.aspx.cs">
-      <DependentUpon>wfreport.aspx</DependentUpon>
+    <Compile Include="wfreport_stockyprecios.aspx.cs">
+      <DependentUpon>wfreport_stockyprecios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="report\wfreport.aspx.designer.cs">
-      <DependentUpon>wfreport.aspx</DependentUpon>
+    <Compile Include="wfreport_stockyprecios.aspx.designer.cs">
+      <DependentUpon>wfreport_stockyprecios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="report\wfreport_test.aspx.cs">
+      <DependentUpon>wfreport_test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="report\wfreport_test.aspx.designer.cs">
+      <DependentUpon>wfreport_test.aspx</DependentUpon>
     </Compile>
     <Compile Include="Sales.aspx.cs">
       <DependentUpon>Sales.aspx</DependentUpon>
@@ -268,7 +276,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="report\report_test.rdlc" />
+    <EmbeddedResource Include="report\report_stockyprecio.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

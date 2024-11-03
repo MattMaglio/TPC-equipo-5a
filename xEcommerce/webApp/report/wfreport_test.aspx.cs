@@ -2,6 +2,7 @@
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -17,7 +18,7 @@ namespace webApp.report
         {
             if (IsPostBack) return;
             // LoadReport(); // Con la funcion "LoadReport()"
-            ShowReport();
+            //ShowReport();
         }
 
         // Con la funcion "LoadReport()" ↓
@@ -27,7 +28,7 @@ namespace webApp.report
                 // Esta opcion permite manipular datos adicionales que son
                 // obtenidos por fuera de la consulta sql
 
-                var data= artAS.listar().ToList();
+                var data = artAS.listar().ToList();
                 var dataRpt = ( from item in data
                                 select new
                                 {
@@ -43,38 +44,38 @@ namespace webApp.report
                 }
                 ShowReport("~/report/report_test.rdlc", dataRpt);
         }
-        */
+            */
+            /*
+            // SIN la funcion "LoadReport()" ↓
+            private void ShowReport()
+            {
+                var listadoArticulos = artAS.listarStockYPrecio();
+                var urlReport = "~/report/report_stockyprecio.rdlc";
 
-        // SIN la funcion "LoadReport()" ↓
-        private void ShowReport()
-        {
-            var listadoArticulos = artAS.listar();
-            var urlReport = "~/report/report_test.rdlc";
+                ReportViewer1.ProcessingMode = ProcessingMode.Local;
+                ReportViewer1.LocalReport.ReportPath = Server.MapPath(urlReport);
 
-            ReportViewer1.ProcessingMode = ProcessingMode.Local;
-            ReportViewer1.LocalReport.ReportPath = Server.MapPath(urlReport);
+                var ds = new ReportDataSource("Data", listadoArticulos);
 
-            var ds = new ReportDataSource("Data", listadoArticulos);
+                ReportViewer1.LocalReport.DataSources.Clear();
+                ReportViewer1.LocalReport.DataSources.Add(ds);
 
-            ReportViewer1.LocalReport.DataSources.Clear();
-            ReportViewer1.LocalReport.DataSources.Add(ds);
+            }
+            */
+            // Con la funcion "LoadReport()" ↓
+            /*
+            private void ShowReport(string urlRpt, object datos)
+            {
 
+
+                ReportViewer1.ProcessingMode = ProcessingMode.Local;
+                ReportViewer1.LocalReport.ReportPath = Server.MapPath(urlRpt);
+
+                ReportDataSource datasource0 = new ReportDataSource("Data", datos);
+
+                ReportViewer1.LocalReport.DataSources.Clear();
+                ReportViewer1.LocalReport.DataSources.Add(datasource0);
+            }
+            */
         }
-
-        // Con la funcion "LoadReport()" ↓
-        /*
-        private void ShowReport(string urlRpt, object datos)
-        {
-
-
-            ReportViewer1.ProcessingMode = ProcessingMode.Local;
-            ReportViewer1.LocalReport.ReportPath = Server.MapPath(urlRpt);
-
-            ReportDataSource datasource0 = new ReportDataSource("Data", datos);
-
-            ReportViewer1.LocalReport.DataSources.Clear();
-            ReportViewer1.LocalReport.DataSources.Add(datasource0);
-        }
-        */
-    }
 }
