@@ -31,19 +31,32 @@ namespace ApplicationService
                 while (result.Read())
                 {
                     Articulo aux = new Articulo();
+<<<<<<< Updated upstream
                     aux.Id = (int)result["Id"];
                     aux.Codigo = result["Codigo"].ToString();
                     aux.Descripcion = result["Descripcion"].ToString();
                     aux.Estado = (bool)result["Estado"];
                     aux.Detalle = result["Detalle"].ToString();
+=======
+                    aux.Id = (int)result["Id"];  // Id del artículo
+                    aux.Codigo = result["Codigo"].ToString();
+                    aux.Descripcion = result["NombreArticulo"].ToString();
+                    //aux.Stock = (int)result["Stock"];
+>>>>>>> Stashed changes
 
                     aux.Marca = new Marca();
                     aux.Tipo = new Tipo();
                     aux.Categoria = new Categoria();
 
-                    aux.Tipo.Descripcion = result["Tipo"].ToString();  
-                    aux.Marca.Descripcion = result["Marca"].ToString(); 
-                    aux.Categoria.Descripcion = result["Categoria"].ToString();  
+                    aux.Marca.Id = (int)result["IdMarca"];
+                    aux.Tipo.Id = (int)result["IdTipo"];
+                    aux.Categoria.Id = (int)result["IdCategoria"];
+
+                    //aux.Tipo.Descripcion = result["Tipo"].ToString();  
+                   // aux.Marca.Descripcion = result["Marca"].ToString(); 
+                   // aux.Categoria.Descripcion = result["Categoria"].ToString();
+
+                    aux.Estado = (bool)result["Estado"];
 
                     lista.Add(aux);
                 }

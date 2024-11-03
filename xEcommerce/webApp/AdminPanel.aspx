@@ -171,6 +171,7 @@
 
 
      <div class="container mt-4">
+
         <div class="left-panel">
         <h2 class="h2">Admin Panel</h2>
 
@@ -192,6 +193,9 @@
                                <li class="list-group-item">
                                 <asp:Button Text="Agregar articulo" CssClass="btn btn-dark w-100" ID="btnAddArticle" OnClick="btnAddArticle_Click" runat="server" />
                             </li>  
+                             <li class="list-group-item">
+                                <asp:Button Text="Petificaciones" ID="btnPetificaciones"  CssClass="btn btn-dark w-100" OnClick="btnPetificaciones_Click" runat="server" />
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -270,7 +274,10 @@
             </div>
 
                               <!-- Sección Promociones -->
+<<<<<<< Updated upstream
             
+=======
+>>>>>>> Stashed changes
             <!-- Sección Buscar -->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingSearch">
@@ -327,6 +334,7 @@
             </div>
         </div>
     </div>    
+     </div>
     
      <div class="right-panel">
             <div class="form-article">
@@ -348,6 +356,7 @@
                 </div>
             </div>
          <div class="dgviewArticles">
+<<<<<<< Updated upstream
                       <asp:GridView ID="dgvArticles" OnRowUpdating="dgvArticles_RowUpdating" OnRowDeleting="dgvArticles_RowDeleting" OnRowCommand="dgvArticles_RowCommand" runat="server" CssClass="table table-bordered mt-4" Visible="false" AutoGenerateColumns="False">
     <Columns>
     
@@ -377,6 +386,73 @@
         </asp:TemplateField>
     </Columns>
 </asp:GridView>
+=======
+                           <!-- GRID PARA MOSTRAR Los articulos -->
+                    <asp:GridView ID="dgvArticles" OnRowCommand="dgvArticles_RowCommand" runat="server" CssClass="table table-bordered mt-4" Visible="false" AutoGenerateColumns="False">
+                     <Columns>
+                         <asp:BoundField DataField="Id" HeaderText="ID Article " />
+                         <asp:BoundField DataField="Codigo" HeaderText="Codigo" />
+                         <asp:BoundField DataField="Tipo.Id" HeaderText="Tipo" />
+                         <asp:BoundField DataField="Marca.Id" HeaderText="Brand" />
+                         <asp:BoundField DataField="Categoria.Id" HeaderText="Category" />
+                         <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
+                         <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                       <!-- GRID PARA MOSTRAR Los articulos  -->
+                        <asp:TemplateField HeaderText="Image">
+                    <ItemTemplate>
+                        <asp:Button Text="Ver imágenes" CssClass="btn btn-primary" CommandName="ShowImages" CommandArgument='<%# Eval("Id") %>' runat="server" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+                         <asp:TemplateField HeaderText="Update">
+                         <ItemTemplate>
+                         <asp:Button Text="Update" CssClass="btn btn-warning" CommandName="Update" CommandArgument='<%# Eval("Id") %>' runat="server" />
+                         </ItemTemplate>
+                         </asp:TemplateField>
+                         <asp:TemplateField HeaderText="Delete">
+                         <ItemTemplate>
+                         <asp:Button Text="Delete" CssClass="btn btn-danger" CommandName="Delete" CommandArgument='<%# Eval("Id") %>' runat="server" />
+                         </ItemTemplate>
+                         </asp:TemplateField>
+                     </Columns>
+                 </asp:GridView>
+        </div>
+          <!-- Formulario para agregar petificaciones -->
+   <div class="col-md-8">
+       <asp:Panel ID="pnlPetificaciones" CssClass="p-3 border bg-light" runat="server" Visible="false">
+           <h3>Administrar Petificaciones</h3>
+
+           <!-- Desplegables de colores, talles, marcas, cat, tipo -->
+           <div class="mb-3">
+               <label for="ddlColores" class="form-label">Colores</label>
+               <asp:DropDownList ID="ddlColores" CssClass="form-select" runat="server"></asp:DropDownList>
+           </div>
+           <div class="mb-3">
+               <label for="ddlTalles" class="form-label">Talles</label>
+               <asp:DropDownList ID="ddlTalles" CssClass="form-select" runat="server"></asp:DropDownList>
+           </div>
+           <div class="mb-3">
+               <label for="ddlMarcas" class="form-label">Marcas</label>
+               <asp:DropDownList ID="ddlMarcas" CssClass="form-select" runat="server"></asp:DropDownList>
+           </div>
+           <div class="mb-3">
+               <label for="ddlCategorias" class="form-label">Categorías</label>
+               <asp:DropDownList ID="ddlCategorias" CssClass="form-select" runat="server"></asp:DropDownList>
+           </div>
+           <div class="mb-3">
+               <label for="ddlTipos" class="form-label">Tipo</label>
+               <asp:DropDownList ID="ddlTipos" CssClass="form-select" runat="server"></asp:DropDownList>
+           </div>
+
+           <!-- botones agregar, eliminar, modificar -->
+           <div class="mt-3">
+               <asp:Button ID="btnAgregarPetificacion" runat="server" CssClass="btn btn-primary" Text="Agregar"  />
+               <asp:Button ID="btnModificarPetificacion" runat="server" CssClass="btn btn-warning" Text="Modificar"  />
+               <asp:Button ID="btnEliminarPetificacion" runat="server" CssClass="btn btn-danger" Text="Eliminar"  />
+           </div>
+       </asp:Panel>
+
+
+>>>>>>> Stashed changes
          </div>
     </div>
     </asp:Content>

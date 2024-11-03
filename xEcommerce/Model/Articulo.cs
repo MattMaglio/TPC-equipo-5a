@@ -21,6 +21,10 @@ namespace Model
         public List <Imagen> Imagen { get; set; }
         public int Stock { get; set; }
         public float Precio { get; set; }
+<<<<<<< Updated upstream
         public bool  Estado { get; set; }
+=======
+        public bool Estado { get; set; }
+>>>>>>> Stashed changes
     }
 }
