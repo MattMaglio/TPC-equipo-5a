@@ -270,25 +270,7 @@
             </div>
 
                               <!-- Sección Promociones -->
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingPromotions">
-                    <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePromotions" aria-expanded="false" aria-controls="collapsePromotions">
-                        Agregar promociones
-                    </button>
-                </h2>
-                <div id="collapsePromotions" class="accordion-collapse collapse" aria-labelledby="headingPromotions" data-bs-parent="#adminAccordion">
-                    <div class="accordion-body">
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <asp:Button Text="2 x 1" CssClass="btn btn-dark w-100" ID="btnTwoForOne" OnClick="btnTwoForOne_Click" runat="server"/>
-                            </li>
-                            <li class="list-group-item">
-                                <asp:Button Text="10% off" CssClass="btn btn-dark w-100" ID="btnTenPercentOff" runat="server" OnClick="btnTenPercentOff_Click"/>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            
             <!-- Sección Buscar -->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingSearch">
@@ -351,79 +333,50 @@
                 <div class="mt-3" runat="server" id="addArticleForm" Visible="false">
                     <h4>Agregar nuevo articulo</h4>
                     <asp:TextBox runat="server" ID="txtCodeArticle"  Placeholder="Codigo" CssClass="form-control"  />
-                    <asp:TextBox ID="txtName" runat="server" CssClass="form-control" Placeholder="Nombre"></asp:TextBox>
                     <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" Placeholder="Descripcion"></asp:TextBox>
-                     <!-- DROP DOWN LIST MARCAS -->
-                    <asp:DropDownList ID="ddListBrand" runat="server" CssClass="form-control"> 
- 
-                    </asp:DropDownList>
-                         <!-- DROP DOWN LIST TALLES -->
-                    <asp:DropDownList runat="server" ID="ddListSize" CssClass="form-control">
-                       
-                    </asp:DropDownList>
-                         <!-- DROP DOWN LIST COLORES -->
-                    <asp:DropDownList runat="server" ID="ddListColors" CssClass="form-control">
-                      
-                    </asp:DropDownList>        
+                    <asp:TextBox runat="server" ID="txtDetalle" Placeholder="Detalle" CssClass="form-control"/>
+                    <!-- DROP DOWN LIST MARCAS -->
+                    <asp:DropDownList ID="ddListBrand" runat="server" CssClass="form-control"></asp:DropDownList>       
                      <!-- DROP DOWN LIST TIPOS -->
-                    <asp:DropDownList ID="ddListType" runat="server" CssClass="form-control">
-                      
-                    </asp:DropDownList>
+                    <asp:DropDownList ID="ddListType" runat="server" CssClass="form-control"></asp:DropDownList>
                      <!-- DROP DOWN LIST CATEGORIA -->
-                <asp:DropDownList ID="ddListCategory" runat="server" CssClass="form-control">
-                 
-                </asp:DropDownList>
-                    <asp:TextBox ID="txtStock" runat="server" CssClass="form-control" Placeholder="Stock" TextMode="Number"></asp:TextBox>
-                    <asp:TextBox ID="txtPrice" runat="server" CssClass="form-control" Placeholder="Precio" TextMode="Number"></asp:TextBox>
-                    <asp:UpdatePanel runat="server">
-             <ContentTemplate>
-                    <asp:TextBox ID="txtUrlImage1" runat="server" CssClass="form-control mt-3" Placeholder="URL de la imagen 1"></asp:TextBox>
-                    <asp:FileUpload ID="fileImg1" runat="server" CssClass="form-control mt-3" />
-                    <asp:Image ID="Image2" ImageUrl="https://img.freepik.com/foto-gratis/icono-imagen-lado-frontal_187299-39480.jpg?semt=ais_hybrid" runat="server" CssClass="img-thumbnail mt-3" Width="10%" />
-                   
-                 <asp:TextBox ID="txtImageUrl2" runat="server" CssClass="form-control mt-3" Placeholder="URL de la imagen 2"></asp:TextBox>
-                    <asp:FileUpload ID="fileImg2" runat="server" CssClass="form-control mt-3" />
-                    <asp:Image ID="Image1" ImageUrl="https://img.freepik.com/foto-gratis/icono-imagen-lado-frontal_187299-39480.jpg?semt=ais_hybrid" runat="server" CssClass="img-thumbnail mt-3" Width="10%" />
-                 
-                 <asp:TextBox ID="txtImageUrl3" runat="server" CssClass="form-control mt-3" Placeholder="URL de la imagen 3"></asp:TextBox>
-                   <asp:FileUpload ID="fileImg3" runat="server" CssClass="form-control mt-3" />
-                 <asp:Image ID="imgPreview" ImageUrl="https://img.freepik.com/foto-gratis/icono-imagen-lado-frontal_187299-39480.jpg?semt=ais_hybrid" runat="server" CssClass="img-thumbnail mt-3" Width="10%" />
-             </ContentTemplate>
-         </asp:UpdatePanel>
+                <asp:DropDownList ID="ddListCategory" runat="server" CssClass="form-control"></asp:DropDownList>
+      
                     <asp:Button ID="btnSaveArticle" runat="server" CssClass="bn5" OnClick="btnSaveArticle_Click" Text="Guardar articulo" />
-                    <a type="button" class="bn5" href="AdminPanel.aspx">Cancelar</a>
-                   
+                    <a type="button" class="bn5" href="AdminPanel.aspx">Cancelar</a> 
+                    <asp:Label ID="labelMsj" runat="server" CssClass="alert alert-success" Visible="false"></asp:Label>
                 </div>
             </div>
          <div class="dgviewArticles">
-                           <!-- GRID PARA MOSTRAR Los articulos -->
-                    <asp:GridView ID="dgvArticles" OnRowCommand="dgvArticles_RowCommand" runat="server" CssClass="table table-bordered mt-4" Visible="false" AutoGenerateColumns="False">
-                     <Columns>
-                         <asp:BoundField DataField="Id" HeaderText="ID Article " />
-                         <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
-                         <asp:BoundField DataField="Categoria.Descripcion" HeaderText="Category" />
-                         <asp:BoundField DataField="Marca.Descripcion" HeaderText="Brand" />
-                         <asp:BoundField DataField="Tipo.Descripcion" HeaderText="Tipo" />
-                         <asp:BoundField DataField="Stock" HeaderText="Stock" />
-                         <asp:BoundField DataField="Precio" HeaderText="Price" />
-                        <asp:TemplateField HeaderText="Image">
-                    <ItemTemplate>
-                        <asp:Button Text="Ver imágenes" CssClass="btn btn-primary" CommandName="ShowImages" CommandArgument='<%# Eval("Id") %>' runat="server" />
-                    </ItemTemplate>
-                </asp:TemplateField>
-                         <asp:TemplateField HeaderText="Update">
-                         <ItemTemplate>
-                         <asp:Button Text="Update" CssClass="btn btn-warning" CommandName="Update" CommandArgument='<%# Eval("Id") %>' runat="server" />
-                         </ItemTemplate>
-                         </asp:TemplateField>
-                         <asp:TemplateField HeaderText="Delete">
-                         <ItemTemplate>
-                         <asp:Button Text="Delete" CssClass="btn btn-danger" CommandName="Delete" CommandArgument='<%# Eval("Id") %>' runat="server" />
-                         </ItemTemplate>
-                         </asp:TemplateField>
-                     </Columns>
-                 </asp:GridView>
-        </div>
+                      <asp:GridView ID="dgvArticles" OnRowUpdating="dgvArticles_RowUpdating" OnRowDeleting="dgvArticles_RowDeleting" OnRowCommand="dgvArticles_RowCommand" runat="server" CssClass="table table-bordered mt-4" Visible="false" AutoGenerateColumns="False">
+    <Columns>
+    
+        <asp:BoundField DataField="Id" HeaderText="Id" />
+        <asp:BoundField DataField="Codigo" HeaderText="Codigo" />
+        <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
+        <asp:BoundField DataField="Tipo.Descripcion" HeaderText="Tipo" />
+        <asp:BoundField DataField="Marca.Descripcion" HeaderText="Marca" />
+        <asp:BoundField DataField="Categoria.Descripcion" HeaderText="Categoria" />
+        <asp:BoundField DataField="Detalle" HeaderText="Detalle" />
+        <asp:BoundField DataField="Estado" HeaderText="Estado" />
+
+      
+        <asp:TemplateField HeaderText="Acción">
+            <ItemTemplate>
+                <asp:Button Text="Modificar" CssClass="btn btn-primary"
+                    CommandName="Modificar" 
+                    CommandArgument='<%# Eval("Id") %>' 
+                    runat="server" />
+
+                <asp:Button Text="Eliminar" CssClass="btn btn-danger" 
+                    CommandName="Delete"
+                    CommandArgument='<%# Eval("Id") %>' 
+                    runat="server" 
+                    OnClientClick="return confirm('¿Estás seguro de que deseas borrar este artículo?');" />
+            </ItemTemplate>
+        </asp:TemplateField>
+    </Columns>
+</asp:GridView>
          </div>
     </div>
     </asp:Content>
