@@ -263,3 +263,56 @@ BEGIN
         a.Estado = 1;
 END;
 GO
+
+select * from Catalogo.Articulos
+
+CREATE PROCEDURE Catalogo.InsertarArticulosConImagenes
+    @Codigo VARCHAR(10),
+    @Nombre VARCHAR(255),
+    @Descripcion VARCHAR(255),
+    @Stock INT,
+    @Precio MONEY,
+    @IdMarca INT,
+    @IdTalle INT,
+    @IdColor INT,
+    @IdTipo INT,
+    @IdCategoria INT,
+    @Estado BIT = 1, -- Por defecto activo
+    @IdImagen VARCHAR(MAX) -- Parámetro para recibir las URLs de las imágenes separadas por comas
+AS
+BEGIN
+    SET NOCOUNT ON; -- Evita mostrar el conteo de filas afectadas
+
+    -- Insertar en la tabla articulos
+    INSERT INTO Catalogo.Articulos
+    (Codigo, IdTipo, IdMarca, IdCategoria, Descripcion, Estado, IdColor, IdTalle, Stock, Precio, IdImagen)
+    VALUES 
+    (@Codigo, @IdTipo, @IdMarca, @IdCategoria, @Descripcion, @Estado, @IdColor, @IdTalle, @Stock, @Precio, @IdImagen);
+
+    -- Obtener el id del último artículo insertado
+    DECLARE @IdArticulo INT = SCOPE_IDENTITY();
+
+    -- Declarar var para almacenar la URL de cada imagen
+    DECLARE @UrlImagen VARCHAR(255);
+
+    -- Dividir las URLs de imágenes y realizar la inserción
+    WHILE LEN(@IdImagen) > 0
+    BEGIN
+        -- Obtener la primera URL de la lista
+        SET @UrlImagen = LEFT(@IdImagen, CHARINDEX(',', @IdImagen + ',') - 1);
+
+        -- Limpiar espacios en blanco alrededor de la URL
+        SET @UrlImagen = LTRIM(RTRIM(@UrlImagen));
+
+        -- Insertar la imagen en la tabla de imágenes si la URL no está vacía
+        IF @UrlImagen <> ''
+        BEGIN
+            INSERT INTO Catalogo.ImagenArticulos (IdArticulo, UrlImagen)
+            VALUES (@IdArticulo, @UrlImagen);
+        END
+
+        -- Eliminar la URL procesada de la lista
+        SET @IdImagen = STUFF(@IdImagen, 1, CHARINDEX(',', @IdImagen + ','), '');
+    END;
+END;
+GO
