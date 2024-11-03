@@ -32,20 +32,13 @@ namespace ApplicationService
                 while (result.Read())
                 {
                     Articulo aux = new Articulo();
-<<<<<<< HEAD
+
                     aux.Id = (int)result["Id"];
                     aux.Codigo = result["Codigo"].ToString();
                     aux.Descripcion = result["Descripcion"].ToString();
                     aux.Estado = (bool)result["Estado"];
                     aux.Detalle = result["Detalle"].ToString();
-=======
                     aux.Id = (int)result["Id"];  // Id del artículo
-
-                    aux.Codigo = result["Codigo"].ToString();
-                    aux.Descripcion = result["Descripcion"].ToString();
-                    aux.Detalle = result["Detalle"].ToString();
-                    //aux.Estado = result["Estado"]
->>>>>>> master
 
                     aux.Marca = new Marca();
                     aux.Tipo = new Tipo();
@@ -186,12 +179,6 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
-
-
-
-
-<<<<<<< HEAD
-=======
         public DataTable listarStockYPrecio()
         {
             DataTable dataTable = new DataTable();
@@ -293,8 +280,6 @@ namespace ApplicationService
             }
         }*/
 
->>>>>>> master
     }
-    
     
 }

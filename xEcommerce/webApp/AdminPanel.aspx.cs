@@ -58,12 +58,8 @@ namespace webApp
         protected void btnViewArticles_Click(object sender, EventArgs e)
         {
             //BOTON PÁRA VER EL  GRIDVIEW LOS ARTICULOS
-<<<<<<< HEAD
             addArticleForm.Visible = false; // Ocultar el formulario
             LoadArticle(); // Cargar y mostrar artículos en el GridView
-=======
-           // addArticleForm.Visible = false; // Ocultar el formulario
-           // LoadArticle(); // Cargar y mostrar artículos en el GridView
         }
 
         protected void btnReportPrueba_Click(object sender, EventArgs e)
@@ -78,7 +74,6 @@ namespace webApp
         private void apllyPromotion(string promotion)
         {
             //logica para obtener datos del carrito y hacer las promo
->>>>>>> master
         }
 
         protected void btnAddArticle_Click(object sender, EventArgs e)
@@ -123,18 +118,11 @@ namespace webApp
                 Articulo articulo = new Articulo();
                 ArticuloAS data = new ArticuloAS();
 
-<<<<<<< HEAD
                 // valida si los campos estan vacios
                 if (string.IsNullOrWhiteSpace(txtCodeArticle.Text))
                 {
                     throw new Exception("El código del artículo es obligatorio.");
                 }
-=======
-                articulo.Codigo = txtCodeArticle.Text;
-                articulo.Descripcion = txtName.Text;
-                articulo.Stock = int.Parse(txtStock.Text);
-                articulo.Precio = float.Parse(txtPrice.Text);
->>>>>>> master
 
                 if (string.IsNullOrWhiteSpace(txtDescripcion.Text))
                 {
