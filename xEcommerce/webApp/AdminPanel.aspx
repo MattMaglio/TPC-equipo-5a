@@ -269,7 +269,7 @@
                 </div>
             </div>
 
-                            <!-- Sección Promociones -->
+                            <!-- Sección Listados -->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingReports">
                     <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReports" aria-expanded="false" aria-controls="collapseReports">
@@ -283,7 +283,7 @@
                                 <asp:Button Text="Listado de prueba" CssClass="btn btn-dark w-100" ID="btnReportPrueba" OnClick="btnReportPrueba_Click" runat="server"/>
                             </li>
                             <li class="list-group-item">
-                                <asp:Button Text="Listado de Stock" CssClass="btn btn-dark w-100" ID="btnReportStock" runat="server" OnClick="btnReportStock_Click"/>
+                                <asp:Button Text="Listado de Stock y Precios" CssClass="btn btn-dark w-100" ID="btnReportStockYPrecio" runat="server" OnClick="btnReportStockYPrecio_Click"/>
                             </li>
                         </ul>
                     </div>

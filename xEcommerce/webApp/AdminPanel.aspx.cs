@@ -53,9 +53,9 @@ namespace webApp
             
         }
 
-        protected void btnReportStock_Click(object sender, EventArgs e)
+        protected void btnReportStockYPrecio_Click(object sender, EventArgs e)
         {
-            // Ver reporte de stock
+            Response.Redirect("wfreport_stockyprecios.aspx");
         }
         private void apllyPromotion(string promotion)
         {
