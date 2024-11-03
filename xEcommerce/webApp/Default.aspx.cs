@@ -30,27 +30,26 @@ namespace webApp
 
             try
             {
-              dataAccess.openConnection();
-              dataManipulator.configSqlProcedure("Catalogo.ListarArticulosConImagen");
+                 dataAccess.openConnection();
+                dataManipulator.configSqlProcedure("Catalogo.ListarArticulosConImagen");
               dataManipulator.configSqlConexion(dataAccess.getConnection());
 
               SqlDataReader reader = dataManipulator.exectQuerry();
 
              rptFeaturedProducts.DataSource = reader;
               rptFeaturedProducts.DataBind();
-            }
-            catch (Exception ex)
-            {
-                Session.Add("Error", ex); //DESPUES LO MANDAMOS A UNA PAGINA DE ERROR
-                throw;
-            }
-            finally
-            {
-                dataAccess.closeConnection();
-            }
+          }
+          catch (Exception ex)
+          {
+             //error
+         }
+         finally
+        {
+            dataAccess.closeConnection();
+         }
+          }
         }
+
+
+
     }
-
-
-
-}

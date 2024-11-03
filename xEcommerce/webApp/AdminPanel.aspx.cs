@@ -19,7 +19,6 @@ namespace webApp
         {
             try
             {
-<<<<<<< Updated upstream
                 if (!IsPostBack)
                 {
                     // Inicializa el formulario como no visible al cargar la página
@@ -37,13 +36,6 @@ namespace webApp
             {
 
                 Session.Add("Error", ex);
-=======
-                 //Inicializa el formulario como no visible al cargar la página
-                addArticleForm.Visible = false;
-             
-                LoadArticle();
-               
->>>>>>> Stashed changes
             }
 
 
@@ -67,21 +59,14 @@ namespace webApp
         {
             //BOTON PÁRA VER EL  GRIDVIEW LOS ARTICULOS
             addArticleForm.Visible = false; // Ocultar el formulario
-<<<<<<< Updated upstream
             LoadArticle(); // Cargar y mostrar artículos en el GridView
         }
 
-=======
-            dgvArticles.Visible = true;
-            LoadArticle(); // Cargar y mostrar artículos en el GridView
-        }
->>>>>>> Stashed changes
         protected void btnAddArticle_Click(object sender, EventArgs e)
         {
             //BOTON PARA AGREGAR ARTICULOS
             addArticleForm.Visible = true;
             dgvArticles.Visible = false;
-
             MarcaAS marca = new MarcaAS();
             ddListBrand.DataSource = marca.listar();
             ddListBrand.DataValueField = "Id";
@@ -100,21 +85,7 @@ namespace webApp
             ddListType.DataTextField = "Descripcion";
             ddListType.DataBind();
 
-<<<<<<< Updated upstream
             
-=======
-            ColorAS color = new ColorAS();
-            ddListColors.DataSource = color.listar();
-            ddListColors.DataValueField = "Id";
-            ddListColors.DataTextField = "Descripcion";
-            ddListColors.DataBind();
-
-            TallesAS talle = new TallesAS();
-            ddListSize.DataSource = talle.listar();
-            ddListSize.DataValueField = "Id";
-            ddListSize.DataTextField = "Descripcion";
-            ddListSize.DataBind();
->>>>>>> Stashed changes
 
 
             // Response.Redirect(Request.RawUrl);
@@ -122,23 +93,7 @@ namespace webApp
 
         protected void txtImageUrl_TextChanged(object sender, EventArgs e)
         {
-<<<<<<< Updated upstream
             //imgPreview.ImageUrl = txtImageUrl.Text;
-=======
-            // VALIDACIONES PARA QUE CARGE LA IMAGEN 
-            if (!string.IsNullOrEmpty(txtUrlImage1.Text))
-            {
-                imgPreview.ImageUrl = txtUrlImage1.Text;
-            }
-            if (!string.IsNullOrEmpty(txtImageUrl2.Text))
-            {
-                imgPreview.ImageUrl = txtImageUrl2.Text;
-            }
-            if (!string.IsNullOrEmpty(txtImageUrl3.Text))
-            {
-                imgPreview.ImageUrl = txtImageUrl3.Text;
-            }
->>>>>>> Stashed changes
         }
 
         protected void btnSaveArticle_Click(object sender, EventArgs e)
@@ -321,7 +276,6 @@ namespace webApp
         private void LoadArticle()
         {
             // Carga el GridView con artículos
-<<<<<<< Updated upstream
             ArticuloAS articulo = new ArticuloAS();
             dgvArticles.DataSource = articulo.listar(); 
             dgvArticles.DataBind(); 
@@ -352,17 +306,7 @@ namespace webApp
         protected void dgvArticles_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
       
-=======
-           ArticuloAS articulo = new ArticuloAS();
-            dgvArticles.DataSource = articulo.listar(); 
-            dgvArticles.DataBind(); 
-            dgvArticles.Visible = true; 
->>>>>>> Stashed changes
         }
 
-        protected void btnPetificaciones_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
