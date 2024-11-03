@@ -30,11 +30,6 @@
             background-color: #fff;
         }
 
-
-
-
-
-
         footer {
             margin-top: auto;
             background-color: #000;
@@ -42,18 +37,11 @@
             padding: 20px 0;
         }
 
-
-
-
         .header-top-area .dropdown.show .dropdown-menu {
             display: block;
             opacity: 1;
             transform: translateY(0);
         }
-
-
-
-
 
         .header-top-area {
             background-color: #000;
@@ -129,7 +117,6 @@
 <body>
    
     <form id="form1" runat="server">
-
         <header class="header-area">
             <div class="header-top-area py-2">
                 <div class="container">
@@ -252,7 +239,6 @@
                                 <li class="nav-item"><a class="nav-link" href="AboutUs.aspx">About us</a></li>
                                 <li class="nav-item"><a class="nav-link" href="Contact.aspx">Contact</a></li>
 
-
                             </ul>
                         </div>
                     </nav>
@@ -260,14 +246,10 @@
             </div>
         </header>
 
-
-
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
-
-
 
         <footer style="background-color: #000; color: #fff; padding: 40px 0;">
             <div style="padding: 20px 0;">
@@ -283,10 +265,8 @@
                                 <p>
                                     Gerli & Camino Gral Chamizo<br>
                                     Bs As, Argentina
-                        </p>
+                                </p>
                                 <p>
-                                  
-
                             TELEPHONE- +540110303456<br>
                             Email: admin@xecommerce.com
                                 </p>
@@ -299,7 +279,6 @@
                                 <li><a href="#" style="color: #fff;">Return Policy</a></li>
                                 <li><a href="Contact.aspx" style="color: #fff;">Contact Us</a></li>
                                 <li><a href="#" style="color: #fff;">Terms &amp; Condition</a></li>
-
                             </ul>
                         </div>
                         <div style="flex: 1; margin-right: 20px;">
@@ -352,10 +331,6 @@
                 </div>
             </div>
 
-
-
-
-
           <div style="background-color: #222; padding: 10px 0;"> 
     <div class="container">
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0;">
@@ -370,18 +345,10 @@
 </div>
            </footer>
 
-
-
-
-
-
-
-
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 

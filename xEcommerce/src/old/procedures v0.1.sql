@@ -16,14 +16,21 @@ WHERE Codigo = @cod_articulo
 GO
 
 CREATE PROCEDURE Catalogo.ListarArticulos AS
-SELECT Id,
-    Codigo,
-    IdTipo,
-    IdMarca,
-    IdCategoria,
-    Descripcion,
-    Estado
-FROM Catalogo.Articulos
+SELECT a.Id,
+    a.Codigo,
+    a.Descripcion,
+    a.IdTipo,
+    t.Descripcion AS "Tipo",
+    a.IdMarca,
+    m.Descripcion AS "Marca",
+    a.IdCategoria,
+    c.Descripcion AS "Categoria",
+    a.Detalle,
+    a.Estado
+FROM Catalogo.Articulos a
+INNER JOIN Catalogo.Tipos t ON a.IdTipo = t.Id
+INNER JOIN Catalogo.Marcas m ON a.IdMarca = m.Id
+INNER JOIN Catalogo.Categorias c ON a.IdCategoria = c.Id
 ;
 GO
 
@@ -64,13 +71,14 @@ SELECT Id,
 FROM Catalogo.Marcas
 ;
 GO
-
 CREATE PROCEDURE Catalogo.ListarColores AS
 SELECT Id,
     Codigo,
     Descripcion,
     Estado
 FROM Catalogo.Colores
+;
+GO
 
 CREATE PROCEDURE Catalogo.BuscarTipos @cod_tipo VARCHAR(10) AS
 SELECT Id,
@@ -98,15 +106,6 @@ SELECT Id,
     Estado
 FROM Catalogo.Colores
 WHERE Codigo = @cod_color
-;
-GO
-
-CREATE PROCEDURE Catalogo.ListarColores AS
-SELECT Id,
-    Codigo,
-    Descripcion,
-    Estado
-FROM Catalogo.Colores
 ;
 GO
 
