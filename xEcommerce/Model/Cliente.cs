@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    internal class Cliente
+    public class Cliente
     {
-        private int Id { get; set; }
-        private string Nombre { get; set; }
-        private string Apellido { get; set; }
-        private string Dni { get; set; }
-        private string Email { get; set; }
-        private Direccion Direccion { get; set; }
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Dni { get; set; }
+        public string Email { get; set; }
+        public Direccion Direccion { get; set; }
+        public Ciudad Ciudad { get; set; }
+
+        public Provincia Provincia { get; set; }
+
+
 }
 }

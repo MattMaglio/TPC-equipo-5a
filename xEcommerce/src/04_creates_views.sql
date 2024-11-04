@@ -1,5 +1,6 @@
 -- Creacion de vista para los listados de Stock.
 CREATE VIEW Operaciones.VW_Stock AS
+
 SELECT a.Codigo AS "Codigo de Articulo",
     a.Descripcion AS "Descripcion de Articulo",
     c.Codigo AS "Codigo de Color",
@@ -22,6 +23,7 @@ SELECT a.Codigo AS "Codigo de Articulo",
     c.Descripcion AS "Descripcion de Color",
     t.Codigo AS "Codigo de Talle",
     t.Descripcion AS "Descripcion de Talle",
+    s.Cantidad,
     p.Precio
 FROM Operaciones.Precios p
 INNER JOIN Catalogo.Articulos a ON p.IdArticulo = a.Id

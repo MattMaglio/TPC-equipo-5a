@@ -58,4 +58,5 @@ BEGIN
 
     RETURN @Activo
 END;
+
 GO

@@ -124,7 +124,7 @@
                         <div class="col-md-6 d-none d-md-block">
 
 
-                            <ul class="list-inline mb-0">
+                            <%--<ul class="list-inline mb-0">
                                 <li class="list-inline-item dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language</a>
                                     <div class="dropdown-menu">
@@ -140,7 +140,7 @@
                                         <a class="dropdown-item" href="#">ARS</a>
                                     </div>
                                 </li>
-                            </ul>
+                            </ul>--%>
 
                                            <%--VER DESPLEGABLE!!!!
                                 

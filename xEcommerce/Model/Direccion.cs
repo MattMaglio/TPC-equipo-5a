@@ -8,11 +8,11 @@ namespace Model
 {
     public class Direccion
     {
-        private int Id { get; set; }
-        private string Calle { get; set; }
-        private int Numeracion { get; set; }
-        private string CodigoPostal { get; set; }
-        private Provincia Provincia { get; set; }
-        private Ciudad Ciudad { get; set; }
+        public int Id { get; set; }
+        public string Calle { get; set; }
+        public int Numeracion { get; set; }
+        public string CodigoPostal { get; set; }
+        public Provincia Provincia { get; set; }
+        public Ciudad Ciudad { get; set; }
     }
 }
