@@ -99,7 +99,7 @@ namespace ApplicationService
             try
             {
                 
-                query.configSqlQuery("UPDATE CATALOGO_CLIENTES SET Nombre = @nombre, Apellido = @apellido, Email = @email, DNI = @dni, Calle = @calle, Numeracion = @numero, CodigoPostal = @codigoPostal WHERE Id = @clientId");
+                query.configSqlQuery("UPDATE CATALOGO.CLIENTES SET Nombre = @nombre, Apellido = @apellido, Email = @email, DNI = @dni, Calle = @calle, Numeracion = @numero, CodigoPostal = @codigoPostal WHERE Id = @clientId");
 
                
                 query.configSqlConexion(conexion.getConnection());

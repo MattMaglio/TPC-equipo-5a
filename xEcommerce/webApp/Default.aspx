@@ -91,7 +91,9 @@
                             <div class="product-card-body">
                                 <h5 class="card-title"><%# Eval("Name") %></h5>
                                 <%--<p class="card-text">$<%# Eval("Price", "{0:F2}") %></p>--%>
-                                <asp:Button ID="btnAddToCart" runat="server" Text="Add to Cart" CommandArgument='<%# Eval("ProductId") %>' CssClass="btn btn-primary" />
+                                <asp:Button ID="btnGoToShop" runat="server" Text="Let´s go!" OnClick="btnGoToShop_Click" CssClass="btn btn-secondary" />
+
+
                             </div>
                         </div>
                     </div>

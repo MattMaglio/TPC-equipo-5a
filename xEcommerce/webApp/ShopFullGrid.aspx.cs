@@ -27,6 +27,9 @@ namespace webApp
                 ddlCategoria.DataTextField = "Descripcion";
                 ddlCategoria.DataBind();
 
+                // Agregoopción "Selecciona una categoría" al principio
+                ddlCategoria.Items.Insert(0, new ListItem("Select the category", ""));
+
                 MarcaAS MarcAS = new MarcaAS();
                 List<Marca> listMarcas = MarcAS.listar();
 
@@ -35,6 +38,9 @@ namespace webApp
                 ddlMarca.DataTextField = "Descripcion";
                 ddlMarca.DataBind();
 
+                // Agregoopción "Selecciona una marcaprincipio
+                ddlMarca.Items.Insert(0, new ListItem("Select the brand", ""));
+
                 TipoAS TipAS = new TipoAS();
                 List<Tipo> listTipos = TipAS.listar();
 
@@ -42,6 +48,9 @@ namespace webApp
                 ddlTipo.DataValueField = "Id";
                 ddlTipo.DataTextField = "Descripcion";
                 ddlTipo.DataBind();
+
+                // Agrego opción "Selecciona un tipo al principio"
+                ddlTipo.Items.Insert(0, new ListItem("Select the type", ""));
 
                 CargarProductos();
             }
@@ -79,6 +88,53 @@ namespace webApp
                 dataAccess.closeConnection();
             }
         }
+
+
+        protected void btnMostrarTodos_Click(object sender, EventArgs e)
+        {
+            // Limpio DropDownList
+
+            ddlCategoria.SelectedIndex = 0;
+            ddlMarca.SelectedIndex = 0;
+            ddlTipo.SelectedIndex = 0;
+
+            // Cargo todos los productos
+            CargarTodosLosProductos();
+        }
+
+        private void CargarTodosLosProductos()
+        {
+            DataAccess dataAccess = new DataAccess();
+            DataManipulator dataManipulator = new DataManipulator();
+
+            try
+            {
+                // Abro la conexión a la base de datos
+                dataAccess.openConnection();
+
+                // Configuro el procedimiento almacenado para obtener todos los artículos
+                dataManipulator.configSqlProcedure("Catalogo.ListarArticulosConImagen"); 
+
+                // Configuro la conexión del manipulador de datos
+                dataManipulator.configSqlConexion(dataAccess.getConnection());
+
+                // Ejecuto la consulta y obtengo el SqlDataReader
+                SqlDataReader reader = dataManipulator.exectQuerry();
+
+                lvProducts.DataSource = reader;
+                lvProducts.DataBind();
+            }
+            catch (Exception ex)
+            {
+                throw ex; // Manejo de excepciones
+            }
+            finally
+            {
+                // Cierro la conexión
+                dataAccess.closeConnection();
+            }
+        }
+
 
 
         private void CargarProductosDestacados()

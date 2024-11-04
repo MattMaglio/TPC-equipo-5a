@@ -21,8 +21,6 @@ namespace webApp
             }
         }
 
-
-
         private void CargarProductosDestacados()
         {
             DataAccess dataAccess = new DataAccess();
@@ -31,7 +29,7 @@ namespace webApp
             try
             {
                 dataAccess.openConnection();
-                dataManipulator.configSqlProcedure("Catalogo.ListarArticulosConImagen");
+                dataManipulator.configSqlProcedure("Catalogo.ListarArticulosDestacadosConImagen");
                 dataManipulator.configSqlConexion(dataAccess.getConnection());
 
                 SqlDataReader reader = dataManipulator.exectQuerry();
@@ -49,8 +47,17 @@ namespace webApp
                 dataAccess.closeConnection();
             }
         }
+
+        protected void btnGoToShop_Click(object sender, EventArgs e)
+        {
+            // Redirigir a ShopFullGrid.aspx
+            Response.Redirect("ShopFullGrid.aspx");
+        }
+
+
+
     }
-
-
-
 }
+
+
+

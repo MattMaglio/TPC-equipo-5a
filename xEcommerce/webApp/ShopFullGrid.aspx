@@ -10,6 +10,10 @@
         <br />
 
         <div class="row mb-4">
+            <div class="col-md-12 text-center mb-3">
+            <asp:Button ID="btnMostrarTodos" runat="server" Text="Mostrar Todos" OnClick="btnMostrarTodos_Click" CssClass="btn btn-secondary" />
+               </div>
+            <br />
             <div class="col-md-4">
                 <h5>Filter by Category</h5>
                 <asp:DropDownList ID="ddlCategoria" runat="server" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" class="form-control">
@@ -33,7 +37,7 @@
         <br />
         <br />
 
-        <!-- Aquí va el Repeater para mostrar los productos -->
+        <!-- Aquí va el Repeater para mostrar los articulos -->
         <div class="row" id="productList">
 
 
@@ -49,7 +53,7 @@
                     <p class="card-text">Category: <%# Eval("CategoriaDescripcion") %></p>
                     <p class="card-text">Brand: <%# Eval("MarcaDescripcion") %></p>
                     <p class="card-text">Type: <%# Eval("TipoDescripcion") %></p>
-                    <a href="ProductDetail.aspx?ProductId=<%# Eval("ProductId") %>" class="btn btn-light">View Details</a>
+                    <a href="ProductDetail.aspx?ProductId=<%# Eval("ProductId") %>" class="btn btn-secondary">View Details</a>
                 </div>
             </div>
         </div>
