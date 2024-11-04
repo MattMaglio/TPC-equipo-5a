@@ -504,6 +504,7 @@ BEGIN
 END;
 GO
 
+
 CREATE OR ALTER PROCEDURE Catalogo.SP_EliminarMarca
     @Id INT
 AS
@@ -780,3 +781,35 @@ BEGIN
     EXEC sp_executesql @sql, N'@Id INT', @Id;
 END;
 GO
+
+CREATE OR ALTER PROCEDURE [Catalogo].[ObtenerArticuloPorIdParaCards]
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        a.Id AS ProductId,
+        a.Descripcion AS Name,
+        i.UrlImagen AS ImageUrl,
+         a.Detalle,
+        a.IdTipo,
+        a.IdMarca,
+        a.IdCategoria,
+        a.Estado,
+        c.Descripcion AS CategoriaDescripcion,
+        m.Descripcion AS MarcaDescripcion,
+        t.Descripcion AS TipoDescripcion
+    FROM
+        Catalogo.Articulos a
+    LEFT JOIN
+        Catalogo.ImagenArticulos i ON a.Id = i.IdArticulo
+    LEFT JOIN
+        Catalogo.Categorias c ON a.IdCategoria = c.Id
+    LEFT JOIN
+        Catalogo.Marcas m ON a.IdMarca = m.Id
+    LEFT JOIN
+        Catalogo.Tipos t ON a.IdTipo = t.Id
+    WHERE
+        a.Estado = 1 AND a.Id = @Id;  
+END
