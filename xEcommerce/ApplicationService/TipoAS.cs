@@ -30,6 +30,7 @@ namespace ApplicationService
                     aux.Id = (int)result["Id"];
                     aux.Codigo = (string)result["Codigo"];
                     aux.Descripcion = (string)result["Descripcion"];
+                    aux.Estado = (bool)result["Estado"];
 
                     lista.Add(aux);
                 }
@@ -46,7 +47,6 @@ namespace ApplicationService
                 data.closeConnection();
             }
         }
-
     }
 }
 

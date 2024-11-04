@@ -254,6 +254,7 @@ CREATE TABLE Usuario.PerfilUsuario (
     FOREIGN KEY (NivelAcceso) REFERENCES Usuario.NivelAcceso(Id),
     FOREIGN KEY (IdCliente) REFERENCES Catalogo.Clientes(Id)
 );
+GO
 
 -- Tabla antigua descontinuada
 /*
@@ -272,3 +273,28 @@ CREATE TABLE Transportes (
     FOREIGN KEY (IdTipo) REFERENCES TiposTransporte(Id)
 );
 */
+
+/* DEFINICION DE LOS TRIGGERS */
+CREATE OR ALTER TRIGGER Catalogo.TR_EliminarArticulo ON Catalogo.Articulos
+AFTER UPDATE
+AS
+BEGIN
+    BEGIN TRY
+        -- Inicia la transacción
+        BEGIN TRANSACTION;
+
+        -- Primero, eliminamos los registros de Stock y Precios relacionados
+        DELETE FROM Operaciones.Stock
+        WHERE IdArticulo IN (SELECT Id FROM INSERTED);
+
+        DELETE FROM Operaciones.Precios
+        WHERE IdArticulo IN (SELECT Id FROM INSERTED);
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, revertimos la transacción
+        ROLLBACK TRANSACTION;
+    END CATCH
+END;
+GO

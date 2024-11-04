@@ -13,7 +13,9 @@ namespace DataPersistence
 
         public DataAccess()
         {
+
             string connectionString = "Server=.\\SQLEXPRESS;Database=XECOMMERCE;Trusted_Connection=True;";
+
             conexionDB = new SqlConnection(connectionString);
         }
 

@@ -10,6 +10,7 @@ namespace DataPersistence
     public class DataManipulator
     {
         public SqlCommand sqlQuery { get; set; }
+        public SqlConnection connection { get; set; }
 
         public DataManipulator()
         {
@@ -81,6 +82,24 @@ namespace DataPersistence
 
             object result = sqlQuery.ExecuteScalar();
             return result;
+        }
+        public int getLastInsertedId()
+        {
+            int lastId = -1; // defecto en caso de error
+
+            using (SqlCommand command = new SqlCommand("SELECT SCOPE_IDENTITY();", this.connection))
+            {
+                try
+                {
+                    lastId = Convert.ToInt32(command.ExecuteScalar()); // Ejecutar la consulta y convertir el resultado a int para obtener el ultimo id
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            return lastId; //retorna el ultimo id 
         }
     }
 }
