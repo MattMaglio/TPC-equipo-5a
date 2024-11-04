@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-4">
                 <h5>Filter by Product Type</h5>
-                <asp:DropDownList ID="ddlTipo" runat="server"OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" class="form-control">
+                <asp:DropDownList ID="ddlTipo" runat="server" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" class="form-control">
                     
                 </asp:DropDownList>
             </div>
@@ -56,26 +56,6 @@
     </ItemTemplate>
 </asp:ListView>
 
-
-
-
-
-
-           <%-- <asp:ListView ID="lvProducts" runat="server">
-    <ItemTemplate>
-        <div class="col-sm-6 col-md-3 mb-4">
-            <div class="card h-100">
-                <asp:Image ID="imgProduct" runat="server" ImageUrl='<%# Eval("ImageUrl") %>' AlternateText='<%# Eval("Name") %>' CssClass="card-img-top" />
-                <div class="card-body">
-                    <h5 class="card-title"><%# Eval("Name") %></h5>
-                    <p class="card-text"> <%# Eval("Detalle") %></p>
-                    <%--<p class="card-text"><strong>Price: $<%# Eval("Price", "{0:F2}") %></strong></p>--%>
-         <%--           <a href="ProductDetail.aspx?ProductId=<%# Eval("ProductId") %>" class="btn btn-light">View Details</a>
-                </div>
-            </div>
-        </div>
-    </ItemTemplate>
-</asp:ListView>--%>
 
         </div>
 

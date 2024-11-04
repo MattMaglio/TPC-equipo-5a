@@ -54,16 +54,16 @@ namespace webApp
 
             try
             {
-                // Abrir la conexión a la base de datos
+                // Abro la conexión a la base de datos
                 dataAccess.openConnection();
 
-                // Configurar el procedimiento almacenado
+                // Configuro el procedimiento almacenado
                 dataManipulator.configSqlProcedure("Catalogo.ListarArticulosConImagen");
 
-                // Configurar la conexión del manipulador de datos
+                // Configuro la conexión del manipulador de datos
                 dataManipulator.configSqlConexion(dataAccess.getConnection());
 
-                // Ejecutar la consulta y obtener el SqlDataReader
+                // Ejecuto la consulta y obtengo el SqlDataReader
                 SqlDataReader reader = dataManipulator.exectQuerry();
 
                 lvProducts.DataSource = reader;
@@ -71,12 +71,11 @@ namespace webApp
             }
             catch (Exception ex)
             {
-                // Manejar el error
-                throw ex; // Considera manejarlo de una manera más amigable
+                throw ex; // 
             }
             finally
             {
-                // Cerrar la conexión
+                // Cieerro la conexión
                 dataAccess.closeConnection();
             }
         }
@@ -103,7 +102,7 @@ namespace webApp
             }
             catch (Exception ex)
             {
-                // Manejar el error
+               
             }
             finally
             {
@@ -136,13 +135,11 @@ namespace webApp
             {
                 dataAccess.openConnection();
 
-                // Configurar el procedimiento almacenado
+               
                 dataManipulator.configSqlProcedure("Catalogo.ListarArticulosConImagen");
 
-                // Configurar la conexión del manipulador de datos
                 dataManipulator.configSqlConexion(dataAccess.getConnection());
 
-                // Agregar parámetros
                 dataManipulator.configSqlParams("@IdCategoria", ddlCategoria.SelectedValue != "" ? (object)Convert.ToInt32(ddlCategoria.SelectedValue) : DBNull.Value);
                 dataManipulator. configSqlParams("@IdMarca", ddlMarca.SelectedValue != "" ? (object)Convert.ToInt32(ddlMarca.SelectedValue) : DBNull.Value);
                 dataManipulator.configSqlParams("@IdTipo", ddlTipo.SelectedValue != "" ? (object)Convert.ToInt32(ddlTipo.SelectedValue) : DBNull.Value);
@@ -154,7 +151,6 @@ namespace webApp
             }
             catch (Exception ex)
             {
-                // Manejar el error
             }
             finally
             {
