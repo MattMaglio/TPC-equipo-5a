@@ -46,12 +46,13 @@ INSERT INTO Catalogo.Talles (Codigo, Descripcion) VALUES
 ('XXXL','Triple extra large')
 ;
 
-INSERT INTO Catalogo.Articulos (Codigo, IdTipo, IdMarca, IdCategoria, Descripcion, Detalle, Estado)
+INSERT INTO Catalogo.Articulos (Codigo, IdTipo, IdMarca, IdCategoria, Descripcion, Detalle)
 VALUES
-('ART001', 1, 1, 1, 'Camiseta Deportiva', 'Una prenda super elastica para deporte de intensidad', 1),
-('ART002', 2, 2, 1, 'Pantalón Casual', 'Un pantalo rreee facherito', 1),
-('ART003', 3, 3, 2, 'Camisa Formal', 'Con esta sos un lord ingles', 1),
-('ART004', 3, 3, 2, 'Vestido Casual', 'Vestido de la segunda temporada de floricienta', 1)
+('ART001', 1, 1, 1, 'Camiseta Deportiva', 'Una prenda super elastica para deporte de intensidad'),
+('ART002', 2, 2, 1, 'Pantalón Casual', 'Un pantalo rreee facherito'),
+('ART003', 3, 3, 2, 'Camisa Formal', 'Con esta sos un lord ingles'),
+('ART004', 3, 3, 2, 'Vestido Casual', 'Vestido de la segunda temporada de floricienta'),
+('DelArt001', 1, 1, 1, 'Test To Deleted', 'Es un articulo creado especificamente para pruebas de borrado')
 ;
 
 INSERT INTO Catalogo.ImagenArticulos (IdArticulo, UrlImagen)
@@ -72,7 +73,9 @@ VALUES
 (3, 4, 2, 7), -- Art 003, Amarrillo, S
 (3, 5, 7, 1), -- Art 003, Negro, XXXL
 (4, 2, 3, 0), -- Art 004, Azul, M
-(4, 2, 4, 11) -- Art 004, Azul, L
+(4, 2, 4, 11), -- Art 004, Azul, L
+(5, 1, 3, 90), -- Del Art 001, Rojo, M
+(5, 2, 4, 95) -- Del Art 001, Azul, L
 ;
 
 INSERT INTO Operaciones.Precios (IdArticulo, IdColor, IdTalle, Precio)
@@ -85,5 +88,7 @@ VALUES
 (3, 4, 2, 25000), -- Art 003, Amarrillo, S
 (3, 5, 7, 19999), -- Art 003, Negro, XXXL
 (4, 2, 3, 23999), -- Art 004, Azul, M
-(4, 2, 4, 23999) -- Art 004, Azul, L
+(4, 2, 4, 23999), -- Art 004, Azul, L
+(5, 1, 3, 999), -- Del Art 001, Rojo, M
+(5, 2, 4, 995) -- Del Art 001, Azul, L
 ;

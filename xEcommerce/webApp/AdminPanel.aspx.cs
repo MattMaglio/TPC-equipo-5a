@@ -61,12 +61,10 @@ namespace webApp
             addArticleForm.Visible = false; // Ocultar el formulario
             LoadArticle(); // Cargar y mostrar artículos en el GridView
         }
-
-        protected void btnReportPrueba_Click(object sender, EventArgs e)
+        protected void btnReportStockPorArticulo_Click(object sender, EventArgs e)
         {
-            
+            Response.Redirect("wfreport_stockporarticulo.aspx");
         }
-
         protected void btnReportStockYPrecio_Click(object sender, EventArgs e)
         {
             Response.Redirect("wfreport_stockyprecios.aspx");
@@ -118,10 +116,15 @@ namespace webApp
                 Articulo articulo = new Articulo();
                 ArticuloAS data = new ArticuloAS();
 
-                // valida si los campos estan vacios
+                                // valida si los campos estan vacios
                 if (string.IsNullOrWhiteSpace(txtCodeArticle.Text))
                 {
                     throw new Exception("El código del artículo es obligatorio.");
+                }
+
+                if (data.ValidarCopdigoActivo(txtCodeArticle.Text) == 1)
+                {
+                    throw new Exception("El código del artículo esta en uso.");
                 }
 
                 if (string.IsNullOrWhiteSpace(txtDescripcion.Text))
@@ -143,8 +146,6 @@ namespace webApp
                 {
                     throw new Exception("El detalle del articulo no puede exceder los 50 caracteres.");
                 }
-
-               
 
                 // Asignar valores a las propiedades del artículo
                 articulo.Codigo = txtCodeArticle.Text;
@@ -169,7 +170,6 @@ namespace webApp
                 Session.Add("Error", ex); //DESPUES LO MANDAMOS A UNA PAGINA DE ERROR
                 throw;
             }
-
 
         }
          protected string GetStatusIcon(object status)
@@ -293,7 +293,9 @@ namespace webApp
             ArticuloAS articulo = new ArticuloAS();
             dgvArticles.DataSource = articulo.listar(); 
             dgvArticles.DataBind(); 
-            dgvArticles.Visible = true; 
+            dgvArticles.Visible = true;
+            dgvArticles.Columns[0].Visible = false;
+            dgvArticles.Columns[7].Visible = false;
         }
         private void LimpiarFormulario()
         {

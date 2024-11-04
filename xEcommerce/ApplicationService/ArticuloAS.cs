@@ -33,22 +33,22 @@ namespace ApplicationService
                 {
                     Articulo aux = new Articulo();
 
-                    aux.Id = (int)result["Id"];
+                    //aux.Id = (int)result["Id"];
                     aux.Codigo = result["Codigo"].ToString();
                     aux.Descripcion = result["Descripcion"].ToString();
-                    aux.Estado = (bool)result["Estado"];
                     aux.Detalle = result["Detalle"].ToString();
-                    aux.Id = (int)result["Id"];  // Id del artículo
+                    //aux.Estado = (bool)result["Estado"];
 
                     aux.Marca = new Marca();
                     aux.Tipo = new Tipo();
                     aux.Categoria = new Categoria();
 
-                    aux.Tipo.Descripcion = result["Tipo"].ToString();  
-                    aux.Marca.Descripcion = result["Marca"].ToString(); 
-                    aux.Categoria.Descripcion = result["Categoria"].ToString();  
+                    aux.Tipo.Descripcion = result["Tipo"].ToString();
+                    aux.Marca.Descripcion = result["Marca"].ToString();
+                    aux.Categoria.Descripcion = result["Categoria"].ToString();
 
                     lista.Add(aux);
+                    
                 }
                 return lista;
 
@@ -123,6 +123,35 @@ namespace ApplicationService
             }
         }
 
+        public int ValidarCopdigoActivo(string codigo)
+        {
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+            int estado;
+
+            try
+            {
+
+                query.configSqlQuery("SELECT Estado FROM Catalogo.Articulos WHERE Codigo = @Codigo");
+                query.configSqlConexion(conexion.getConnection());
+                conexion.openConnection();
+
+                query.configSqlParams("@Codigo", codigo);
+
+                estado = Convert.ToInt32(query.exectScalar());
+
+                return estado;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
+        }
 
         public void AgregarNuevoArticulo(Articulo articulo)
         {
@@ -230,56 +259,99 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
-
-        /*public List<Articulo> listarStockYPrecio()
+        public DataTable listarStockYPrecio_Filtrado(string Codigo)
         {
-            List<Articulo> lista = new List<Articulo>();
+            DataTable dataTable = new DataTable();
             DataAccess conexion = new DataAccess();
             DataManipulator query = new DataManipulator();
             SqlDataReader result;
 
-
             try
             {
-                query.configSqlProcedure("Operaciones.SP_StockYPrecio");
+                query.configSqlProcedure("Operaciones.SP_Listado_StockYPrecio_Filtrado");
+                query.configSqlParams("@Codigo", Codigo);
                 query.configSqlConexion(conexion.getConnection());
                 conexion.openConnection();
                 result = query.exectQuerry();
+
+                // Definir las columnas en el DataTable
+                dataTable.Columns.Add("Codigo", typeof(string));
+                dataTable.Columns.Add("Descripcion", typeof(string));
+                dataTable.Columns.Add("ColorCodigo", typeof(string));
+                dataTable.Columns.Add("ColorDescripcion", typeof(string));
+                dataTable.Columns.Add("TalleCodigo", typeof(string));
+                dataTable.Columns.Add("TalleDescripcion", typeof(string));
+                dataTable.Columns.Add("Stock", typeof(int));
+                dataTable.Columns.Add("Precio", typeof(float));
+
+                // Llenar el DataTable con los datos del SqlDataReader
                 while (result.Read())
                 {
-                    Articulo aux = new Articulo();
+                    DataRow row = dataTable.NewRow();
+                    row["Codigo"] = result["Codigo de Articulo"].ToString();
+                    row["Descripcion"] = result["Descripcion de Articulo"].ToString();
+                    row["ColorCodigo"] = result["Codigo de Color"].ToString();
+                    row["ColorDescripcion"] = result["Descripcion de Color"].ToString();
+                    row["TalleCodigo"] = result["Codigo de Talle"].ToString();
+                    row["TalleDescripcion"] = result["Descripcion de Talle"].ToString();
+                    row["Stock"] = Convert.ToInt32(result["Cantidad"]);
+                    row["Precio"] = Convert.ToSingle(result["Precio"]);
 
-                    aux.Codigo = result["Codigo de Articulo"].ToString();
-                    aux.Descripcion = result["Descripcion de Articulo"].ToString();
-
-                    
-
-                    aux.Color = new Color();
-                    aux.Color.Codigo = result["Codigo de Color"].ToString();
-                    aux.Color.Descripcion = result["Descripcion de Color"].ToString();
-
-                    aux.Talle = new Talle();
-                    aux.Talle.Codigo = result["Codigo de Talle"].ToString();
-                    aux.Talle.Descripcion = result["Descripcion de Talle"].ToString();
-
-                    aux.Stock = Convert.ToInt32(result["Cantidad"]);
-                    aux.Precio = Convert.ToSingle(result["Precio"]);
-
-                    lista.Add(aux);
+                    dataTable.Rows.Add(row);
                 }
-                return lista;
+
+                return dataTable;
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally
             {
                 conexion.closeConnection();
             }
-        }*/
+        }
+        public DataTable listarStockPorArticulo()
+        {
+            DataTable dataTable = new DataTable();
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+            SqlDataReader result;
 
+            try
+            {
+                query.configSqlProcedure("Operaciones.SP_Listado_StockPorArticulo");
+                query.configSqlConexion(conexion.getConnection());
+                conexion.openConnection();
+                result = query.exectQuerry();
+
+                // Definir las columnas en el DataTable
+                dataTable.Columns.Add("Codigo", typeof(string));
+                dataTable.Columns.Add("Descripcion", typeof(string));
+                dataTable.Columns.Add("Stock", typeof(int));
+
+                // Llenar el DataTable con los datos del SqlDataReader
+                while (result.Read())
+                {
+                    DataRow row = dataTable.NewRow();
+                    row["Codigo"] = result["Codigo"].ToString();
+                    row["Descripcion"] = result["Descripcion"].ToString();       
+                    row["Stock"] = Convert.ToInt32(result["StockPorProducto"]);
+
+                    dataTable.Rows.Add(row);
+                }
+
+                return dataTable;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
+        }
     }
     
 }

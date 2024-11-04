@@ -1,5 +1,14 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AdminPanel.aspx.cs" Inherits="webApp.AdminPanel" %>
+﻿ <%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AdminPanel.aspx.cs" Inherits="webApp.AdminPanel" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+    function showSuccessMessage() {
+        $('#successModal').modal('show');
+    }
+
+    //function redirectToLogin() {
+    //    window.location.href = "Login.aspx"; 
+    //}
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager runat="server"></asp:ScriptManager>
@@ -271,10 +280,10 @@
                         <div class="accordion-body">
                             <ul class="list-group">
                                 <li class="list-group-item">
-                                    <asp:Button Text="Listado de prueba" CssClass="btn btn-dark w-100" ID="btnReportPrueba" OnClick="btnReportPrueba_Click" runat="server" />
+                                    <asp:Button Text="Stock por Articulo" CssClass="btn btn-dark w-100" ID="btnReportStockPorArticulo" OnClick="btnReportStockPorArticulo_Click" runat="server" />
                                 </li>
                                 <li class="list-group-item">
-                                    <asp:Button Text="Listado de Stock y Precios" CssClass="btn btn-dark w-100" ID="btnReportStockYPrecio" runat="server" OnClick="btnReportStockYPrecio_Click" />
+                                    <asp:Button Text="Stock y Precios por combinacion" CssClass="btn btn-dark w-100" ID="btnReportStockYPrecio" runat="server" OnClick="btnReportStockYPrecio_Click" />
                                 </li>
                             </ul>
                         </div>
@@ -283,6 +292,28 @@
 
             </div>
         </div>
+
+        <%--    SUCCESS ALERT--%>
+
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Welcome Aboard!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You're Now Registered!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="redirectToLogin()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
         <div class="right-panel">
             <div class="form-article">
