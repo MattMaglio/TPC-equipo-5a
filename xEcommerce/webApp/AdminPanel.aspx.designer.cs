@@ -69,13 +69,13 @@ namespace webApp
         protected global::System.Web.UI.WebControls.GridView dgvSell;
 
         /// <summary>
-        /// btnReportPrueba control.
+        /// btnReportStockPorArticulo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnReportPrueba;
+        protected global::System.Web.UI.WebControls.Button btnReportStockPorArticulo;
 
         /// <summary>
         /// btnReportStockYPrecio control.

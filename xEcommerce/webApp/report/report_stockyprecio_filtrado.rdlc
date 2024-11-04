@@ -590,8 +590,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>Data</DataSetName>
-        <Top>2.27224cm</Top>
-        <Left>0.55245cm</Left>
+        <Top>1.74156cm</Top>
+        <Left>0.45857cm</Left>
         <Height>1.59688cm</Height>
         <Width>32.48834cm</Width>
         <Style>
@@ -601,10 +601,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.85416in</Height>
+    <Height>2in</Height>
     <Style />
   </Body>
-  <Width>13.25819in</Width>
+  <Width>13.40132in</Width>
   <Page>
     <PageHeader>
       <Height>2.54cm</Height>
@@ -632,11 +632,8 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>por combinaciones</Value>
-                  <Style>
-                    <FontSize>16pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
-                  </Style>
+                  <Value />
+                  <Style />
                 </TextRun>
               </TextRuns>
               <Style>
@@ -645,9 +642,9 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>0.31432cm</Top>
-          <Left>12.67037cm</Left>
-          <Height>1.73179cm</Height>
+          <Top>0.40411cm</Top>
+          <Left>13.9977cm</Left>
+          <Height>1.22908cm</Height>
           <Width>8.2336cm</Width>
           <Style>
             <Border>
@@ -667,7 +664,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>2.03729cm</Height>
+      <Height>2.54cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -686,8 +683,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox35</rd:DefaultName>
-          <Top>1.11979cm</Top>
-          <Left>0.55245cm</Left>
+          <Top>1.54387cm</Top>
+          <Left>0.79071cm</Left>
           <Height>0.54708cm</Height>
           <Width>2.97625cm</Width>
           <Style>
@@ -723,7 +720,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>5ae938a2-8fe7-45d0-88c0-2cb6ed6063cb</rd:DataSourceID>
+      <rd:DataSourceID>bd28fd39-27d4-4fe3-b8df-9d9d3ca25f02</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -775,5 +772,5 @@
     </DataSet>
   </DataSets>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
-  <rd:ReportID>880483b2-83e3-4213-bfe6-81d2d4751320</rd:ReportID>
+  <rd:ReportID>1ed12f3e-0d28-4ef1-9be9-49f55dd7f2be</rd:ReportID>
 </Report>

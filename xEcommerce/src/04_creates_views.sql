@@ -1,6 +1,6 @@
 -- Creacion de vista para los listados de Stock.
 CREATE VIEW Operaciones.VW_Stock AS
-SELECT  a.Codigo AS "Codigo de Articulo",
+SELECT a.Codigo AS "Codigo de Articulo",
     a.Descripcion AS "Descripcion de Articulo",
     c.Codigo AS "Codigo de Color",
     c.Descripcion AS "Descripcion de Color",

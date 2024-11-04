@@ -31,6 +31,7 @@ FROM Catalogo.Articulos a
 INNER JOIN Catalogo.Tipos t ON a.IdTipo = t.Id
 INNER JOIN Catalogo.Marcas m ON a.IdMarca = m.Id
 INNER JOIN Catalogo.Categorias c ON a.IdCategoria = c.Id
+WHERE a.Estado = 1
 ;
 GO
 
@@ -313,6 +314,30 @@ BEGIN
 END;
 GO
 
+CREATE OR ALTER PROCEDURE Operaciones.SP_Listado_StockPorArticulo
+AS
+BEGIN
+    SELECT "Codigo",
+        "Descripcion",
+        "StockPorProducto"
+    FROM Operaciones.VW_StockPorArticulos
+    ORDER BY "Codigo"
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Operaciones.SP_Listado_StockPorArticulo_Filtrado
+   @Codigo VARCHAR(10)
+AS
+BEGIN
+    SELECT "Codigo",
+        "Descripcion",
+        "StockPorProducto"
+    FROM Operaciones.VW_StockPorArticulos
+    WHERE "Codigo" = @Codigo
+    ORDER BY "Codigo"
+END;
+GO
+
 CREATE OR ALTER PROCEDURE Operaciones.SP_StockYPrecio
 AS
 BEGIN
@@ -325,6 +350,24 @@ BEGIN
         "Cantidad",
         "Precio"
     FROM Operaciones.VW_StockYPrecios
+    ORDER BY "Codigo de Articulo", "Codigo de Color", "Codigo de Talle"
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Operaciones.SP_Listado_StockYPrecio_Filtrado
+@Codigo VARCHAR(10)
+AS
+BEGIN
+    SELECT "Codigo de Articulo",
+    	"Descripcion de Articulo",
+        "Codigo de Color",
+        "Descripcion de Color",
+        "Codigo de Talle",
+        "Descripcion de Talle",
+        "Cantidad",
+        "Precio"
+    FROM Operaciones.VW_StockYPrecios
+    WHERE "Codigo de Articulo" = @Codigo
     ORDER BY "Codigo de Articulo", "Codigo de Color", "Codigo de Talle"
 END;
 GO
@@ -357,6 +400,73 @@ BEGIN
             INSERT INTO CATALOGO.DIRECCIONES (Calle, Numero, CodigoPostal, IdCiudad, IdProvincia, IdCliente)
             VALUES(@calle, @numero, @codigoPostal, @idCiudad, @idProvincia, @idCliente);
         COMMIT TRANSACTION;
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+    END CATCH
+END;
+GO
+
+CREATE PROCEDURE Catalogo.ObtenerArticuloPorId
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        Id,
+        Codigo,
+        Descripcion,
+        Estado,
+        Detalle,
+        (SELECT Descripcion FROM Catalogo.Tipos WHERE Id = Catalogo.Articulos.IdTipo) AS Tipo,
+        (SELECT Descripcion FROM Catalogo.Marcas WHERE Id = Catalogo.Articulos.IdMarca) AS Marca,
+        (SELECT Descripcion FROM Catalogo.Categorias WHERE Id = Catalogo.Articulos.IdCategoria) AS Categoria
+    FROM
+        Catalogo.Articulos
+    WHERE Id = @Id
+        AND Estado = 1;
+END;
+GO
+
+CREATE PROCEDURE Catalogo.InsertarNuevoArticulo
+    @Codigo VARCHAR(10),
+    @Descripcion VARCHAR(255),
+    @IdTipo INT,
+    @IdMarca INT,
+    @IdCategoria INT,
+    @Detalle VARCHAR(255)
+AS
+BEGIN
+    -- Iniciar una transacción para asegurar que todas las operaciones se realicen juntas
+    BEGIN TRY
+        BEGIN TRANSACTION;
+            -- Insertar en la tabla Articulos
+            INSERT INTO Articulos (Codigo, Descripcion, IdTipo, IdMarca, IdCategoria, Detalle)
+            VALUES (@Codigo, @Descripcion, @IdTipo, @IdMarca, @IdCategoria, @Detalle);
+            -- Confirmar la transacción
+            COMMIT TRANSACTION;
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
+GO
+
+CREATE PROCEDURE Catalogo.EliminarArticulo
+    @IdArticulo INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+            DELETE FROM Catalogo.Articulos
+            WHERE Id = @IdArticulo;
+        COMMIT TRANSACTION;
+
+        PRINT 'Artículo eliminado exitosamente.';
     END TRY
 
     BEGIN CATCH

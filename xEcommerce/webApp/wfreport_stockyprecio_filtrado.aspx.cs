@@ -1,18 +1,15 @@
 ﻿using ApplicationService;
-using DataPersistence;
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace webApp.report
+namespace webApp
 {
-    public partial class wfreport_stockyprecios : System.Web.UI.Page
+    public partial class wfreport_stockyprecio_filtrado : System.Web.UI.Page
     {
         ArticuloAS artAS = new ArticuloAS();
         protected void Page_Load(object sender, EventArgs e)
@@ -24,6 +21,9 @@ namespace webApp.report
         private void ShowReport()
         {
             // Obtener el DataTable desde el método
+            //var dataTable = artAS.listarStockYPrecio_Filtrado("ART001");
+            //var urlReport = "~/report/report_stockyprecio_filtrado.rdlc";
+
             var dataTable = artAS.listarStockYPrecio();
             var urlReport = "~/report/report_stockyprecio.rdlc";
 
@@ -38,7 +38,5 @@ namespace webApp.report
             ReportViewer1.LocalReport.Refresh();
 
         }
-
-      
     }
 }
