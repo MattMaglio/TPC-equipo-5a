@@ -33,11 +33,11 @@ namespace ApplicationService
                 {
                     Articulo aux = new Articulo();
 
-                    //aux.Id = (int)result["Id"];
+                    aux.Id = (int)result["Id"];
                     aux.Codigo = result["Codigo"].ToString();
                     aux.Descripcion = result["Descripcion"].ToString();
                     aux.Detalle = result["Detalle"].ToString();
-                    //aux.Estado = (bool)result["Estado"];
+                    aux.Estado = (bool)result["Estado"];
 
                     aux.Marca = new Marca();
                     aux.Tipo = new Tipo();
@@ -93,15 +93,21 @@ namespace ApplicationService
                         Detalle = result["Detalle"].ToString(),
                         Marca = new Marca
                         {
-                            Descripcion = result["Marca"].ToString()
+                            Id = (int)result["Id Marca"],
+                            Codigo = result["Codigo Marca"].ToString(),
+                            Descripcion = result["Descripcion Marca"].ToString()
                         },
                         Tipo = new Tipo
                         {
-                            Descripcion = result["Tipo"].ToString()
+                            Id = (int)result["Id Tipo"],
+                            Codigo = result["Codigo Tipo"].ToString(),
+                            Descripcion = result["Descripcion Tipo"].ToString()
                         },
                         Categoria = new Categoria
                         {
-                            Descripcion = result["Categoria"].ToString()
+                            Id = (int)result["Id Categoria"],
+                            Codigo = result["Codigo Categoria"].ToString(),
+                            Descripcion = result["Descripcion Categoria"].ToString()
                         }
                     };
 
@@ -122,8 +128,7 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
-
-        public int ValidarCopdigoActivo(string codigo)
+        public int ValidarCodigoActivo(string codigo)
         {
             DataAccess conexion = new DataAccess();
             DataManipulator query = new DataManipulator();
@@ -152,7 +157,37 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
+        public void ModificarArticulo(Articulo articulo)
+        {
 
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+            try
+            {
+                query.configSqlProcedure("Catalogo.SP_ModificarArticulo");
+                query.configSqlConexion(conexion.getConnection());
+                conexion.openConnection();
+
+                query.configSqlParams("@Codigo", articulo.Codigo);
+                query.configSqlParams("@Descripcion", articulo.Descripcion);
+                query.configSqlParams("@IdTipo", articulo.Tipo.Id);
+                query.configSqlParams("@IdMarca", articulo.Marca.Id);
+                query.configSqlParams("@IdCategoria", articulo.Categoria.Id);
+                query.configSqlParams("@Detalle", articulo.Detalle);
+
+                query.exectCommand();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
+
+        }
         public void AgregarNuevoArticulo(Articulo articulo)
         {
             
@@ -336,6 +371,49 @@ namespace ApplicationService
                     DataRow row = dataTable.NewRow();
                     row["Codigo"] = result["Codigo"].ToString();
                     row["Descripcion"] = result["Descripcion"].ToString();       
+                    row["Stock"] = Convert.ToInt32(result["StockPorProducto"]);
+
+                    dataTable.Rows.Add(row);
+                }
+
+                return dataTable;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
+        }
+
+        public DataTable listarStockPorArticulo_Filtrado(string Codigo)
+        {
+            DataTable dataTable = new DataTable();
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+            SqlDataReader result;
+
+            try
+            {
+                query.configSqlProcedure("Operaciones.SP_Listado_StockPorArticulo_Filtrado");
+                query.configSqlParams("@Codigo", Codigo);
+                query.configSqlConexion(conexion.getConnection());
+                conexion.openConnection();
+                result = query.exectQuerry();
+
+                // Definir las columnas en el DataTable
+                dataTable.Columns.Add("Codigo", typeof(string));
+                dataTable.Columns.Add("Descripcion", typeof(string));
+                dataTable.Columns.Add("Stock", typeof(int));
+
+                // Llenar el DataTable con los datos del SqlDataReader
+                while (result.Read())
+                {
+                    DataRow row = dataTable.NewRow();
+                    row["Codigo"] = result["Codigo"].ToString();
+                    row["Descripcion"] = result["Descripcion"].ToString();
                     row["Stock"] = Convert.ToInt32(result["StockPorProducto"]);
 
                     dataTable.Rows.Add(row);

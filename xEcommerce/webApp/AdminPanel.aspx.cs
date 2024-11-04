@@ -15,8 +15,19 @@ namespace webApp
 {
     public partial class AdminPanel : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        public bool IsEditMode
         {
+            get { return ViewState["IsEditMode"] != null && (bool)ViewState["IsEditMode"]; }
+            set { ViewState["IsEditMode"] = value; }
+        }
+        //private int _isEditId; // Variable privada para almacenar el ID
+        //public int IsEditId
+        //{
+        //    get { return _isEditId; }
+        //    set { _isEditId = value; }
+        //}
+        protected void Page_Load(object sender, EventArgs e)
+        {   
             try
             {
                 if (!IsPostBack)
@@ -77,6 +88,7 @@ namespace webApp
         protected void btnAddArticle_Click(object sender, EventArgs e)
         {
             //BOTON PARA AGREGAR ARTICULOS
+            IsEditMode = false;
             addArticleForm.Visible = true;
             dgvArticles.Visible = false;
             MarcaAS marca = new MarcaAS();
@@ -97,9 +109,6 @@ namespace webApp
             ddListType.DataTextField = "Descripcion";
             ddListType.DataBind();
 
-            
-
-
             // Response.Redirect(Request.RawUrl);
         }
 
@@ -116,15 +125,18 @@ namespace webApp
                 Articulo articulo = new Articulo();
                 ArticuloAS data = new ArticuloAS();
 
-                                // valida si los campos estan vacios
+                // valida si los campos estan vacios
                 if (string.IsNullOrWhiteSpace(txtCodeArticle.Text))
                 {
                     throw new Exception("El código del artículo es obligatorio.");
                 }
 
-                if (data.ValidarCopdigoActivo(txtCodeArticle.Text) == 1)
+                if (!IsEditMode)
                 {
-                    throw new Exception("El código del artículo esta en uso.");
+                    if (data.ValidarCodigoActivo(txtCodeArticle.Text) == 1)
+                    {
+                        throw new Exception("El código del artículo esta en uso.");
+                    }
                 }
 
                 if (string.IsNullOrWhiteSpace(txtDescripcion.Text))
@@ -142,12 +154,13 @@ namespace webApp
                     Console.WriteLine("El código del articulo no puede exceder los 10 caracteres.");
                     throw new Exception("El código del articulo no puede exceder los 10 caracteres.");
                 }
-                if (txtDetalle.Text.Length > 50)
+                if (txtDetalle.Text.Length > 250)
                 {
                     throw new Exception("El detalle del articulo no puede exceder los 50 caracteres.");
                 }
 
                 // Asignar valores a las propiedades del artículo
+                
                 articulo.Codigo = txtCodeArticle.Text;
                 articulo.Descripcion = txtDescripcion.Text;
                 articulo.Detalle = txtDetalle.Text;
@@ -155,12 +168,19 @@ namespace webApp
                 articulo.Tipo = new Tipo();
                 articulo.Categoria = new Categoria();
 
-                articulo.Marca.Id = int.Parse(ddListType.SelectedValue);
+                articulo.Marca.Id = int.Parse(ddListBrand.SelectedValue);
                 articulo.Tipo.Id = int.Parse(ddListType.SelectedValue); 
                 articulo.Categoria.Id = int.Parse(ddListCategory.SelectedValue);
 
-                
-                data.AgregarNuevoArticulo(articulo);
+
+                if (IsEditMode)
+                {
+                    data.ModificarArticulo(articulo);
+                }
+                else
+                {
+                    data.AgregarNuevoArticulo(articulo);
+                }
                 labelMsj.Text = "¡Se ha agregado exitosamente!";
                 labelMsj.Visible = true;
                 LimpiarFormulario();
@@ -199,6 +219,8 @@ namespace webApp
             ArticuloAS data = new ArticuloAS();
             if (e.CommandName == "Modificar")
             {
+                IsEditMode = true;
+
                 int idArticulo = Convert.ToInt32(e.CommandArgument);
                 List<Articulo> listaArticulos = data.ObtenerIdXModificacion(idArticulo.ToString());
 
@@ -207,30 +229,41 @@ namespace webApp
                 {
                     // Asignar el primer artículo de la lista al objeto articulo
                     Articulo articulo = listaArticulos[0];
-                    articulo.Marca = new Marca();
-                    articulo.Categoria = new Categoria();
-                    articulo.Tipo = new Tipo();
+
                     // Rellenar los controles con la información del artículo
+
                     txtCodeArticle.Text = articulo.Codigo;
                     txtDescripcion.Text = articulo.Descripcion;
                     txtDetalle.Text = articulo.Detalle;
-                    if (articulo.Marca != null)
-                    {
-                        ddListBrand.SelectedValue = articulo.Marca.Id.ToString();
-                    }
 
-                    if (articulo.Tipo != null)
-                    {
-                        ddListType.SelectedValue = articulo.Tipo.Id.ToString();
-                    }
+                    MarcaAS marca = new MarcaAS();
+                    ddListBrand.DataSource = marca.listar();
+                    ddListBrand.DataValueField = "Id";
+                    ddListBrand.DataTextField = "Descripcion";
+                    ddListBrand.DataBind();
 
-                    if (articulo.Categoria != null)
-                    {
-                        ddListCategory.SelectedValue = articulo.Categoria.Id.ToString();
-                    }
+                    ddListBrand.SelectedValue = articulo.Marca.Id.ToString();
+
+                    TipoAS tipo = new TipoAS();
+                    ddListType.DataSource = tipo.listar();
+                    ddListType.DataValueField = "Id";
+                    ddListType.DataTextField = "Descripcion";
+                    ddListType.DataBind();
+
+                    ddListType.SelectedValue = articulo.Tipo.Id.ToString();
+
+                    CategoriaAS categoria = new CategoriaAS();
+                    ddListCategory.DataSource = categoria.listar();
+                    ddListCategory.DataValueField = "Id";
+                    ddListCategory.DataTextField = "Descripcion";
+                    ddListCategory.DataBind();
+
+                    ddListCategory.SelectedValue = articulo.Categoria.Id.ToString();
+
 
                     // Hacer visible el formulario para editar
-                    addArticleForm.Visible = true; // El formulario debe ser el div que contiene tus campos
+                    addArticleForm.Visible = true; // El formulario debe ser el div que contiene tus 
+                    dgvArticles.Visible = false;
                 }
                 else
                 {

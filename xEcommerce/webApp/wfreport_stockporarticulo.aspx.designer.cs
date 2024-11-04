@@ -24,6 +24,24 @@ namespace webApp
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
+        /// txtCodArt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCodArt;
+
+        /// <summary>
+        /// btnSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearch;
+
+        /// <summary>
         /// ReportViewer1 control.
         /// </summary>
         /// <remarks>

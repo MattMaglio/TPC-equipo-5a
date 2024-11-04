@@ -341,8 +341,8 @@
                         <asp:BoundField DataField="Id" HeaderText="Id" />
                         <asp:BoundField DataField="Codigo" HeaderText="Codigo" />
                         <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
-                        <asp:BoundField DataField="Tipo.Descripcion" HeaderText="Tipo" />
                         <asp:BoundField DataField="Marca.Descripcion" HeaderText="Marca" />
+                        <asp:BoundField DataField="Tipo.Descripcion" HeaderText="Tipo" />
                         <asp:BoundField DataField="Categoria.Descripcion" HeaderText="Categoria" />
                         <asp:BoundField DataField="Detalle" HeaderText="Detalle" />
                         <asp:BoundField DataField="Estado" HeaderText="Estado" />
@@ -353,7 +353,7 @@
                                 <asp:Button Text="Modificar" CssClass="btn btn-primary"
                                     CommandName="Modificar"
                                     CommandArgument='<%# Eval("Id") %>'
-                                    runat="server" />
+                                    runat="server"/>
 
                                 <asp:Button Text="Eliminar" CssClass="btn btn-danger"
                                     CommandName="Delete"
