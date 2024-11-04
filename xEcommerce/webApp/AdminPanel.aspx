@@ -1,16 +1,18 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AdminPanel.aspx.cs" Inherits="webApp.AdminPanel" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AdminPanel.aspx.cs" Inherits="webApp.AdminPanel" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
-    function showSuccessMessage() {
-        $('#successModal').modal('show');
-    }
+        function showSuccessMessage() {
+            $('#successModal').modal('show');
+        }
 
-    //function redirectToLogin() {
-    //    window.location.href = "Login.aspx"; 
-    //}
+        //function redirectToLogin() {
+        //    window.location.href = "Login.aspx";
+        //}
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <asp:ScriptManager runat="server"></asp:ScriptManager>
     <style>
         /* Ajustes generales */
@@ -31,29 +33,40 @@
             max-width: 300px;
         }
 
-    .right-panel {
-        display: flex;
-        flex-direction: column; /* Puedes cambiar a 'row' si quieres que estén en fila */
-        align-items: flex-start; /* Ajusta los elementos a la izquierda */
-        padding: 0px;
-        margin-top: 40px;
-        border: 1px solid #ccc; /* Agrega borde si es necesario */
-    }
-    .right-panel .form-article {
-        margin-bottom: 20px;
-        width: 100%; /* Ajusta al ancho completo del panel */
-    }
-    .right-panel input, .right-panel select, .right-panel button, .right-panel a {
-        margin-bottom: 10px; /* Espacio entre los elementos */
-    }
+        .right-panel {
+            width: 100%; /* Ocupa EL 100% DE PANTALLAS CHICAS */
+            max-width: 700px; /* MAX PARA PANTALLAS GRANDES */
+            margin-top: 20px;
+        }
 
-    
-    
+        /* Flexibilidad en los formularios y grids */
+        .form-article {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 10px;
+            margin-top: -30px;
+        }
 
-    /* RESPONSIVE CON MEDIA QUERYS */
-    @media (min-width: 768px) {
-        .container {
-            flex-direction: row; /* Alinea los paneles en fila para pantallas grandes */
+        .form-tipific {
+            width: 100%;
+            max-width: 600px;
+            top: 25px; /* Distancia desde el borde superior */
+            left: 50%;
+            /*transform: translateX(-50%); /* Centra el formulario horizontalmente */
+            /*z-index: 1000; /* Asegura que esté encima de otros elementos */
+        }
+
+        .dgviewArticles {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* Centra horizontalmente */
+            align-items: center; /* Centra verticalmente */
+            height: 100vh;
+            margin-top: -150px;
         }
 
         /* RESPONSIVE CON MEDIA QUERYS */
@@ -168,32 +181,41 @@
     </style>
 
     <div class="container mt-4">
+        <%-- LEFT PANEL --%>
         <div class="left-panel">
-        <h2 class="h2">Admin Panel</h2>
+            <h2 class="h2">Admin Panel</h2>
 
-        <!--MENU DESPEGABLE CON ACORDEON -->
-        <div class="accordion custom-width" id="adminAccordion">
-            <!--SECCION ARTICULOS -->
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingArticles">
-                    <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseArticles" aria-expanded="false" aria-controls="collapseArticles">
-                        Articulos
-                    </button>
-                </h2>
-                <div id="collapseArticles" class="accordion-collapse collapse" aria-labelledby="headingArticles" data-bs-parent="#adminAccordion">
-                    <div class="accordion-body">
-                        <ul class="list-group mb-3">
-                            <li class="list-group-item">
-                                <asp:Button Text="Ver articulos" CssClass="btn btn-dark w-100" OnClick="btnViewArticles_Click" ID="btnViewArticles" runat="server" />
-                            </li>
-                               <li class="list-group-item">
-                                <asp:Button Text="Agregar articulo" CssClass="btn btn-dark w-100" ID="btnAddArticle" OnClick="btnAddArticle_Click" runat="server" />
-                            </li>  
-                               <li class="list-group-item">
-                            
-                        </li> 
-                        </ul>
+            <!-- MENU DESPEGABLE CON ACORDEON -->
+            <div class="accordion custom-width" id="adminAccordion">
 
+                <!--Sección Articulos -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingArticles">
+                        <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseArticles" aria-expanded="false" aria-controls="collapseArticles">
+                            Articulos
+                           
+                        </button>
+                    </h2>
+                    <div id="collapseArticles" class="accordion-collapse collapse" aria-labelledby="headingArticles" data-bs-parent="#adminAccordion">
+                        <div class="accordion-body">
+                            <ul class="list-group mb-3">
+                                <li class="list-group-item">
+                                    <asp:Button Text="Ver articulos" CssClass="btn btn-dark w-100" OnClick="btnViewArticles_Click" ID="btnViewArticles" runat="server" />
+                                </li>
+                                <li class="list-group-item">
+                                    <asp:Button Text="Agregar articulo" CssClass="btn btn-dark w-100" ID="btnAddArticle" OnClick="btnAddArticle_Click" runat="server" />
+                                </li>
+                                <li>
+                                    <asp:Button Text="Ver Tipificacion" CssClass="btn btn-dark w-100" ID="btnViewTipific" OnClick="btnViewTipific_Click" runat="server" />
+                                </li>
+                                <li class="list-group-item">
+                                    <asp:Button Text="Agregar Tipificacion" CssClass="btn btn-dark w-100" ID="btnAddTipific" OnClick="btnAddTipific_Click" runat="server" />
+                                </li>
+                                <li class="list-group-item">
+                                    <asp:Button Text="Agregar Stock y Precio" CssClass="btn btn-dark w-100" ID="btnAddSyP" OnClick="btnAddSyP_Click" runat="server" />
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
@@ -202,6 +224,7 @@
                     <h2 class="accordion-header" id="headingClients">
                         <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseClients" aria-expanded="true" aria-controls="collapseClients">
                             Usuarios
+                           
                         </button>
                     </h2>
                     <div id="collapseClients" class="accordion-collapse collapse" aria-labelledby="headingClients" data-bs-parent="#adminAccordion">
@@ -236,6 +259,7 @@
                     <h2 class="accordion-header" id="headingSell">
                         <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSell" aria-expanded="false" aria-controls="collapseSell">
                             Ventas
+                           
                         </button>
                     </h2>
                     <div id="collapseSell" class="accordion-collapse collapse" aria-labelledby="headingSell" data-bs-parent="#adminAccordion">
@@ -268,6 +292,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- Sección Listados -->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingReports">
@@ -290,38 +315,42 @@
                 </div>
 
             </div>
+            <!-- FIN de MENU DESPEGABLE CON ACORDEON -->
+
         </div>
+        <%-- FIN de LEFT PANEL --%>
 
-        <%--    SUCCESS ALERT--%>
-
-    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="successModalLabel">Welcome Aboard!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                You're Now Registered!
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="redirectToLogin()">OK</button>
+        <%-- SUCCESS ALERT --%>
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Welcome Aboard!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        You're Now Registered!
+               
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="redirectToLogin()">OK</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+        <%-- FIN de SUCCESS ALERT --%>
 
-
+        <%-- RIGHT PANEL --%>
         <div class="right-panel">
+
             <div class="form-article">
                 <div class="mt-3" runat="server" id="addArticleForm" visible="false">
                     <h4>Agregar nuevo articulo</h4>
-    
                     <asp:TextBox runat="server" ID="txtCodeArticle" Placeholder="Codigo" CssClass="form-control" />
-                    <asp:TextBox ID="txtDetalle" runat="server" CssClass="form-control" Placeholder="Detalle"></asp:TextBox>
                     <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" Placeholder="Descripcion"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtDetalle" Placeholder="Detalle" CssClass="form-control" />
 
                     <!-- DROP DOWN LIST MARCAS -->
                     <asp:DropDownList ID="ddListBrand" runat="server" CssClass="form-control"></asp:DropDownList>
@@ -330,58 +359,14 @@
                     <asp:DropDownList ID="ddListType" runat="server" CssClass="form-control"></asp:DropDownList>
 
                     <!-- DROP DOWN LIST CATEGORIA -->
-                    <asp:DropDownList ID="ddListCategory" runat="server" CssClass="form-control"></asp:DropDownList> 
-
-                    <!-- BOTÓN GUARDAR ARTÍCULO -->
+                    <asp:DropDownList ID="ddListCategory" runat="server" CssClass="form-control"></asp:DropDownList>
 
                     <asp:Button ID="btnSaveArticle" runat="server" CssClass="bn5" OnClick="btnSaveArticle_Click" Text="Guardar articulo" />
-
-                    <!-- BOTÓN CANCELAR -->
                     <a type="button" class="bn5" href="AdminPanel.aspx">Cancelar</a>
-
-
-                    <!-- MENSAJE -->
-                    <asp:Label ID="labelMsj" runat="server" CssClass="alert alert-success" Visible="false"></asp:Label>
-                </div>
-
-                </div>
-         <div class="dgviewArticles">
-                           <!-- GRID PARA MOSTRAR Los articulos -->
-                     <asp:GridView ID="dgvArticles" DataKeyNames="Id"  OnRowUpdating="dgvArticles_RowUpdating" OnRowDeleting="dgvArticles_RowDeleting" OnRowCommand="dgvArticles_RowCommand" runat="server" CssClass="table table-bordered mt-4" Visible="false" AutoGenerateColumns="False">
-                    <Columns>
-
-                    <asp:BoundField DataField="Id" HeaderText="Id" />
-                    <asp:BoundField DataField="Codigo" HeaderText="Codigo" />
-                    <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
-                    <asp:BoundField DataField="Tipo.Descripcion" HeaderText="Tipo" />
-                    <asp:BoundField DataField="Marca.Descripcion" HeaderText="Marca" />
-                    <asp:BoundField DataField="Categoria.Descripcion" HeaderText="Categoria" />
-                    <asp:BoundField DataField="Detalle" HeaderText="Detalle" />
-                    <asp:BoundField DataField="Estado" HeaderText="Estado" />
-                    <asp:TemplateField HeaderText="Acción">
-    <ItemTemplate>
-        <asp:Button Text="Modificar" CssClass="btn btn-primary"
-            CommandName="Modificar" 
-            CommandArgument='<%# Eval("Id") %>' 
-            runat="server" />
-
-        <asp:Button Text="Eliminar" CssClass="btn btn-danger" 
-            CommandName="Delete"
-            CommandArgument='<%# Eval("Id") %>' 
-            runat="server" 
-            OnClientClick="return confirm('¿Estás seguro de que deseas borrar este artículo?');" />
-    </ItemTemplate>
-</asp:TemplateField>
-                 </Columns>
-                </asp:GridView>
-        </div>
-         </div>
-            </div>
-    </asp:Content>
-
                     <asp:Label ID="labelMsj" runat="server" CssClass="alert alert-success" Visible="false"></asp:Label>
                 </div>
             </div>
+
             <div class="dgviewArticles">
                 <asp:GridView ID="dgvArticles" OnRowUpdating="dgvArticles_RowUpdating" OnRowDeleting="dgvArticles_RowDeleting" OnRowCommand="dgvArticles_RowCommand" runat="server" CssClass="table table-bordered mt-4" Visible="false" AutoGenerateColumns="False">
                     <Columns>
@@ -389,12 +374,118 @@
                         <asp:BoundField DataField="Id" HeaderText="Id" />
                         <asp:BoundField DataField="Codigo" HeaderText="Codigo" />
                         <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
-                        <asp:BoundField DataField="Tipo.Descripcion" HeaderText="Tipo" />
                         <asp:BoundField DataField="Marca.Descripcion" HeaderText="Marca" />
+                        <asp:BoundField DataField="Tipo.Descripcion" HeaderText="Tipo" />
                         <asp:BoundField DataField="Categoria.Descripcion" HeaderText="Categoria" />
                         <asp:BoundField DataField="Detalle" HeaderText="Detalle" />
                         <asp:BoundField DataField="Estado" HeaderText="Estado" />
 
+
+                        <asp:TemplateField HeaderText="Acción">
+                            <ItemTemplate>
+                                <asp:Button Text="Modificar" CssClass="btn btn-primary"
+                                    CommandName="Modificar"
+                                    CommandArgument='<%# Eval("Id") %>'
+                                    runat="server" />
+
+                                <asp:Button Text="Eliminar" CssClass="btn btn-danger"
+                                    CommandName="Delete"
+                                    CommandArgument='<%# Eval("Id") %>'
+                                    runat="server"
+                                    OnClientClick="return confirm('¿Estás seguro de que deseas borrar este artículo?');" />
+
+                                <asp:Button Text="Cargar Stock y precio" CssClass="btn btn-primary"
+                                    CommandName="Actualizar"
+                                    CommandArgument='<%# Eval("Id") %>'
+                                    runat="server"
+                                    OnClientClick="return confirm('¿Estás seguro de que deseas actualziar el stock y precio de este artículo?');" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+            </div>
+
+            <div class="dgviewSyP">
+                <asp:Label ID="lblTitulo" runat="server" Text="Ingrese la combinacion que desee actualziar" Visible="false"></asp:Label>
+
+                <asp:Label ID="lblArticulo" runat="server" Text="Articulo: " Visible="false"></asp:Label>
+                <asp:DropDownList ID="ddlArticulo" runat="server" Visible="false"></asp:DropDownList>
+
+                <asp:Label ID="lblColor" runat="server" Text="Color: " Visible="false"></asp:Label>
+                <asp:DropDownList ID="ddlColor" runat="server" Visible="false"></asp:DropDownList>
+
+                <asp:Label ID="lblTalle" runat="server" Text="Talle: " Visible="false"></asp:Label>
+                <asp:DropDownList ID="ddlTalle" runat="server" Visible="false"></asp:DropDownList>
+
+                <asp:Label ID="lblStock" runat="server" Text="Cantidad: " Visible="false"></asp:Label>
+                <asp:TextBox ID="txtStock" runat="server" Visible="false"></asp:TextBox>
+                <asp:Button ID="btnActStock" runat="server" Text="Actualziar Stock" Visible="false" />
+
+                <asp:Label ID="lblPrecio" runat="server" Text="Precio $: " Visible="false"></asp:Label>
+                <asp:TextBox ID="txtPrecio" runat="server" Visible="false"></asp:TextBox>
+                <asp:Button ID="btnActPrecio" runat="server" Text="Actualziar Precio" Visible="false" />
+
+                <asp:GridView ID="dgvSyP" runat="server" CssClass="table table-bordered mt-4" Visible="false" AutoGenerateColumns="False">
+                    <Columns>
+                        <asp:BoundField DataField="Id" HeaderText="Id" />
+                        <asp:BoundField DataField="Codigo" HeaderText="Codigo" />
+                        <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
+                        <asp:BoundField DataField="Color.Descripcion" HeaderText="Color" />
+                        <asp:BoundField DataField="Talle.Descripcion" HeaderText="Talle" />
+                        <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                        <asp:BoundField DataField="Stock" HeaderText="Stock" />
+                        <asp:BoundField DataField="Precio" HeaderText="Precio" />
+
+                        <asp:TemplateField HeaderText="Acción">
+                            <ItemTemplate>
+                                <asp:Button Text="Modificar Stock y Precio" CssClass="btn btn-primary"
+                                    CommandName="Modificar"
+                                    CommandArgument='<%# Eval("Id") %>'
+                                    runat="server" />
+
+                                <asp:Button Text="Eliminar combinacion" CssClass="btn btn-danger"
+                                    CommandName="Delete"
+                                    CommandArgument='<%# Eval("Id") %>'
+                                    runat="server"
+                                    OnClientClick="return confirm('¿Estás seguro de que deseas borrar este artículo?');" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+            </div>
+
+            <div class="form-tipific">
+                <div class="mt-3" runat="server" id="addTipificForm" visible="false">
+
+                    <h4>Agregar nueva Tipificacion</h4>
+
+                    <asp:DropDownList ID="ddlTipoTipific" runat="server" CssClass="form-control"></asp:DropDownList>
+
+                    <asp:TextBox ID="txtCodTipific" runat="server" CssClass="form-control" Placeholder="Codigo" />
+                    <asp:TextBox ID="txtDescTipific" runat="server" CssClass="form-control" Placeholder="Descripcion" />
+
+                    <asp:Button ID="btnAceptar" CssClass="bn5" Text="Guardar Tipificacion" OnClick="btnAceptarTipific_Click" runat="server" />
+                    <a type="button" class="bn5" href="AdminPanel.aspx">Cancelar</a>
+
+                    <asp:Label ID="label1" runat="server" CssClass="alert alert-success" Visible="false"></asp:Label>
+                </div>
+            </div>
+
+            <div class="dgviewTipificaciones">
+                <!-- OnRowUpdating="dgvTipific_RowUpdating" OnRowDeleting="dgvTipific_RowDeleting" OnRowCommand="dgvTipific_RowCommand" -->
+                <asp:Label ID="lblSelecTipific" runat="server" Text="Selecione la tipificacion que desea visualizar" Visible="false"></asp:Label>
+                <asp:Button ID="btnTipificMarca" CssClass="btn btn-primary" OnClick="btnTipificMarca_Click" runat="server" Text="Marca" Visible="false" />
+                <asp:Button ID="btnTipificTipo" CssClass="btn btn-primary" OnClick="btnTipificTipo_Click" runat="server" Text="Tipo" Visible="false" />
+                <asp:Button ID="btnTipificCategoria" CssClass="btn btn-primary" OnClick="btnTipificCategoria_Click" runat="server" Text="Categoria" Visible="false" />
+                <asp:Button ID="btnTipificColor" CssClass="btn btn-primary" OnClick="btnTipificColor_Click" runat="server" Text="Color" Visible="false" />
+                <asp:Button ID="btnTipificTalle" CssClass="btn btn-primary" OnClick="btnTipificTalle_Click" runat="server" Text="Talle" Visible="false" />
+                <asp:GridView ID="dgvTipific" runat="server" CssClass="table table-bordered mt-4" Visible="false" AutoGenerateColumns="False"
+                    OnRowUpdating="dgvTipific_RowUpdating" OnRowDeleting="dgvTipific_RowDeleting" OnRowCommand="dgvTipific_RowCommand">
+                    <Columns>
+                        <asp:BoundField DataField="Id" HeaderText="Id" />
+                        <asp:BoundField DataField="Codigo" HeaderText="Codigo" />
+                        <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
+                        <asp:BoundField DataField="Estado" HeaderText="Estado" />
 
                         <asp:TemplateField HeaderText="Acción">
                             <ItemTemplate>
@@ -413,6 +504,18 @@
                     </Columns>
                 </asp:GridView>
             </div>
+
         </div>
+
+        <%-- FIN de RIGHT PANEL --%>
     </div>
+
 </asp:Content>
+
+         
+   
+
+
+
+
+
