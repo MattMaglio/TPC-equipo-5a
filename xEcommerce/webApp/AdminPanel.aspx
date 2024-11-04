@@ -1,4 +1,4 @@
-﻿ <%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AdminPanel.aspx.cs" Inherits="webApp.AdminPanel" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AdminPanel.aspx.cs" Inherits="webApp.AdminPanel" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
     function showSuccessMessage() {
@@ -32,20 +32,25 @@
             max-width: 300px;
         }
 
-        .right-panel {
-            width: 100%; /* Ocupa EL 100% DE PANTALLAS CHICAS */
-            max-width: 700px; /* MAX PARA PANTALLAS GRANDES */
-            margin-top: 20px;
-        }
+    .right-panel {
+        display: flex;
+        flex-direction: column; /* Puedes cambiar a 'row' si quieres que estén en fila */
+        align-items: flex-start; /* Ajusta los elementos a la izquierda */
+        padding: 0px;
+        margin-top: 40px;
+        border: 1px solid #ccc; /* Agrega borde si es necesario */
+    }
+    .right-panel .form-article {
+        margin-bottom: 20px;
+        width: 100%; /* Ajusta al ancho completo del panel */
+    }
+    .right-panel input, .right-panel select, .right-panel button, .right-panel a {
+        margin-bottom: 10px; /* Espacio entre los elementos */
+    }
 
-        /* Flexibilidad en los formularios y grids */
-        .form-article {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 10px;
-            margin-top: -30px;
-        }
+    
+    
+
 
         .form-tipific {
             width: 100%;
@@ -343,7 +348,9 @@
             <div class="form-article">
                 <div class="mt-3" runat="server" id="addArticleForm" visible="false">
                     <h4>Agregar nuevo articulo</h4>
+    
                     <asp:TextBox runat="server" ID="txtCodeArticle" Placeholder="Codigo" CssClass="form-control" />
+                    <asp:TextBox ID="txtDetalle" runat="server" CssClass="form-control" Placeholder="Detalle"></asp:TextBox>
                     <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" Placeholder="Descripcion"></asp:TextBox>
                     <asp:TextBox runat="server" ID="txtDetalle" Placeholder="Detalle" CssClass="form-control" />
 
@@ -354,10 +361,55 @@
                     <asp:DropDownList ID="ddListType" runat="server" CssClass="form-control"></asp:DropDownList>
 
                     <!-- DROP DOWN LIST CATEGORIA -->
-                    <asp:DropDownList ID="ddListCategory" runat="server" CssClass="form-control"></asp:DropDownList>
+                    <asp:DropDownList ID="ddListCategory" runat="server" CssClass="form-control"></asp:DropDownList> 
+
+                    <!-- BOTÓN GUARDAR ARTÍCULO -->
 
                     <asp:Button ID="btnSaveArticle" runat="server" CssClass="bn5" OnClick="btnSaveArticle_Click" Text="Guardar articulo" />
+
+                    <!-- BOTÓN CANCELAR -->
                     <a type="button" class="bn5" href="AdminPanel.aspx">Cancelar</a>
+
+
+                    <!-- MENSAJE -->
+                    <asp:Label ID="labelMsj" runat="server" CssClass="alert alert-success" Visible="false"></asp:Label>
+                </div>
+
+                </div>
+         <div class="dgviewArticles">
+                           <!-- GRID PARA MOSTRAR Los articulos -->
+                     <asp:GridView ID="dgvArticles" DataKeyNames="Id"  OnRowUpdating="dgvArticles_RowUpdating" OnRowDeleting="dgvArticles_RowDeleting" OnRowCommand="dgvArticles_RowCommand" runat="server" CssClass="table table-bordered mt-4" Visible="false" AutoGenerateColumns="False">
+                    <Columns>
+
+                    <asp:BoundField DataField="Id" HeaderText="Id" />
+                    <asp:BoundField DataField="Codigo" HeaderText="Codigo" />
+                    <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
+                    <asp:BoundField DataField="Tipo.Descripcion" HeaderText="Tipo" />
+                    <asp:BoundField DataField="Marca.Descripcion" HeaderText="Marca" />
+                    <asp:BoundField DataField="Categoria.Descripcion" HeaderText="Categoria" />
+                    <asp:BoundField DataField="Detalle" HeaderText="Detalle" />
+                    <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                    <asp:TemplateField HeaderText="Acción">
+    <ItemTemplate>
+        <asp:Button Text="Modificar" CssClass="btn btn-primary"
+            CommandName="Modificar" 
+            CommandArgument='<%# Eval("Id") %>' 
+            runat="server" />
+
+        <asp:Button Text="Eliminar" CssClass="btn btn-danger" 
+            CommandName="Delete"
+            CommandArgument='<%# Eval("Id") %>' 
+            runat="server" 
+            OnClientClick="return confirm('¿Estás seguro de que deseas borrar este artículo?');" />
+    </ItemTemplate>
+</asp:TemplateField>
+                 </Columns>
+                </asp:GridView>
+        </div>
+         </div>
+            </div>
+    </asp:Content>
+
                     <asp:Label ID="labelMsj" runat="server" CssClass="alert alert-success" Visible="false"></asp:Label>
                 </div>
             </div>
@@ -505,13 +557,4 @@
         <%-- FIN de RIGHT PANEL --%>
     
     </div>
-
 </asp:Content>
-
-         
-   
-
-
-
-
-
