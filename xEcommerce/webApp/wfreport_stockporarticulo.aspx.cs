@@ -15,14 +15,12 @@ namespace webApp
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
-
-            ShowReport();
         }
 
-        private void ShowReport()
+        private void ShowReport(string codArt)
         {
             // Obtener el DataTable desde el método
-            var dataTable = artAS.listarStockPorArticulo();
+            var dataTable = artAS.listarStockPorArticulo_Filtrado(codArt);
             var urlReport = "~/report/report_stockporarticulo.rdlc";
 
             ReportViewer1.ProcessingMode = ProcessingMode.Local;
@@ -35,6 +33,11 @@ namespace webApp
             ReportViewer1.LocalReport.DataSources.Add(ds);
             ReportViewer1.LocalReport.Refresh();
 
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            ShowReport(txtCodArt.Text);
         }
     }
 }

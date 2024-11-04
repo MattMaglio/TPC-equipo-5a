@@ -5,5 +5,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <asp:TextBox runat="server" ID="txtCodArt" Placeholder="Codigo" CssClass="form-control" />
+    <asp:Button ID="btnSearch" runat="server" Text="Buscar" OnClick="btnSearch_Click"/>
     <rsweb:ReportViewer ID="ReportViewer1" runat="server" Width="100%" Height="800px"></rsweb:ReportViewer>
 </asp:Content>
