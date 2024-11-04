@@ -60,6 +60,7 @@
     <Compile Include="NivelDeAccesso.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provincia.cs" />
+    <Compile Include="Tipificacion.cs" />
     <Compile Include="Talle.cs" />
     <Compile Include="Tipo.cs" />
     <Compile Include="Usuario.cs" />
