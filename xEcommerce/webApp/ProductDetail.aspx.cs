@@ -31,7 +31,7 @@ namespace webApp
                 try
                 {
                     dataAccess.openConnection();
-                    dataManipulator.configSqlProcedure("Catalogo.ObtenerArticuloPorId");
+                    dataManipulator.configSqlProcedure("Catalogo.ObtenerArticuloPorIdParaCards");
                     dataManipulator.configSqlConexion(dataAccess.getConnection());
                     dataManipulator.configSqlParams("@Id", productId);
 
