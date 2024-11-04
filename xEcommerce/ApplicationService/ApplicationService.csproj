@@ -47,6 +47,7 @@
     <Compile Include="MarcaAS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TallesAS.cs" />
+    <Compile Include="TipificacionAS.cs" />
     <Compile Include="TipoAS.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -63,6 +63,61 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
+        public List<Articulo> listarConSyP()
+        {
+            List<Articulo> lista = new List<Articulo>();
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+            SqlDataReader result;
+
+
+            try
+            {
+                query.configSqlProcedure("Operaciones.SP_StockYPrecio");
+                query.configSqlConexion(conexion.getConnection());
+                conexion.openConnection();
+                result = query.exectQuerry();
+                while (result.Read())
+                {
+                    Articulo aux = new Articulo
+                    {
+
+                        Id = (int)result["Id de Articulo"],
+                        Codigo = result["Codigo de Articulo"].ToString(),
+                        Descripcion = result["Descripcion de Articulo"].ToString(),
+                        Estado = true,
+                        Color = new Color
+                        {
+                            Id = (int)result["Id de Color"],
+                            Codigo = result["Codigo de Color"].ToString(),
+                            Descripcion = result["Descripcion de Color"].ToString()
+                        },
+                        Talle = new Talle
+                        {
+                            Id = (int)result["Id de Talle"],
+                            Codigo = result["Codigo de Talle"].ToString(),
+                            Descripcion = result["Descripcion de Talle"].ToString()
+                        },
+                        Stock = (int)result["Cantidad"],
+                        Precio = Convert.ToSingle(result["Precio"])
+                    };
+
+                    lista.Add(aux);
+
+                }
+                return lista;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
+        }
         public List<Articulo> ObtenerIdXModificacion(string id="")
         {
             List<Articulo> lista = new List<Articulo>();
@@ -387,7 +442,6 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
-
         public DataTable listarStockPorArticulo_Filtrado(string Codigo)
         {
             DataTable dataTable = new DataTable();
