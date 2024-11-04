@@ -333,8 +333,8 @@ BEGIN
         "Descripcion",
         "StockPorProducto"
     FROM Operaciones.VW_StockPorArticulos
-        WHERE (@Codigo = '' OR "Codigo" = @Codigo)
-    ORDER BY "Codigo";
+    WHERE "Codigo" = @Codigo
+    ORDER BY "Codigo"
 END;
 GO
 
@@ -359,7 +359,7 @@ CREATE OR ALTER PROCEDURE Operaciones.SP_Listado_StockYPrecio_Filtrado
 AS
 BEGIN
     SELECT "Codigo de Articulo",
-        "Descripcion de Articulo",
+    	"Descripcion de Articulo",
         "Codigo de Color",
         "Descripcion de Color",
         "Codigo de Talle",
@@ -367,29 +367,8 @@ BEGIN
         "Cantidad",
         "Precio"
     FROM Operaciones.VW_StockYPrecios
-    WHERE (@Codigo = '' OR "Codigo de Articulo" = @Codigo)
-    ORDER BY "Codigo de Articulo", "Codigo de Color", "Codigo de Talle";
-END;
-GO
-
-CREATE OR ALTER PROCEDURE Operaciones.SP_Articulo_StockYPrecio_Filtrado
-@Id INT
-AS
-BEGIN
-    SELECT "Id de Articulo",
-        "Codigo de Articulo",
-        "Descripcion de Articulo",
-        "Id de Color",
-        "Codigo de Color",
-        "Descripcion de Color",
-        "Id de Talle",
-        "Codigo de Talle",
-        "Descripcion de Talle",
-        "Cantidad",
-        "Precio"
-    FROM Operaciones.VW_StockYPrecios
-    WHERE (@Id = '' OR "Id de Articulo" = @Id)
-    ORDER BY "Codigo de Articulo", "Codigo de Color", "Codigo de Talle";
+    WHERE "Codigo de Articulo" = @Codigo
+    ORDER BY "Codigo de Articulo", "Codigo de Color", "Codigo de Talle"
 END;
 GO
 
@@ -429,37 +408,29 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER PROCEDURE Catalogo.ObtenerArticuloPorId
+CREATE PROCEDURE Catalogo.ObtenerArticuloPorId
     @Id INT
 AS
 BEGIN
     SET NOCOUNT ON;
+
     SELECT
-        a.Id,
-        a.Codigo,
-        a.Descripcion,
-        a.Estado,
-        a.Detalle,
-        t.Id AS "Id Tipo",
-        t.Codigo AS "Codigo Tipo",
-        t.Descripcion AS "Descripcion Tipo",
-        m.Id AS "Id Marca",
-        m.Codigo AS "Codigo Marca",
-        m.Descripcion AS "Descripcion Marca",
-        c.Id AS "Id Categoria",
-        c.Codigo AS "Codigo Categoria",
-        c.Descripcion AS "Descripcion Categoria"
+        Id,
+        Codigo,
+        Descripcion,
+        Estado,
+        Detalle,
+        (SELECT Descripcion FROM Catalogo.Tipos WHERE Id = Catalogo.Articulos.IdTipo) AS Tipo,
+        (SELECT Descripcion FROM Catalogo.Marcas WHERE Id = Catalogo.Articulos.IdMarca) AS Marca,
+        (SELECT Descripcion FROM Catalogo.Categorias WHERE Id = Catalogo.Articulos.IdCategoria) AS Categoria
     FROM
-        Catalogo.Articulos a
-        INNER JOIN Catalogo.Tipos t ON a.IdTipo = t.Id
-        INNER JOIN Catalogo.Marcas m ON a.IdMarca = m.Id
-        INNER JOIN Catalogo.Categorias c ON a.IdCategoria = c.Id
-    WHERE a.Id = @Id
-        AND a.Estado = 1;
+        Catalogo.Articulos
+    WHERE Id = @Id
+        AND Estado = 1;
 END;
 GO
 
-CREATE OR ALTER PROCEDURE Catalogo.InsertarNuevoArticulo
+CREATE PROCEDURE Catalogo.InsertarNuevoArticulo
     @Codigo VARCHAR(10),
     @Descripcion VARCHAR(255),
     @IdTipo INT,
@@ -485,7 +456,7 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER PROCEDURE Catalogo.EliminarArticulo
+CREATE PROCEDURE Catalogo.EliminarArticulo
     @IdArticulo INT
 AS
 BEGIN
@@ -501,284 +472,6 @@ BEGIN
     BEGIN CATCH
         ROLLBACK TRANSACTION;
     END CATCH
-END;
-GO
-
-
-CREATE OR ALTER PROCEDURE Catalogo.SP_EliminarMarca
-    @Id INT
-AS
-BEGIN
-    BEGIN TRY
-        BEGIN TRANSACTION;
-            DELETE FROM Catalogo.Marcas
-            WHERE Id = @Id;
-        COMMIT TRANSACTION;
-
-        PRINT 'Marca eliminada exitosamente.';
-    END TRY
-
-    BEGIN CATCH
-        ROLLBACK TRANSACTION;
-    END CATCH
-END;
-GO
-
-CREATE OR ALTER PROCEDURE Catalogo.SP_ModificarArticulo
-    @Codigo VARCHAR(10),
-    @Descripcion VARCHAR(255),
-    @IdTipo INT,
-    @IdMarca INT,
-    @IdCategoria INT,
-    @Detalle VARCHAR(255)
-AS
-BEGIN
-    -- Iniciar una transacción para asegurar que todas las operaciones se realicen juntas
-    BEGIN TRY
-        BEGIN TRANSACTION;
-
-            DECLARE @Id INT;
-
-            --Obtenemos el id del Articulo.
-            SELECT @Id = Id FROM Catalogo.Articulos WHERE Codigo = @Codigo
-
-            -- Insertar en la tabla Articulos.
-            UPDATE Catalogo.Articulos
-            SET Codigo = @Codigo,
-                Descripcion = @Descripcion,
-                IdTipo = @IdTipo,
-                IdMarca = @IdMarca,
-                IdCategoria = @IdCategoria,
-                Detalle = @Detalle
-            WHERE Id = @Id;
-            -- Confirmar la transacción
-            COMMIT TRANSACTION;
-    END TRY
-
-    BEGIN CATCH
-        ROLLBACK TRANSACTION;
-        THROW;
-    END CATCH
-END;
-GO
-
-CREATE OR ALTER PROCEDURE Catalogo.SP_ValidarCodigoTipificacion
-    @Tipificacion INT,
-    @Codigo VARCHAR(10)
-AS
-BEGIN
-
-    -- Determinar la tabla de inserción según el valor de @Tipificacion
-    IF @Tipificacion = 1
-    BEGIN
-        SELECT Estado FROM Catalogo.Marcas WHERE Codigo = @Codigo
-    END
-    ELSE IF @Tipificacion = 2
-    BEGIN
-        SELECT Estado FROM Catalogo.Tipos WHERE Codigo = @Codigo
-    END
-    ELSE IF @Tipificacion = 3
-    BEGIN
-        SELECT Estado FROM Catalogo.Categorias WHERE Codigo = @Codigo
-    END
-    ELSE IF @Tipificacion = 4
-    BEGIN
-        SELECT Estado FROM Catalogo.Colores WHERE Codigo = @Codigo
-    END
-    ELSE IF @Tipificacion = 5
-    BEGIN
-       SELECT Estado FROM Catalogo.Talles WHERE Codigo = @Codigo
-    END
-END;
-GO
-
-CREATE OR ALTER PROCEDURE Catalogo.SP_InsertarTipificacion
-    @Tipificacion INT,
-    @Codigo VARCHAR(10),
-    @Descripcion VARCHAR(25)
-AS
-BEGIN
-    -- Iniciar una transacción para asegurar que todas las operaciones se realicen juntas
-    BEGIN TRY
-        BEGIN TRANSACTION;
-            -- Determinar la tabla de inserción según el valor de @Tipificacion
-                IF @Tipificacion = 1
-                BEGIN
-                    INSERT INTO Catalogo.Marcas (Codigo, Descripcion)
-                    VALUES (@Codigo, @Descripcion);
-                END
-                ELSE IF @Tipificacion = 2
-                BEGIN
-                     INSERT INTO Catalogo.Tipos (Codigo, Descripcion)
-                    VALUES (@Codigo, @Descripcion);
-                END
-                ELSE IF @Tipificacion = 3
-                BEGIN
-                    INSERT INTO Catalogo.Categorias (Codigo, Descripcion)
-                    VALUES (@Codigo, @Descripcion);
-                END
-                ELSE IF @Tipificacion = 4
-                BEGIN
-                    INSERT INTO Catalogo.Colores (Codigo, Descripcion)
-                    VALUES (@Codigo, @Descripcion);
-                END
-                ELSE IF @Tipificacion = 5
-                BEGIN
-                    INSERT INTO Catalogo.Talles (Codigo, Descripcion)
-                    VALUES (@Codigo, @Descripcion);
-                END
-            COMMIT TRANSACTION;
-    END TRY
-
-    BEGIN CATCH
-        ROLLBACK TRANSACTION;
-        THROW;
-    END CATCH
-END;
-GO
-
-CREATE OR ALTER PROCEDURE Catalogo.SP_InsertarColor
-    @Codigo VARCHAR(10),
-    @Descripcion VARCHAR(25)
-AS
-BEGIN
-    -- Iniciar una transacción para asegurar que todas las operaciones se realicen juntas
-    BEGIN TRY
-        BEGIN TRANSACTION;
-            -- Insertar en la tabla Tipo
-            INSERT INTO Catalogo.Colores (Codigo, Descripcion)
-            VALUES (@Codigo, @Descripcion);
-            -- Confirmar la transacción
-            COMMIT TRANSACTION;
-    END TRY
-
-    BEGIN CATCH
-        ROLLBACK TRANSACTION;
-        THROW;
-    END CATCH
-END;
-GO
-
-CREATE OR ALTER PROCEDURE Catalogo.SP_InsertarTalle
-    @Codigo VARCHAR(10),
-    @Descripcion VARCHAR(25)
-AS
-BEGIN
-    -- Iniciar una transacción para asegurar que todas las operaciones se realicen juntas
-    BEGIN TRY
-        BEGIN TRANSACTION;
-            -- Insertar en la tabla Tipo
-            INSERT INTO Catalogo.Talles (Codigo, Descripcion)
-            VALUES (@Codigo, @Descripcion);
-            -- Confirmar la transacción
-            COMMIT TRANSACTION;
-    END TRY
-
-    BEGIN CATCH
-        ROLLBACK TRANSACTION;
-        THROW;
-    END CATCH
-END;
-GO
-
-CREATE OR ALTER PROCEDURE Catalogo.SP_InsertarTipo
-    @Codigo VARCHAR(10),
-    @Descripcion VARCHAR(25)
-AS
-BEGIN
-    -- Iniciar una transacción para asegurar que todas las operaciones se realicen juntas
-    BEGIN TRY
-        BEGIN TRANSACTION;
-            -- Insertar en la tabla Tipo
-            INSERT INTO Catalogo.Tipos (Codigo, Descripcion)
-            VALUES (@Codigo, @Descripcion);
-            -- Confirmar la transacción
-            COMMIT TRANSACTION;
-    END TRY
-
-    BEGIN CATCH
-        ROLLBACK TRANSACTION;
-        THROW;
-    END CATCH
-END;
-GO
-
-CREATE OR ALTER PROCEDURE Catalogo.SP_InsertarCategoria
-    @Codigo VARCHAR(10),
-    @Descripcion VARCHAR(25)
-AS
-BEGIN
-    -- Iniciar una transacción para asegurar que todas las operaciones se realicen juntas
-    BEGIN TRY
-        BEGIN TRANSACTION;
-            -- Insertar en la tabla Categoria
-            INSERT INTO Catalogo.Categorias (Codigo, Descripcion)
-            VALUES (@Codigo, @Descripcion);
-            -- Confirmar la transacción
-            COMMIT TRANSACTION;
-    END TRY
-
-    BEGIN CATCH
-        ROLLBACK TRANSACTION;
-        THROW;
-    END CATCH
-END;
-GO
-
-CREATE OR ALTER PROCEDURE Catalogo.SP_InsertarMarca
-    @Codigo VARCHAR(10),
-    @Descripcion VARCHAR(25)
-AS
-BEGIN
-    -- Iniciar una transacción para asegurar que todas las operaciones se realicen juntas
-    BEGIN TRY
-        BEGIN TRANSACTION;
-            -- Insertar en la tabla Marca
-            INSERT INTO Catalogo.Marcas (Codigo, Descripcion)
-            VALUES (@Codigo, @Descripcion);
-            -- Confirmar la transacción
-            COMMIT TRANSACTION;
-    END TRY
-
-    BEGIN CATCH
-        ROLLBACK TRANSACTION;
-        THROW;
-    END CATCH
-END;
-GO
-
-CREATE OR ALTER PROCEDURE Catalogo.SP_Listado_TipificacionesCompletas
-AS
-BEGIN
-    SELECT Tipificacion, Id, Codigo, Descripcion, Estado
-    FROM Catalogo.VW_Tipifiaciones
-    ORDER BY Tipificacion, Codigo DESC;
-END;
-GO
-
-CREATE OR ALTER PROCEDURE Operaciones.SP_ValidarIntegridadTipificacion
-    @Tipificacion INT,
-    @Id INT
-AS
-BEGIN
-    -- Definir el nombre de la columna de ID en función de @Tipificacion
-    DECLARE @columnName NVARCHAR(50);
-
-    -- Asignar la columna de ID correspondiente al tipo de tipificación
-    SET @columnName = CASE @Tipificacion
-                        WHEN 1 THEN 'Id Marca'
-                        WHEN 2 THEN 'Id Tipo'
-                        WHEN 3 THEN 'Id Categoria'
-                        WHEN 4 THEN 'Id Color'
-                        WHEN 5 THEN 'Id Talle'
-                      END;
-
-    -- Construir la consulta dinámica
-    DECLARE @sql NVARCHAR(MAX);
-    SET @sql = N'SELECT COUNT(*) FROM Operaciones.VW_IntegridadTipificaciones WHERE [' + @columnName + '] = @Id';
-
-    -- Ejecutar la consulta dinámica
-    EXEC sp_executesql @sql, N'@Id INT', @Id;
 END;
 GO
 

@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace webApp
 {
-    public partial class wfreport_stockporarticulo : System.Web.UI.Page
+    public partial class wfreport_stockyprecio_filtrado : System.Web.UI.Page
     {
         ArticuloAS artAS = new ArticuloAS();
         protected void Page_Load(object sender, EventArgs e)
@@ -18,12 +18,14 @@ namespace webApp
 
             ShowReport();
         }
-
         private void ShowReport()
         {
             // Obtener el DataTable desde el método
-            var dataTable = artAS.listarStockPorArticulo();
-            var urlReport = "~/report/report_stockporarticulo.rdlc";
+            //var dataTable = artAS.listarStockYPrecio_Filtrado("ART001");
+            //var urlReport = "~/report/report_stockyprecio_filtrado.rdlc";
+
+            var dataTable = artAS.listarStockYPrecio();
+            var urlReport = "~/report/report_stockyprecio.rdlc";
 
             ReportViewer1.ProcessingMode = ProcessingMode.Local;
             ReportViewer1.LocalReport.ReportPath = Server.MapPath(urlReport);

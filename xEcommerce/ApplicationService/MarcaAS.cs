@@ -30,8 +30,7 @@ namespace ApplicationService
                     aux.Id = (int)result["Id"];
                     aux.Codigo = (string)result["Codigo"];
                     aux.Descripcion = (string)result["Descripcion"];
-                    aux.Estado = (bool)result["Estado"];
-
+                    
                     lista.Add(aux);
                 }
 
@@ -48,29 +47,5 @@ namespace ApplicationService
             }
         }
 
-        public void EliminarMarca(int Id)
-        {
-            DataAccess conexion = new DataAccess();
-            DataManipulator query = new DataManipulator();
-            try
-            {
-                query.configSqlProcedure("Catalogo.SP_EliminarMarca");
-                query.configSqlConexion(conexion.getConnection());
-                conexion.openConnection();
-                query.configSqlParams("@Id", Id);
-                query.exectCommand();
-
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception("Error al eliminar la Marca: " + ex.Message, ex);
-            }
-            finally
-            {
-                conexion.closeConnection();
-            }
-
-        }
     }
 }

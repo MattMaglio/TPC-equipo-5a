@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace webApp.report
+namespace webApp
 {
 
 
-    public partial class wfreport_stockyprecios
+    public partial class wfreport_stockyprecio_filtrado
     {
 
         /// <summary>
@@ -22,6 +22,15 @@ namespace webApp.report
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager ScriptManager1;
+
+        /// <summary>
+        /// btnSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearch;
 
         /// <summary>
         /// ReportViewer1 control.
