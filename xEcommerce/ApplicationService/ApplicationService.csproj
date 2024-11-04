@@ -43,9 +43,12 @@
   <ItemGroup>
     <Compile Include="ArticuloAS.cs" />
     <Compile Include="CategoriaAS.cs" />
+    <Compile Include="CiudadAS.cs" />
+    <Compile Include="ClientAS.cs" />
     <Compile Include="ColorAS.cs" />
     <Compile Include="MarcaAS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProvinciaAS.cs" />
     <Compile Include="TallesAS.cs" />
     <Compile Include="TipoAS.cs" />
   </ItemGroup>

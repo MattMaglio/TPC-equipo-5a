@@ -25,31 +25,32 @@ namespace webApp
 
         private void CargarProductosDestacados()
         {
-              DataAccess dataAccess = new DataAccess();
-             DataManipulator dataManipulator = new DataManipulator();
+            DataAccess dataAccess = new DataAccess();
+            DataManipulator dataManipulator = new DataManipulator();
 
             try
             {
-                 dataAccess.openConnection();
+                dataAccess.openConnection();
                 dataManipulator.configSqlProcedure("Catalogo.ListarArticulosConImagen");
-              dataManipulator.configSqlConexion(dataAccess.getConnection());
+                dataManipulator.configSqlConexion(dataAccess.getConnection());
 
-              SqlDataReader reader = dataManipulator.exectQuerry();
+                SqlDataReader reader = dataManipulator.exectQuerry();
 
-             rptFeaturedProducts.DataSource = reader;
-              rptFeaturedProducts.DataBind();
-          }
-          catch (Exception ex)
-          {
-             //error
-         }
-         finally
-        {
-            dataAccess.closeConnection();
-         }
-          }
+                rptFeaturedProducts.DataSource = reader;
+                rptFeaturedProducts.DataBind();
+            }
+            catch (Exception ex)
+
+            {
+                //error
+            }
+            finally
+            {
+                dataAccess.closeConnection();
+            }
         }
-
-
-
     }
+
+
+
+}

@@ -1,5 +1,6 @@
 -- Set de datos
 USE XECOMMERCE;
+GO
 
 INSERT INTO Catalogo.Tipos (Id, Codigo, Descripcion) VALUES
 (1, 'CAMI-C-TA', 'Camisetas'),
