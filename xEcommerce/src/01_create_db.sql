@@ -23,35 +23,35 @@ GO
 -- Dim relacionadas a los Productos
 
 CREATE TABLE Catalogo.Tipos (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
     Descripcion VARCHAR(255) NOT NULL,
     Estado BIT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE Catalogo.Marcas (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
     Descripcion VARCHAR(255) NOT NULL,
     Estado BIT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE Catalogo.Categorias (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
     Descripcion VARCHAR(255) NOT NULL,
     Estado BIT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE Catalogo.Colores (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
     Descripcion VARCHAR(255) NOT NULL,
     Estado BIT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE Catalogo.Talles (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
     Descripcion VARCHAR(255) NOT NULL,
     Estado BIT NOT NULL DEFAULT 1
@@ -59,7 +59,7 @@ CREATE TABLE Catalogo.Talles (
 
 
 CREATE TABLE Catalogo.Articulos (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
     Descripcion VARCHAR(25) NOT NULL,
     IdTipo INT,
@@ -73,7 +73,7 @@ CREATE TABLE Catalogo.Articulos (
 );
 
 CREATE TABLE Catalogo.ImagenArticulos (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     IdArticulo INT NOT NULL,
     UrlImagen VARCHAR(255) NOT NULL,
     FOREIGN KEY (IdArticulo) REFERENCES Catalogo.Articulos(Id),
@@ -81,25 +81,25 @@ CREATE TABLE Catalogo.ImagenArticulos (
 
 -- Dimensiones Gral. precargadas del sistema
 CREATE TABLE Catalogo.Ciudades (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
     Descripcion VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Catalogo.Provincias (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR (10) NOT NULL,
     Descripcion VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Catalogo.EntidadesFinancieras (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR (10) NOT NULL,
     Descripcion VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Catalogo.MediosPago (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     IdEntidadFinanciera INT,
     Codigo VARCHAR (10) NOT NULL,
     Descripcion VARCHAR(255) NOT NULL,
@@ -108,7 +108,7 @@ CREATE TABLE Catalogo.MediosPago (
 
 -- Cliente
 CREATE TABLE Catalogo.Clientes (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(255) NOT NULL,
     Apellido VARCHAR(255) NOT NULL,
     DNI VARCHAR(10) NOT NULL,
@@ -117,7 +117,7 @@ CREATE TABLE Catalogo.Clientes (
 );
 
 CREATE TABLE Catalogo.Direcciones (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     IdCliente INT NOT NULL,
     Calle VARCHAR(255) NOT NULL,
     Numero SMALLINT NOT NULL,
@@ -132,18 +132,18 @@ CREATE TABLE Catalogo.Direcciones (
 
 -- Tablas de hechos (Operaciones)
 CREATE TABLE Operaciones.Stock (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     IdArticulo INT,
     IdColor INT,
     IdTalle INT,
-    Cantidad INT NOT NULL,
+    Cantidad INT NOT NULL CHECK (Cantidad >= 0),
     FOREIGN KEY (IdArticulo) REFERENCES Catalogo.Articulos(Id),
     FOREIGN KEY (IdColor) REFERENCES Catalogo.Colores(Id),
-    FOREIGN KEY (IdTalle) REFERENCES Catalogo.Talles(Id)
+    FOREIGN KEY (IdTalle) REFERENCES Catalogo.Talles(Id),
 );
 
 CREATE TABLE Operaciones.Precios (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     IdArticulo INT NOT NULL,
     IdColor INT NOT NULL,
     IdTalle INT NOT NULL,
@@ -155,7 +155,7 @@ CREATE TABLE Operaciones.Precios (
 
 -- Tablas relacionadas al envio.
 CREATE TABLE Shipping.DetallesEnvio (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     NumeroLinea INT NOT NULL,
     IdArticulo INT,
     IdColor INT,
@@ -168,14 +168,14 @@ CREATE TABLE Shipping.DetallesEnvio (
 
 -- Shipping.EstadoEnvio <=> Precargada en el sistema.
 CREATE TABLE Shipping.EstadoEnvio (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR (10) NOT NULL,
     Descripcion VARCHAR (255) NOT NULL
 )
 
 
 CREATE TABLE Shipping.Couriers (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     --IdTransporte INT,
     Legajo VARCHAR (10) NOT NULL,
     Nombre VARCHAR(255) NOT NULL,
@@ -185,7 +185,7 @@ CREATE TABLE Shipping.Couriers (
 );
 
 CREATE TABLE Shipping.Envios (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     IdDetalleEnvio INT,
     IdCourier INT,
     IdDireccion INT,
@@ -198,7 +198,7 @@ CREATE TABLE Shipping.Envios (
 
 -- Tablas relacionadas a la Facturacion.
 CREATE TABLE Facturacion.DetallesFactura (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     NumeroLinea INT NOT NULL,
     IdArticulo INT NOT NULL,
     IdColor INT NOT NULL,
@@ -211,14 +211,14 @@ CREATE TABLE Facturacion.DetallesFactura (
 );
 
 CREATE TABLE Facturacion.DetallesPago (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     IdMedioDePago INT,
     Monto MONEY NOT NULL,
     FOREIGN KEY (IdMedioDePago) REFERENCES Catalogo.MediosPago(Id)
 );
 
 CREATE TABLE Facturacion.Facturas (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     IdDetalleFactura INT NOT NULL,
     IdDetallePago INT NOT NULL,
     IdEnvio INT NOT NULL,
@@ -238,14 +238,14 @@ CREATE TABLE Facturacion.Facturas (
 -- Tablas de acceso de usuarios y perfiles de seguridad.
 
 CREATE TABLE Usuario.NivelAcceso (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     NivelAcceso INT NOT NULL,
     DescripcionAcceso VARCHAR (255),
     Estado BIT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE Usuario.PerfilUsuario (
-    Id INT NOT NULL PRIMARY KEY,
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     IdCliente INT NOT NULL,
     Usuario VARCHAR (25) NOT NULL,
     Contrasenia VARCHAR (25) NOT NULL,
@@ -254,6 +254,7 @@ CREATE TABLE Usuario.PerfilUsuario (
     FOREIGN KEY (NivelAcceso) REFERENCES Usuario.NivelAcceso(Id),
     FOREIGN KEY (IdCliente) REFERENCES Catalogo.Clientes(Id)
 );
+GO
 
 -- Tabla antigua descontinuada
 /*
@@ -272,3 +273,28 @@ CREATE TABLE Transportes (
     FOREIGN KEY (IdTipo) REFERENCES TiposTransporte(Id)
 );
 */
+
+/* DEFINICION DE LOS TRIGGERS */
+CREATE OR ALTER TRIGGER Catalogo.TR_EliminarArticulo ON Catalogo.Articulos
+AFTER UPDATE
+AS
+BEGIN
+    BEGIN TRY
+        -- Inicia la transacción
+        BEGIN TRANSACTION;
+
+        -- Primero, eliminamos los registros de Stock y Precios relacionados
+        DELETE FROM Operaciones.Stock
+        WHERE IdArticulo IN (SELECT Id FROM INSERTED);
+
+        DELETE FROM Operaciones.Precios
+        WHERE IdArticulo IN (SELECT Id FROM INSERTED);
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, revertimos la transacción
+        ROLLBACK TRANSACTION;
+    END CATCH
+END;
+GO

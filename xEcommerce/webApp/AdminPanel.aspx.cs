@@ -9,6 +9,7 @@ using Model;
 using DataPersistence;
 using ApplicationService;
 using System.Data.SqlTypes;
+using System.Security.Cryptography;
 
 namespace webApp
 {
@@ -18,12 +19,12 @@ namespace webApp
         {
             try
             {
-
                 if (!IsPostBack)
                 {
                     // Inicializa el formulario como no visible al cargar la página
                     addArticleForm.Visible = false;
                     if (Request.QueryString["id"] != null)
+
                     {
                         string id = Request.QueryString["id"];
                         ArticuloAS data = new ArticuloAS();
@@ -61,16 +62,15 @@ namespace webApp
             addArticleForm.Visible = false; // Ocultar el formulario
             LoadArticle(); // Cargar y mostrar artículos en el GridView
             dgvArticles.Columns[]
-        }
 
-        protected void btnReportPrueba_Click(object sender, EventArgs e)
-        {
-            
         }
-
-        protected void btnReportStock_Click(object sender, EventArgs e)
+        protected void btnReportStockPorArticulo_Click(object sender, EventArgs e)
         {
-            // Ver reporte de stock
+            Response.Redirect("wfreport_stockporarticulo.aspx");
+        }
+        protected void btnReportStockYPrecio_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("wfreport_stockyprecios.aspx");
         }
        
 
@@ -91,14 +91,13 @@ namespace webApp
             ddListCategory.DataTextField = "Descripcion";
             ddListCategory.DataBind();
 
-
             TipoAS tipo = new TipoAS();
             ddListType.DataSource = tipo.listar();
             ddListType.DataValueField = "Id";
             ddListType.DataTextField = "Descripcion";
             ddListType.DataBind();
 
-            // Response.Redirect(Request.RawUrl);
+      // Response.Redirect(Request.RawUrl);
         }
 
         protected void txtImageUrl_TextChanged(object sender, EventArgs e)
@@ -109,24 +108,43 @@ namespace webApp
         protected void btnSaveArticle_Click(object sender, EventArgs e)
         {
             try
-            {   //CAPTURAMOS LOS VALORES INGESADOS EN EL FORMULARIO
+            {
+                //CAPTURAMOS LOS VALORES INGRESADOS EN EL FORMULARIO
                 Articulo articulo = new Articulo();
                 ArticuloAS data = new ArticuloAS();
 
                 // valida si los campos estan vacios
+
                 if (string.IsNullOrWhiteSpace(txtCodeArticle.Text))
                 {
                     throw new Exception("El código del artículo es obligatorio.");
                 }
+
+                if (data.ValidarCopdigoActivo(txtCodeArticle.Text) == 1)
+                {
+                    throw new Exception("El código del artículo esta en uso.");
+                }
+
                 if (string.IsNullOrWhiteSpace(txtDescripcion.Text))
                 {
                     throw new Exception("La descripción del artículo es obligatoria.");
                 }
+
+                if (string.IsNullOrWhiteSpace(txtDetalle.Text))
+                {
+                    throw new Exception("El detalle del artículo es obligatorio.");
+                }
+                // validacion tamaño del texto
                 if (txtCodeArticle.Text.Length > 10)
                 {
-                   // Console.WriteLine("El código del articulo no puede exceder los 10 caracteres.");
+                    Console.WriteLine("El código del articulo no puede exceder los 10 caracteres.");
                     throw new Exception("El código del articulo no puede exceder los 10 caracteres.");
                 }
+                if (txtDetalle.Text.Length > 50)
+                {
+                    throw new Exception("El detalle del articulo no puede exceder los 50 caracteres.");
+                }
+
                 // Asignar valores a las propiedades del artículo
                 articulo.Codigo = txtCodeArticle.Text;
                 articulo.Descripcion = txtDescripcion.Text;
@@ -136,12 +154,12 @@ namespace webApp
                 articulo.Categoria = new Categoria();
 
                 articulo.Marca.Id = int.Parse(ddListType.SelectedValue);
-                articulo.Tipo.Id = int.Parse(ddListType.SelectedValue);
+                articulo.Tipo.Id = int.Parse(ddListType.SelectedValue); 
                 articulo.Categoria.Id = int.Parse(ddListCategory.SelectedValue);
 
-
+                
                 data.AgregarNuevoArticulo(articulo);
-                labelMsj.Text= "¡Se ha agregado exitosamente!";
+                labelMsj.Text = "¡Se ha agregado exitosamente!";
                 labelMsj.Visible = true;
                 LimpiarFormulario();
             }
@@ -150,7 +168,6 @@ namespace webApp
                 Session.Add("Error", ex); //DESPUES LO MANDAMOS A UNA PAGINA DE ERROR
                 throw;
             }
-
 
         }
          protected string GetStatusIcon(object status)
@@ -180,9 +197,11 @@ namespace webApp
             ArticuloAS data = new ArticuloAS();
             if (e.CommandName == "Modificar")
             {
+
                     dgvArticles.Visible = false;
                 string idArticle = e.CommandArgument.ToString();
                 //loadArticle(idArticle); // carga el articulo seleccionado
+
                 int idArticulo = Convert.ToInt32(e.CommandArgument);
                 List<Articulo> listaArticulos = data.ObtenerIdXModificacion(idArticulo.ToString());
 
@@ -214,7 +233,8 @@ namespace webApp
                     }
 
                     // Hacer visible el formulario para editar
-                    addArticleForm.Visible = true; 
+
+                    addArticleForm.Visible = true; // El formulario debe ser el div que contiene tus campos
 
                 }
                 else
@@ -226,9 +246,53 @@ namespace webApp
             }
             else if (e.CommandName == "Delete")
             {
+
                     int IdArticulo = Convert.ToInt32(e.CommandArgument);
                     data.DeleteArticulo(IdArticulo);
                     LoadArticle();
+
+            }
+        }
+        private void CargarArticuloParaModificar(int idArticulo)
+        {
+            // Obtener el artículo a modificar desde la base de datos utilizando su ID
+            ArticuloAS data = new ArticuloAS();
+            data.ObtenerIdXModificacion(idArticulo.ToString());
+            Articulo articulo = new Articulo();
+            articulo.Marca = new Marca();
+            articulo.Categoria = new Categoria();
+            articulo.Tipo = new Tipo();
+            if (articulo != null)
+            {
+                // Precargar los valores en los campos de texto del formulario
+                txtCodeArticle.Text = articulo.Codigo;
+                txtDescripcion.Text = articulo.Descripcion;
+                txtDetalle.Text = articulo.Detalle;
+
+                // Precargar los valores de los DropDownList (asegúrate que las listas ya estén cargadas)
+                if (ddListBrand.Items.FindByValue(articulo.Marca.Id.ToString()) != null)
+                {
+                    ddListBrand.SelectedValue = articulo.Marca.Descripcion.ToString();
+                }
+                if (ddListCategory.Items.FindByValue(articulo.Categoria.Descripcion.ToString()) != null)
+                {
+                    ddListCategory.SelectedValue = articulo.Categoria.Descripcion.ToString();
+                }
+                if (ddListType.Items.FindByValue(articulo.Tipo.Descripcion.ToString()) != null)
+                {
+                    ddListType.SelectedValue = articulo.Tipo.Descripcion.ToString();
+                }
+
+                // Mostrar el formulario y ocultar el GridView
+                addArticleForm.Visible = true;
+                dgvArticles.Visible = false;
+            }
+            else
+            {
+                // Manejar el caso cuando el artículo no se encuentra (opcional)
+                labelMsj.Text = "El artículo no fue encontrado.";
+                labelMsj.Visible = true;
+
             }
         }
         private void LoadArticle()
@@ -296,12 +360,20 @@ namespace webApp
             }
         }
 
+            // Carga el GridView con artículos
+            ArticuloAS articulo = new ArticuloAS();
+            dgvArticles.DataSource = articulo.listar(); 
+            dgvArticles.DataBind(); 
+            dgvArticles.Visible = true;
+            dgvArticles.Columns[0].Visible = false;
+            dgvArticles.Columns[7].Visible = false;
+        }
+
         private void LimpiarFormulario()
         {
             txtCodeArticle.Text = string.Empty;
             txtDescripcion.Text = string.Empty;
             txtDetalle.Text = string.Empty;
-
 
             ddListType.SelectedIndex = 0;
             ddListBrand.SelectedIndex = 0;
@@ -333,6 +405,25 @@ namespace webApp
         {
             ///logica
              ArticuloAS data = new ArticuloAS();
+           
+            ddListType.SelectedIndex = 0; 
+            ddListBrand.SelectedIndex = 0; 
+            ddListCategory.SelectedIndex = 0; 
+
+            
+        }
+
+        protected void dgvArticles_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            int IdArticulo = Convert.ToInt32(e.Keys["Id"]); 
+            ArticuloAS data = new ArticuloAS();
+            data.DeleteArticulo(IdArticulo);
+            LoadArticle();
+        }
+
+        protected void dgvArticles_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+        
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)

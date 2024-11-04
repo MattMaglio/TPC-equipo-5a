@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,5 +21,6 @@ namespace Model
         public int Stock { get; set; }
         public float Precio { get; set; }
         public bool Estado { get; set; }
+
     }
 }
