@@ -39,6 +39,7 @@ namespace ApplicationService
                     aux.Detalle = result["Detalle"].ToString();
                     //aux.Estado = (bool)result["Estado"];
 
+
                     aux.Marca = new Marca();
                     aux.Tipo = new Tipo();
                     aux.Categoria = new Categoria();
@@ -63,25 +64,26 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
-        public List<Articulo> ObtenerIdXModificacion(string id="")
+
+
+
+        public List<Articulo> ObtenerIdXModificacion(string id = "")
         {
             List<Articulo> lista = new List<Articulo>();
             DataAccess conexion = new DataAccess();
             DataManipulator query = new DataManipulator();
             SqlDataReader result;
-
-
             try
             {
 
                 if(!string.IsNullOrEmpty(id) && int.TryParse(id, out int articuloId))
-            {
+                {
                     query.configSqlProcedure("Catalogo.ObtenerArticuloPorId");
                     query.configSqlParams("@Id", articuloId); // agregamos el id
                 }
-                query.configSqlConexion(conexion.getConnection());
-                conexion.openConnection();
-                result = query.exectQuerry();
+                    query.configSqlConexion(conexion.getConnection());
+                    conexion.openConnection();
+                    result = query.exectQuerry();
                 while (result.Read())
                 {
                     Articulo aux = new Articulo
@@ -105,22 +107,22 @@ namespace ApplicationService
                         }
                     };
 
-                    lista.Add(aux); // Añadir el artículo a la lista
-                }
+                        lista.Add(aux); // Añadir el artículo a la lista
+                    }
+                        return lista;
 
-  
-                return lista;
-
+                        
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                  throw ex;
             }
             finally
             {
-                conexion.closeConnection();
+                 conexion.closeConnection();
+
             }
+
         }
 
         public int ValidarCopdigoActivo(string codigo)
