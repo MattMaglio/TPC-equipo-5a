@@ -216,7 +216,6 @@
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
-    <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="wfreport_stockyprecios.aspx.cs">
       <DependentUpon>wfreport_stockyprecios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
