@@ -341,10 +341,13 @@ GO
 CREATE OR ALTER PROCEDURE Operaciones.SP_StockYPrecio
 AS
 BEGIN
-    SELECT "Codigo de Articulo",
+    SELECT "Id de Articulo",
+        "Codigo de Articulo",
     	"Descripcion de Articulo",
+        "Id de Color",
         "Codigo de Color",
         "Descripcion de Color",
+        "Id de Talle",
         "Codigo de Talle",
         "Descripcion de Talle",
         "Cantidad",
