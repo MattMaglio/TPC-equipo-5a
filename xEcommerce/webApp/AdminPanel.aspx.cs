@@ -59,7 +59,12 @@ namespace webApp
         {
             addArticleForm.Visible = false; // Ocultar el formulario
             LoadArticle(); // Cargar y mostrar artículos en el GridView
+<<<<<<< Updated upstream
             dgvArticles.Columns[0].Visible = false;
+=======
+            dgvArticles.Columns[0];
+            
+>>>>>>> Stashed changes
 
         }
 

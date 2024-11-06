@@ -14,7 +14,10 @@ namespace DataPersistence
         public DataAccess()
         {
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
             string connectionString = "Server=.\\SQLEXPRESS01;Database=XECOMMERCE;Trusted_Connection=True;";
 
             conexionDB = new SqlConnection(connectionString);

@@ -34,11 +34,11 @@
 
     .right-panel {
         display: flex;
-        flex-direction: column; /* Puedes cambiar a 'row' si quieres que estén en fila */
+        flex-direction: column; 
         align-items: flex-start; /* Ajusta los elementos a la izquierda */
         padding: 0px;
         margin-top: 40px;
-        border: 1px solid #ccc; /* Agrega borde si es necesario */
+        border: 1px solid #ccc; 
     }
     .right-panel .form-article {
         margin-bottom: 20px;
@@ -54,31 +54,31 @@
     /* RESPONSIVE CON MEDIA QUERYS */
     @media (min-width: 768px) {
         .container {
-            flex-direction: row; /* Alinea los paneles en fila para pantallas grandes */
+            flex-direction: row;
         }
 
         /* RESPONSIVE CON MEDIA QUERYS */
         @media (min-width: 768px) {
             .container {
-                flex-direction: row; /* Alinea los paneles en fila para pantallas grandes */
+                flex-direction: row; 
             }
 
             .left-panel {
-                width: 30%; /* Ajusta el ancho de los paneles para pantallas grandes */
+                width: 30%; 
             }
 
             .right-panel {
-                width: 65%; /* Ajusta el ancho del panel derecho en pantallas grandes */
+                width: 65%; 
             }
         }
 
         @media (max-width: 768px) {
             .container {
-                flex-direction: column; /* Apila los paneles en pantallas pequeñas */
+                flex-direction: column; 
             }
 
             .left-panel, .right-panel {
-                width: 100%; /* Ancho completo en pantallas pequeñas */
+                width: 100%; 
             }
         }
 

@@ -177,12 +177,29 @@ namespace webApp
         protected global::System.Web.UI.WebControls.GridView dgvArticles;
 
         /// <summary>
+<<<<<<< Updated upstream
         /// labelMsjDgv control.
+=======
+        /// labelMsj control.
+>>>>>>> Stashed changes
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< Updated upstream
         protected global::System.Web.UI.WebControls.Label labelMsjDgv;
+=======
+        protected global::System.Web.UI.WebControls.Label labelMsj;
+
+        /// <summary>
+        /// dgvArticles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvArticles;
+>>>>>>> Stashed changes
     }
 }
