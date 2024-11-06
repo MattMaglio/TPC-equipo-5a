@@ -47,7 +47,6 @@ namespace webApp
              dgvPanelAdmin.DataSource = sell.listar(); // VENTAS
              dgvPanelAdmin.DataBind(); */
         }
-
         protected void btnViewSell_Click(object sender, EventArgs e)
         {
             //METODO QUE VAMOS A UTILIZAR PARA LA CARGA DE LAS VENTAS
@@ -56,24 +55,18 @@ namespace webApp
              dgvSell.DataSource = ventas.listar();
              dgvSell.DataBind();*/
         }
-
         protected void btnViewArticles_Click(object sender, EventArgs e)
         {
             addArticleForm.Visible = false; // Ocultar el formulario
             LoadArticle(); // Cargar y mostrar artículos en el GridView
-            dgvArticles.Columns[]
+            dgvArticles.Columns[0].Visible = false;
 
         }
-        protected void btnReportStockPorArticulo_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("wfreport_stockporarticulo.aspx");
-        }
+
         protected void btnReportStockYPrecio_Click(object sender, EventArgs e)
         {
             Response.Redirect("wfreport_stockyprecios.aspx");
         }
-       
-
         protected void btnAddArticle_Click(object sender, EventArgs e)
         {
             //BOTON PARA AGREGAR ARTICULOS
@@ -99,12 +92,10 @@ namespace webApp
 
       // Response.Redirect(Request.RawUrl);
         }
-
         protected void txtImageUrl_TextChanged(object sender, EventArgs e)
         {
             //imgPreview.ImageUrl = txtImageUrl.Text;
         }
-
         protected void btnSaveArticle_Click(object sender, EventArgs e)
         {
             try
@@ -170,7 +161,7 @@ namespace webApp
             }
 
         }
-         protected string GetStatusIcon(object status)
+        protected string GetStatusIcon(object status)
         {
             /* // funcion para poner iconos en los status de las ventas
             if (status == null)
@@ -191,7 +182,6 @@ namespace webApp
             }*/
             return "~/Images/default.png";
         }
-
         protected void dgvArticles_RowCommand1(object sender, GridViewCommandEventArgs e)
         {
             ArticuloAS data = new ArticuloAS();
@@ -292,8 +282,75 @@ namespace webApp
                 // Manejar el caso cuando el artículo no se encuentra (opcional)
                 labelMsj.Text = "El artículo no fue encontrado.";
                 labelMsj.Visible = true;
-
+                
             }
+        }
+        protected void dgvArticles_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+
+        }
+        protected void dgvArticles_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            int IdArticulo = Convert.ToInt32(e.Keys["Id"]);
+            ArticuloAS data = new ArticuloAS();
+            data.DeleteArticulo(IdArticulo);
+            LoadArticle();
+        }
+        protected void dgvArticles_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            ArticuloAS data = new ArticuloAS();
+
+            if (e.CommandName == "Modificar")
+            {
+                // obetenemos id para mofificar
+                int idArticulo = Convert.ToInt32(e.CommandArgument);
+                CargarArticuloParaModificar(idArticulo);
+            }
+            else if (e.CommandName == "Eliminar")
+            {
+                // obtenemos id para eliminar, llamamos a la funcion eliminar y volvemos a cargar la grilla
+                int idArticulo = Convert.ToInt32(e.CommandArgument);
+                data.DeleteArticulo(idArticulo);
+                LoadArticle();
+            }
+        }
+        protected void btnPetificaciones_Click(object sender, EventArgs e)
+        {
+            ///logica
+             ArticuloAS data = new ArticuloAS();
+           
+            ddListType.SelectedIndex = 0; 
+            ddListBrand.SelectedIndex = 0; 
+            ddListCategory.SelectedIndex = 0; 
+
+            
+        }
+        protected void dgvArticles_RowDeleting1(object sender, GridViewDeleteEventArgs e)
+        {
+            int IdArticulo = Convert.ToInt32(e.Keys["Id"]);
+            ArticuloAS data = new ArticuloAS();
+            data.DeleteArticulo(IdArticulo);
+            LoadArticle();
+        }
+        protected void btnModificar_Click(object sender, EventArgs e)
+        {
+            ArticuloAS data = new ArticuloAS();
+        }
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            ArticuloAS data = new ArticuloAS();
+        }
+        private void LimpiarFormulario()
+        {
+            txtCodeArticle.Text = string.Empty;
+            txtDescripcion.Text = string.Empty;
+            txtDetalle.Text = string.Empty;
+
+            ddListType.SelectedIndex = 0;
+            ddListBrand.SelectedIndex = 0;
+            ddListCategory.SelectedIndex = 0;
+
+
         }
         private void LoadArticle()
         {
@@ -303,22 +360,7 @@ namespace webApp
               dgvArticles.DataBind(); 
               dgvArticles.Visible = true; 
         }
-
-        protected void dgvArticles_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-
-        }
-
-        protected void dgvArticles_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            int IdArticulo = Convert.ToInt32(e.Keys["Id"]);
-            ArticuloAS data = new ArticuloAS();
-            data.DeleteArticulo(IdArticulo);
-            LoadArticle();
-        }
-
-       
-        private void CargarArticuloParaModificar(int idArticulo)
+        private void CargarArticuloParaMod(int idArticulo)
         {
             // Obtener el artículo a modificar desde la base de datos utilizando su ID
             ArticuloAS data = new ArticuloAS();
@@ -358,82 +400,20 @@ namespace webApp
                 labelMsj.Text = "El artículo no fue encontrado.";
                 labelMsj.Visible = true;
             }
-        }
 
             // Carga el GridView con artículos
-            ArticuloAS articulo = new ArticuloAS();
-            dgvArticles.DataSource = articulo.listar(); 
+            ArticuloAS articulo1 = new ArticuloAS();
+            dgvArticles.DataSource = articulo1.listar(); 
             dgvArticles.DataBind(); 
             dgvArticles.Visible = true;
             dgvArticles.Columns[0].Visible = false;
             dgvArticles.Columns[7].Visible = false;
-        }
-
-        private void LimpiarFormulario()
-        {
-            txtCodeArticle.Text = string.Empty;
-            txtDescripcion.Text = string.Empty;
-            txtDetalle.Text = string.Empty;
-
-            ddListType.SelectedIndex = 0;
-            ddListBrand.SelectedIndex = 0;
-            ddListCategory.SelectedIndex = 0;
-
 
         }
 
-        protected void dgvArticles_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void btnReportStockPorArticulo_Click(object sender, EventArgs e)
         {
-            ArticuloAS data = new ArticuloAS();
-
-            if (e.CommandName == "Modificar")
-            {
-                // obetenemos id para mofificar
-                int idArticulo = Convert.ToInt32(e.CommandArgument);
-                CargarArticuloParaModificar(idArticulo);
-            }
-            else if (e.CommandName == "Eliminar")
-            {
-                // obtenemos id para eliminar, llamamos a la funcion eliminar y volvemos a cargar la grilla
-                int idArticulo = Convert.ToInt32(e.CommandArgument);
-                data.DeleteArticulo(idArticulo);
-                LoadArticle();
-            }
-        }
-
-        protected void btnPetificaciones_Click(object sender, EventArgs e)
-        {
-            ///logica
-             ArticuloAS data = new ArticuloAS();
-           
-            ddListType.SelectedIndex = 0; 
-            ddListBrand.SelectedIndex = 0; 
-            ddListCategory.SelectedIndex = 0; 
-
-            
-        }
-
-        protected void dgvArticles_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            int IdArticulo = Convert.ToInt32(e.Keys["Id"]); 
-            ArticuloAS data = new ArticuloAS();
-            data.DeleteArticulo(IdArticulo);
-            LoadArticle();
-        }
-
-        protected void dgvArticles_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-        
-        }
-
-        protected void btnModificar_Click(object sender, EventArgs e)
-        {
-            ArticuloAS data = new ArticuloAS();
-        }
-
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-            ArticuloAS data = new ArticuloAS();
+            Response.Redirect("wfreport_stockporarticulo.aspx");
         }
     }
 }

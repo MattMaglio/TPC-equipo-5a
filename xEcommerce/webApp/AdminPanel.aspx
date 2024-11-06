@@ -13,6 +13,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager runat="server"></asp:ScriptManager>
     <style>
+ 
         /* Ajustes generales */
         .container {
             display: flex;
@@ -165,12 +166,11 @@
             top: 0;
             border-radius: 10px;
         }
-    </style>
-
+    }
+</style>
     <div class="container mt-4">
         <div class="left-panel">
         <h2 class="h2">Admin Panel</h2>
-
         <!--MENU DESPEGABLE CON ACORDEON -->
         <div class="accordion custom-width" id="adminAccordion">
             <!--SECCION ARTICULOS -->
@@ -190,10 +190,8 @@
                                 <asp:Button Text="Agregar articulo" CssClass="btn btn-dark w-100" ID="btnAddArticle" OnClick="btnAddArticle_Click" runat="server" />
                             </li>  
                                <li class="list-group-item">
-                            
                         </li> 
                         </ul>
-
                     </div>
                 </div>
 
@@ -312,8 +310,7 @@
         </div>
     </div>
 </div>
-
-
+            </div>
         <div class="right-panel">
             <div class="form-article">
                 <div class="mt-3" runat="server" id="addArticleForm" visible="false">
@@ -322,24 +319,16 @@
                     <asp:TextBox runat="server" ID="txtCodeArticle" Placeholder="Codigo" CssClass="form-control" />
                     <asp:TextBox ID="txtDetalle" runat="server" CssClass="form-control" Placeholder="Detalle"></asp:TextBox>
                     <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" Placeholder="Descripcion"></asp:TextBox>
-
                     <!-- DROP DOWN LIST MARCAS -->
                     <asp:DropDownList ID="ddListBrand" runat="server" CssClass="form-control"></asp:DropDownList>
-
                     <!-- DROP DOWN LIST TIPOS -->
                     <asp:DropDownList ID="ddListType" runat="server" CssClass="form-control"></asp:DropDownList>
-
                     <!-- DROP DOWN LIST CATEGORIA -->
                     <asp:DropDownList ID="ddListCategory" runat="server" CssClass="form-control"></asp:DropDownList> 
-
                     <!-- BOTÓN GUARDAR ARTÍCULO -->
-
                     <asp:Button ID="btnSaveArticle" runat="server" CssClass="bn5" OnClick="btnSaveArticle_Click" Text="Guardar articulo" />
-
                     <!-- BOTÓN CANCELAR -->
                     <a type="button" class="bn5" href="AdminPanel.aspx">Cancelar</a>
-
-
                     <!-- MENSAJE -->
                     <asp:Label ID="labelMsj" runat="server" CssClass="alert alert-success" Visible="false"></asp:Label>
                 </div>
@@ -347,9 +336,8 @@
                 </div>
          <div class="dgviewArticles">
                            <!-- GRID PARA MOSTRAR Los articulos -->
-                     <asp:GridView ID="dgvArticles" DataKeyNames="Id"  OnRowUpdating="dgvArticles_RowUpdating" OnRowDeleting="dgvArticles_RowDeleting" OnRowCommand="dgvArticles_RowCommand" runat="server" CssClass="table table-bordered mt-4" Visible="false" AutoGenerateColumns="False">
+                     <asp:GridView ID="dgvArticles" DataKeyNames="Id" OnRowDeleting="dgvArticles_RowDeleting1" OnRowCommand="dgvArticles_RowCommand" runat="server" CssClass="table table-bordered mt-4" Visible="false" AutoGenerateColumns="False">
                     <Columns>
-
                     <asp:BoundField DataField="Id" HeaderText="Id" />
                     <asp:BoundField DataField="Codigo" HeaderText="Codigo" />
                     <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
@@ -359,60 +347,23 @@
                     <asp:BoundField DataField="Detalle" HeaderText="Detalle" />
                     <asp:BoundField DataField="Estado" HeaderText="Estado" />
                     <asp:TemplateField HeaderText="Acción">
-    <ItemTemplate>
-        <asp:Button Text="Modificar" CssClass="btn btn-primary"
-            CommandName="Modificar" 
-            CommandArgument='<%# Eval("Id") %>' 
-            runat="server" />
+                <ItemTemplate>
+                    <asp:Button Text="Modificar" CssClass="btn btn-primary"
+                        CommandName="Modificar" 
+                        CommandArgument='<%# Eval("Id") %>' 
+                        runat="server" />
 
-        <asp:Button Text="Eliminar" CssClass="btn btn-danger" 
-            CommandName="Delete"
-            CommandArgument='<%# Eval("Id") %>' 
-            runat="server" 
-            OnClientClick="return confirm('¿Estás seguro de que deseas borrar este artículo?');" />
-    </ItemTemplate>
-</asp:TemplateField>
-                 </Columns>
+                    <asp:Button Text="Eliminar" CssClass="btn btn-danger" 
+                        CommandName="Delete"
+                        CommandArgument='<%# Eval("Id") %>' 
+                        runat="server" 
+                        OnClientClick="return confirm('¿Estás seguro de que deseas borrar este artículo?');" />
+                </ItemTemplate>
+            </asp:TemplateField>
+                             </Columns>
                 </asp:GridView>
         </div>
          </div>
+                    <asp:Label ID="labelMsjDgv" runat="server" CssClass="alert alert-success" Visible="false"></asp:Label>    
             </div>
-    </asp:Content>
-
-                    <asp:Label ID="labelMsj" runat="server" CssClass="alert alert-success" Visible="false"></asp:Label>
-                </div>
-            </div>
-            <div class="dgviewArticles">
-                <asp:GridView ID="dgvArticles" OnRowUpdating="dgvArticles_RowUpdating" OnRowDeleting="dgvArticles_RowDeleting" OnRowCommand="dgvArticles_RowCommand" runat="server" CssClass="table table-bordered mt-4" Visible="false" AutoGenerateColumns="False">
-                    <Columns>
-
-                        <asp:BoundField DataField="Id" HeaderText="Id" />
-                        <asp:BoundField DataField="Codigo" HeaderText="Codigo" />
-                        <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
-                        <asp:BoundField DataField="Tipo.Descripcion" HeaderText="Tipo" />
-                        <asp:BoundField DataField="Marca.Descripcion" HeaderText="Marca" />
-                        <asp:BoundField DataField="Categoria.Descripcion" HeaderText="Categoria" />
-                        <asp:BoundField DataField="Detalle" HeaderText="Detalle" />
-                        <asp:BoundField DataField="Estado" HeaderText="Estado" />
-
-
-                        <asp:TemplateField HeaderText="Acción">
-                            <ItemTemplate>
-                                <asp:Button Text="Modificar" CssClass="btn btn-primary"
-                                    CommandName="Modificar"
-                                    CommandArgument='<%# Eval("Id") %>'
-                                    runat="server" />
-
-                                <asp:Button Text="Eliminar" CssClass="btn btn-danger"
-                                    CommandName="Delete"
-                                    CommandArgument='<%# Eval("Id") %>'
-                                    runat="server"
-                                    OnClientClick="return confirm('¿Estás seguro de que deseas borrar este artículo?');" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
-            </div>
-        </div>
-    </div>
 </asp:Content>

@@ -75,7 +75,6 @@ namespace webApp
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-
         protected global::System.Web.UI.WebControls.Button btnReportStockPorArticulo;
 
         /// <summary>
@@ -85,7 +84,6 @@ namespace webApp
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-
         protected global::System.Web.UI.WebControls.Button btnReportStockYPrecio;
 
         /// <summary>
@@ -107,7 +105,15 @@ namespace webApp
         protected global::System.Web.UI.WebControls.TextBox txtCodeArticle;
 
         /// <summary>
+        /// txtDetalle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDetalle;
 
+        /// <summary>
         /// txtDescripcion control.
         /// </summary>
         /// <remarks>
@@ -117,13 +123,13 @@ namespace webApp
         protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
 
         /// <summary>
-        /// txtDetalle control.
+        /// ddListBrand control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDetalle;
+        protected global::System.Web.UI.WebControls.DropDownList ddListBrand;
 
         /// <summary>
         /// ddListType control.
@@ -169,5 +175,14 @@ namespace webApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView dgvArticles;
+
+        /// <summary>
+        /// labelMsjDgv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelMsjDgv;
     }
 }

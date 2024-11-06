@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using DataPersistence;
 using Model;
+using Microsoft.ReportingServices.RdlExpressions.ExpressionHostObjectModel;
 
 namespace webApp
 {
@@ -20,9 +21,6 @@ namespace webApp
                 CargarProductosDestacados();
             }
         }
-
-
-
         private void CargarProductosDestacados()
         {
               DataAccess dataAccess = new DataAccess();
@@ -36,20 +34,17 @@ namespace webApp
 
               SqlDataReader reader = dataManipulator.exectQuerry();
 
-             rptFeaturedProducts.DataSource = reader;
-              rptFeaturedProducts.DataBind();
-          }
-          catch (Exception ex)
-          {
-             //error
-         }
-         finally
-        {
+                rptFeaturedProducts.DataSource = reader;
+                rptFeaturedProducts.DataBind();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
             dataAccess.closeConnection();
-         }
-          }
+            }
         }
-
-
-
     }
+}

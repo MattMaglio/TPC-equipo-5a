@@ -64,9 +64,6 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
-
-
-
         public List<Articulo> ObtenerIdXModificacion(string id = "")
         {
             List<Articulo> lista = new List<Articulo>();
@@ -124,7 +121,6 @@ namespace ApplicationService
             }
 
         }
-
         public int ValidarCopdigoActivo(string codigo)
         {
             DataAccess conexion = new DataAccess();
@@ -154,7 +150,6 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
-
         public void AgregarNuevoArticulo(Articulo articulo)
         {
             
