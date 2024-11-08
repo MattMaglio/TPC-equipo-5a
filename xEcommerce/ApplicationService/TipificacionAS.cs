@@ -69,6 +69,33 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
+        public void ModificarTipificacion(int Tipific, string Codigo, string Descripcion)
+        {
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+            try
+            {
+
+                query.configSqlProcedure("Catalogo.SP_ModificarTipificacion");
+                query.configSqlConexion(conexion.getConnection());
+                conexion.openConnection();
+
+                query.configSqlParams("@Tipificacion", Tipific);
+                query.configSqlParams("@Codigo", Codigo);
+                query.configSqlParams("@Descripcion", Descripcion);
+
+                query.exectCommand();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
+        }
         public int ValidarCodigoActivo_Tipificacion(int Tipificacion, string codigo)
         {
             DataAccess conexion = new DataAccess();
@@ -104,13 +131,20 @@ namespace ApplicationService
         {
             return Tipificacion.Tipificaciones;
         }
-
         // Método para buscar una tipificación por código
         public Tipificacion ObtenerPorCodigo(int codigo)
         {
             return Tipificacion.Tipificaciones.FirstOrDefault(t => t.Codigo == codigo);
         }
+        // Busca la tipificación por código y devuelve la lista con un único elemento si se encuentra
+        public List<Tipificacion> ObtenerPorId(int codigo)
+        {
+            var resultado = Tipificacion.Tipificaciones
+                .Where(t => t.Codigo == codigo)
+                .ToList();
 
+            return resultado;
+        }
         // Método para buscar una tipificación por descripción
         public Tipificacion ObtenerPorDescripcion(string descripcion)
         {

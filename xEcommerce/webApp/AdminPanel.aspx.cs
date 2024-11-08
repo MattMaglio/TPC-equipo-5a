@@ -11,6 +11,8 @@ using ApplicationService;
 using System.Data.SqlTypes;
 using System.Security.Cryptography;
 using Model.Scripts;
+using System.Data.SqlClient;
+using System.Collections;
 
 namespace webApp
 {
@@ -26,13 +28,15 @@ namespace webApp
             get { return ViewState["TipificSelected"] != null ? (int)ViewState["TipificSelected"] : 0; }
             set { ViewState["TipificSelected"] = value; }
         }
+        
+        /* Elementos Grales */
         protected void Page_Load(object sender, EventArgs e)
         {   
             try
             {
                 if (!IsPostBack)
                 {
-                    // Inicializa el formulario como no visible al cargar la página
+                    /*// Inicializa el formulario como no visible al cargar la página
                     addArticleForm.Visible = false;
                     if (Request.QueryString["id"]!= null)
                     {
@@ -40,6 +44,7 @@ namespace webApp
                         ArticuloAS data = new ArticuloAS();
                         Articulo articuloSeleccionado = (data.ObtenerIdXModificacion())[0];
                     }
+                    */
                 }
 
             }
@@ -56,34 +61,105 @@ namespace webApp
              dgvPanelAdmin.DataSource = sell.listar(); // VENTAS
              dgvPanelAdmin.DataBind(); */
         }
-        protected void btnViewSell_Click(object sender, EventArgs e)
+        protected void MostarElentoSelecionado(string grupo)
         {
-            //METODO QUE VAMOS A UTILIZAR PARA LA CARGA DE LAS VENTAS
-            /* Ventas ventas = new Ventas();
-             string query = "SELECT VentaID, Cliente, Fecha, Total FROM Ventas";
-             dgvSell.DataSource = ventas.listar();
-             dgvSell.DataBind();*/
+            try
+            {
+                // Formulario Alta y Mod de Articulos
+                div_gral_frmArt.Visible = false;
+                // Grilla de Articulos
+                div_gral_dgvArt.Visible = false;
+                // Grilla de Stock y Precio
+                div_gral_dgvSyp.Visible = false;
+                // Formulario Alta y Mod de Tipificacion
+                div_gral_frmTip.Visible = false;
+                // Grilla de Tipificaciones
+                div_gral_dgvTip.Visible = false;
+
+                switch (grupo)
+                {
+                    case "div_gral_frmArt":
+                        div_gral_frmArt.Visible = true;
+                        break;
+
+                    case "div_gral_dgvArt":
+                        div_gral_dgvArt.Visible = true;
+                        break;
+
+                    case "div_gral_frmTip":
+                        div_gral_frmTip.Visible = true;
+                        break;
+
+                    case "div_gral_dgvTip":
+                        div_gral_dgvTip.Visible = true;
+                        break;
+                    
+                    case "div_gral_dgvSyp":
+                        div_gral_dgvSyp.Visible = true;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            catch { }
         }
-        protected void btnViewArticles_Click(object sender, EventArgs e)
+        protected void ddlPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //BOTON PÁRA VER EL  GRIDVIEW LOS ARTICULOS
-            addArticleForm.Visible = false; // Ocultar el formulario
-            LoadArticle(); // Cargar y mostrar artículos en el GridView
+            // Obtiene el valor seleccionado del DropDownList y lo asigna a PageSize
+            int pageSize = int.Parse(ddlPageSize.SelectedValue);
+            dgvArticles.PageSize = pageSize;
+
+            // Reinicia la página a la primera cada vez que se cambie el tamaño de página
+            dgvArticles.PageIndex = 0;
+
+            // Recarga los datos en la grilla
+            LoadArticle();
         }
-        protected void btnReportStockPorArticulo_Click(object sender, EventArgs e)
+
+        /* SECCION ARTICULOS */
+
+        // Agregar - Modificar articulos
+        private void LimpiarFormulario()
         {
-            Response.Redirect("wfreport_stockporarticulo.aspx");
+            txtCodeArticle.Text = string.Empty;
+            txtDescripcion.Text = string.Empty;
+            txtDetalle.Text = string.Empty;
+
+
+            ddListType.SelectedIndex = 0;
+            ddListBrand.SelectedIndex = 0;
+            ddListCategory.SelectedIndex = 0;
+
         }
-        protected void btnReportStockYPrecio_Click(object sender, EventArgs e)
+        protected string GetStatusIcon(object status)
         {
-            Response.Redirect("wfreport_stockyprecios.aspx");
+            /* // funcion para poner iconos en los status de las ventas
+            if (status == null)
+                return "~/Images/default.png";
+
+            string statusValue = status.ToString().ToLower();
+
+            switch (statusValue)
+            {
+                case "completed":
+                    return "~/Images/check.png"; // URL del ícono de completado
+                case "cancelled":
+                    return "~/Images/x.png"; // URL del ícono de cancelación
+                case "in process":
+                    return "~/Images/circle.png"; // URL del ícono en proceso
+                default:
+                    return "~/Images/default.png"; // Imagen por defecto
+            }*/
+            return "~/Images/default.png";
         }
         protected void btnAddArticle_Click(object sender, EventArgs e)
         {
             //BOTON PARA AGREGAR ARTICULOS
+            MostarElentoSelecionado("div_gral_frmArt");
+
             IsEditMode = false;
-            addArticleForm.Visible = true;
-            dgvArticles.Visible = false;
+
             MarcaAS marca = new MarcaAS();
             ddListBrand.DataSource = marca.listar();
             ddListBrand.DataValueField = "Id";
@@ -102,7 +178,7 @@ namespace webApp
             ddListType.DataTextField = "Descripcion";
             ddListType.DataBind();
 
-            // Response.Redirect(Request.RawUrl);
+            LimpiarFormulario();
         }
         protected void txtImageUrl_TextChanged(object sender, EventArgs e)
         {
@@ -155,7 +231,7 @@ namespace webApp
                 }
 
                 // Asignar valores a las propiedades del artículo
-                
+
                 articulo.Codigo = txtCodeArticle.Text;
                 articulo.Descripcion = txtDescripcion.Text;
                 articulo.Detalle = txtDetalle.Text;
@@ -164,7 +240,7 @@ namespace webApp
                 articulo.Categoria = new Categoria();
 
                 articulo.Marca.Id = int.Parse(ddListBrand.SelectedValue);
-                articulo.Tipo.Id = int.Parse(ddListType.SelectedValue); 
+                articulo.Tipo.Id = int.Parse(ddListType.SelectedValue);
                 articulo.Categoria.Id = int.Parse(ddListCategory.SelectedValue);
 
 
@@ -187,86 +263,27 @@ namespace webApp
             }
 
         }
-        protected string GetStatusIcon(object status)
+
+        // Ver articulos
+        private void LoadArticle()
         {
-            /* // funcion para poner iconos en los status de las ventas
-            if (status == null)
-                return "~/Images/default.png";
-
-            string statusValue = status.ToString().ToLower();
-
-            switch (statusValue)
-            {
-                case "completed":
-                    return "~/Images/check.png"; // URL del ícono de completado
-                case "cancelled":
-                    return "~/Images/x.png"; // URL del ícono de cancelación
-                case "in process":
-                    return "~/Images/circle.png"; // URL del ícono en proceso
-                default:
-                    return "~/Images/default.png"; // Imagen por defecto
-            }*/
-            return "~/Images/default.png";
+            // Carga el GridView con artículos
+            ArticuloAS articulo = new ArticuloAS();
+            dgvArticles.DataSource = articulo.listar();
+            dgvArticles.DataBind();
+            dgvArticles.Visible = true;
+            dgvArticles.Columns[0].Visible = false;
+            dgvArticles.Columns[7].Visible = false;
         }
-        private void CargarArticuloParaModificar(int idArticulo)
+        protected void btnViewArticles_Click(object sender, EventArgs e) 
         {
-            // Obtener el artículo a modificar desde la base de datos utilizando su ID
-            ArticuloAS data = new ArticuloAS();
-            data.ObtenerIdXModificacion(idArticulo.ToString());
-            Articulo articulo = new Articulo();
-            articulo.Marca = new Marca();
-            articulo.Categoria = new Categoria();
-            articulo.Tipo = new Tipo();
-            if (articulo != null)
-            {
-                // Precargar los valores en los campos de texto del formulario
-                txtCodeArticle.Text = articulo.Codigo;
-                txtDescripcion.Text = articulo.Descripcion;
-                txtDetalle.Text = articulo.Detalle;
-
-                // Precargar los valores de los DropDownList (asegúrate que las listas ya estén cargadas)
-                if (ddListBrand.Items.FindByValue(articulo.Marca.Id.ToString()) != null)
-                {
-                    ddListBrand.SelectedValue = articulo.Marca.Descripcion.ToString();
-                }
-                if (ddListCategory.Items.FindByValue(articulo.Categoria.Descripcion.ToString()) != null)
-                {
-                    ddListCategory.SelectedValue = articulo.Categoria.Descripcion.ToString();
-                }
-                if (ddListType.Items.FindByValue(articulo.Tipo.Descripcion.ToString()) != null)
-                {
-                    ddListType.SelectedValue = articulo.Tipo.Descripcion.ToString();
-                }
-
-                // Mostrar el formulario y ocultar el GridView
-                addArticleForm.Visible = true;
-                dgvArticles.Visible = false;
-            }
-            else
-            {
-                // Manejar el caso cuando el artículo no se encuentra (opcional)
-                labelMsj.Text = "El artículo no fue encontrado.";
-                labelMsj.Visible = true;
-            }
+            MostarElentoSelecionado("div_gral_dgvArt");
+            LoadArticle(); // Cargar y mostrar artículos en el GridView
         }
-        private void LimpiarFormulario()
+        protected void dgvArticles_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            txtCodeArticle.Text = string.Empty;
-            txtDescripcion.Text = string.Empty;
-            txtDetalle.Text = string.Empty;
-
-           
-            ddListType.SelectedIndex = 0; 
-            ddListBrand.SelectedIndex = 0; 
-            ddListCategory.SelectedIndex = 0; 
-
-            
-        }
-        private void LimpiarFormulario_Tipificacion()
-        {
-            ddlTipoTipific.SelectedIndex = 0;
-            txtCodTipific.Text = string.Empty;
-            txtDescTipific.Text = string.Empty;
+            dgvArticles.PageIndex = e.NewPageIndex;
+            LoadArticle(); // Vuelve a cargar los datos para actualizar la vista
         }
         protected void dgvArticles_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -274,6 +291,10 @@ namespace webApp
             if (e.CommandName == "Modificar")
             {
                 IsEditMode = true;
+                if (IsEditMode)
+                {
+                    txtCodeArticle.Enabled = false; // El codigo NUNCA puede modificarse
+                }
 
                 int idArticulo = Convert.ToInt32(e.CommandArgument);
                 List<Articulo> listaArticulos = data.ObtenerIdXModificacion(idArticulo.ToString());
@@ -287,6 +308,7 @@ namespace webApp
                     // Rellenar los controles con la información del artículo
 
                     txtCodeArticle.Text = articulo.Codigo;
+                    
                     txtDescripcion.Text = articulo.Descripcion;
                     txtDetalle.Text = articulo.Detalle;
 
@@ -316,8 +338,9 @@ namespace webApp
 
 
                     // Hacer visible el formulario para editar
-                    addArticleForm.Visible = true; // El formulario debe ser el div que contiene tus 
-                    dgvArticles.Visible = false;
+                    MostarElentoSelecionado("div_gral_frmArt");
+                    titulo_add_frm_art.Visible = false;
+                    titulo_mod_frm_art.Visible = true;
                 }
                 else
                 {
@@ -340,84 +363,34 @@ namespace webApp
         }
         protected void dgvArticles_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int IdArticulo = Convert.ToInt32(e.Keys["Id"]); 
+            int IdArticulo = Convert.ToInt32(e.Keys["Id"]);
             ArticuloAS data = new ArticuloAS();
             data.DeleteArticulo(IdArticulo);
             LoadArticle();
         }
         protected void dgvArticles_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-      
+
         }
-        private void LoadArticle()
+
+        // Agregar - Modificar Tipificaciones
+        private void LimpiarFormulario_Tipificacion()
         {
-            // Carga el GridView con artículos
-            ArticuloAS articulo = new ArticuloAS();
-            dgvArticles.DataSource = articulo.listar();
-            dgvArticles.DataBind();
-            dgvArticles.Visible = true;
-            dgvArticles.Columns[0].Visible = false;
-            dgvArticles.Columns[7].Visible = false;
-        }
-        private void LoadSyP()
-        {
-            ArticuloAS articulo = new ArticuloAS();
-
-            lblTitulo.Visible = true;
-
-            lblArticulo.Visible = true;
-            ddlArticulo.Visible = true;
-            ArticuloAS art = new ArticuloAS();
-            ddlArticulo.DataSource = art.listar();
-            ddlArticulo.DataValueField = "Id";
-            ddlArticulo.DataTextField = "Descripcion";
-            ddlArticulo.DataBind();
-
-            lblColor.Visible = true;
-            ddlColor.Visible = true;
-            ColorAS color = new ColorAS();
-            ddlColor.DataSource = color.listar();
-            ddlColor.DataValueField = "Id";
-            ddlColor.DataTextField = "Descripcion";
-            ddlColor.DataBind();
-
-            lblTalle.Visible = true;
-            ddlTalle.Visible = true;
-            TallesAS talle = new TallesAS();
-            ddlTalle.DataSource = talle.listar();
-            ddlTalle.DataValueField = "Id";
-            ddlTalle.DataTextField = "Descripcion";
-            ddlTalle.DataBind();
-
-            lblStock.Visible = true;
-            txtStock.Visible = true;
-            btnActStock.Visible = true;
-
-            lblPrecio.Visible = true;
-            txtPrecio.Visible = true;
-            btnActPrecio.Visible = true;
-
-            dgvSyP.DataSource = articulo.listarConSyP();
-            dgvSyP.DataBind();
-            dgvSyP.Visible = true;
-            dgvSyP.Columns[0].Visible = false;
-            dgvSyP.Columns[3].Visible = false;
+            ddlTipoTipific.SelectedIndex = 0;
+            txtCodTipific.Text = string.Empty;
+            txtDescTipific.Text = string.Empty;
         }
         protected void btnAddTipific_Click(object sender, EventArgs e)
         {
             //BOTON PARA AGREGAR TIPIFICACION.
 
-            addTipificForm.Visible = true;
+            MostarElentoSelecionado("div_gral_frmTip");
 
             TipificacionAS TipAS = new TipificacionAS();
             ddlTipoTipific.DataSource = TipAS.ObtenerTodas();
             ddlTipoTipific.DataValueField = "Codigo";
             ddlTipoTipific.DataTextField = "Descripcion";
             ddlTipoTipific.DataBind();
-        }
-        protected void btnAddSyP_Click(object sender, EventArgs e)
-        {
-            LoadSyP();
         }
         protected void btnAceptarTipific_Click(object sender, EventArgs e)
         {
@@ -432,42 +405,45 @@ namespace webApp
                 throw new Exception("El código del tipificacion es obligatorio.");
             }
 
-            //if (!IsEditMode)
-            //{
+            if (!IsEditMode)
+            {
                 if (data.ValidarCodigoActivo_Tipificacion(IdTipificacion, txtCodTipific.Text) == 1)
                 {
                     throw new Exception("El código de la tpificacion esta en uso.");
                 }
-            //}
+            }
 
             if (string.IsNullOrWhiteSpace(txtDescTipific.Text))
             {
-                throw new Exception("La descripción del artículo es obligatoria.");
+                throw new Exception("La descripción de la tipificacion es obligatoria.");
             }
 
             // validacion tamaño del texto
             if (txtCodTipific.Text.Length > 10)
             {
-                Console.WriteLine("El código del articulo no puede exceder los 10 caracteres.");
-                throw new Exception("El código del articulo no puede exceder los 10 caracteres.");
+                Console.WriteLine("El código de la tipificacion no puede exceder los 10 caracteres.");
+                throw new Exception("El código de la tipificacion no puede exceder los 10 caracteres.");
             }
             if (txtDescTipific.Text.Length > 250)
             {
-                throw new Exception("La descripcion del articulo no puede exceder los 250 caracteres.");
+                throw new Exception("La descripcion de la tipificacion no puede exceder los 250 caracteres.");
             }
 
-            //if (IsEditMode)
-            //{
+            if (IsEditMode)
+            {
+                data.ModificarTipificacion(IdTipificacion, txtCodTipific.Text, txtDescTipific.Text);
+            }
+            else
+            {
                 data.AgregarTipificacion(IdTipificacion, txtCodTipific.Text, txtDescTipific.Text);
-            //}
-            //else
-            //{
-            //    data.AgregarNuevoArticulo(articulo);
-            //}
+            }
+
             labelMsj.Text = "¡Se ha agregado exitosamente!";
             labelMsj.Visible = true;
             LimpiarFormulario_Tipificacion();
         }
+
+        // Ver Tipificaciones
         private void LoadTipific(int Tipific)
         {
             // Carga el GridView con las Tipificacion selecionada.
@@ -479,13 +455,13 @@ namespace webApp
 
                     dgvTipific.DataBind();
                     dgvTipific.Visible = true;
-                    //dgvTipific.Columns[0].Visible = false;
-                    //dgvTipific.Columns[3].Visible = false;
+                    dgvTipific.Columns[0].Visible = false;
+                    dgvTipific.Columns[3].Visible = false;
 
                     TipificSelected = Tipific;
                     break;
                 case 2:
-                    TipoAS tipo= new TipoAS();
+                    TipoAS tipo = new TipoAS();
                     dgvTipific.DataSource = tipo.listar();
 
                     dgvTipific.DataBind();
@@ -531,18 +507,11 @@ namespace webApp
                 default:
                     break;
             }
-
-            
         }
         protected void btnViewTipific_Click(object sender, EventArgs e)
         {
-            lblSelecTipific.Visible = true;
-            btnTipificMarca.Visible = true;
-            btnTipificTipo.Visible = true;
-            btnTipificCategoria.Visible = true;
-            btnTipificColor.Visible = true;
-            btnTipificTalle.Visible = true;
-
+            dgvTipific.Visible=false;
+            MostarElentoSelecionado("div_gral_dgvTip");
         }
         protected void btnTipificMarca_Click(object sender, EventArgs e)
         {
@@ -564,80 +533,86 @@ namespace webApp
         {
             LoadTipific(5);
         }
+        protected void CargarTipificacionParaModificar(int Id)
+        {
+            SqlDataReader result;
+            DataAccess data = new DataAccess();
+            DataManipulator query = new DataManipulator();
+
+            query.configSqlProcedure("Catalogo.SP_BuscarTipificacionPorId");
+            query.configSqlParams("@Tipificacion", TipificSelected);
+            query.configSqlParams("@Id", Id);
+            query.configSqlConexion(data.getConnection());
+            data.openConnection();
+            result = query.exectQuerry();
+
+            try
+            {
+
+                result.Read();
+
+                MostarElentoSelecionado("div_gral_frmTip");
+
+                TipificacionAS TipAS = new TipificacionAS();
+
+                ddlTipoTipific.DataSource = TipAS.ObtenerPorId(TipificSelected);
+                ddlTipoTipific.DataValueField = "Codigo";
+                ddlTipoTipific.DataTextField = "Descripcion";
+                ddlTipoTipific.DataBind();
+
+                ddlTipoTipific.Enabled = false;
+                txtCodTipific.Enabled = false;
+                txtCodTipific.Text = (string)result["Codigo"];
+                txtDescTipific.Text = (string)result["Descripcion"];
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
         protected void dgvTipific_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            /*ArticuloAS data = new ArticuloAS();
-            if (e.CommandName == "Modificar")
-            {
+            if (e.CommandName == "Modificar") {
+
                 IsEditMode = true;
+                titulo_add_frm_tip.Visible = false;
+                titulo_mod_frm_tip.Visible = true;
 
-                int idArticulo = Convert.ToInt32(e.CommandArgument);
-                List<Articulo> listaArticulos = data.ObtenerIdXModificacion(idArticulo.ToString());
-
-                // Verificar si la lista tiene elementos
-                if (listaArticulos.Count > 0)
+                switch (TipificSelected)
                 {
-                    // Asignar el primer artículo de la lista al objeto articulo
-                    Articulo articulo = listaArticulos[0];
-
-                    // Rellenar los controles con la información del artículo
-
-                    txtCodeArticle.Text = articulo.Codigo;
-                    txtDescripcion.Text = articulo.Descripcion;
-                    txtDetalle.Text = articulo.Detalle;
-
-                    MarcaAS marca = new MarcaAS();
-                    ddListBrand.DataSource = marca.listar();
-                    ddListBrand.DataValueField = "Id";
-                    ddListBrand.DataTextField = "Descripcion";
-                    ddListBrand.DataBind();
-
-                    ddListBrand.SelectedValue = articulo.Marca.Id.ToString();
-
-                    TipoAS tipo = new TipoAS();
-                    ddListType.DataSource = tipo.listar();
-                    ddListType.DataValueField = "Id";
-                    ddListType.DataTextField = "Descripcion";
-                    ddListType.DataBind();
-
-                    ddListType.SelectedValue = articulo.Tipo.Id.ToString();
-
-                    CategoriaAS categoria = new CategoriaAS();
-                    ddListCategory.DataSource = categoria.listar();
-                    ddListCategory.DataValueField = "Id";
-                    ddListCategory.DataTextField = "Descripcion";
-                    ddListCategory.DataBind();
-
-                    ddListCategory.SelectedValue = articulo.Categoria.Id.ToString();
-
-
-                    // Hacer visible el formulario para editar
-                    addArticleForm.Visible = true; // El formulario debe ser el div que contiene tus 
-                    dgvArticles.Visible = false;
+                    case 1:
+                        CargarTipificacionParaModificar(Convert.ToInt32(e.CommandArgument));
+                        break;
+                    case 2:
+                        CargarTipificacionParaModificar(Convert.ToInt32(e.CommandArgument));
+                        break;
+                    case 3:
+                        CargarTipificacionParaModificar(Convert.ToInt32(e.CommandArgument));
+                        break;
+                    case 4:
+                        CargarTipificacionParaModificar(Convert.ToInt32(e.CommandArgument));
+                        break;
+                    case 5:
+                        CargarTipificacionParaModificar(Convert.ToInt32(e.CommandArgument));
+                        break;
+                    default:
+                        break;
                 }
-                else
-                {
-                    // Manejo de error: no se encontró ningún artículo con el ID proporcionado
-                    Console.WriteLine("No se encontró el artículo con el ID especificado.");
-                }
-
             }
-            else if (e.CommandName == "Delete")
-            {
-                int IdArticulo = Convert.ToInt32(e.CommandArgument);
-                data.DeleteArticulo(IdArticulo);
-                LoadArticle();
-            }*/
         }
         protected void dgvTipific_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            
-            int Id = Convert.ToInt32(e.Keys[0]);
+
+            int Id = Convert.ToInt32(e.Keys["Id"]);
             try
             {
                 TipificacionAS tipif = new TipificacionAS();
                 int registros = tipif.ValidarIntegridad(TipificSelected, Id);
-
 
                 if (registros == 0)
                 {
@@ -646,22 +621,28 @@ namespace webApp
                         case 1:
                             MarcaAS marca = new MarcaAS();
                             marca.EliminarMarca(Id);
+                            LoadTipific(TipificSelected);
+
                             break;
                         case 2:
                             TipoAS tipo = new TipoAS();
-                            //tipo.BorrarTipo(Id);
+                            tipo.EliminarTipo(Id);
+                            LoadTipific(TipificSelected);
                             break;
                         case 3:
                             CategoriaAS cate = new CategoriaAS();
-                            //cate.BorrarCate(Id);
+                            cate.EliminarCate(Id);
+                            LoadTipific(TipificSelected);
                             break;
                         case 4:
                             ColorAS color = new ColorAS();
-                            //color.BorrarColor(Id);
+                            color.EliminarColor(Id);
+                            LoadTipific(TipificSelected);
                             break;
                         case 5:
                             TallesAS talle = new TallesAS();
-                            //talle.BorrarTalle(Id);
+                            talle.EliminarTalle(Id);
+                            LoadTipific(TipificSelected);
                             break;
                         default:
                             break;
@@ -681,9 +662,155 @@ namespace webApp
 
 
         }
-        protected void dgvTipific_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
 
+        // Stock y Precio
+        private string DescripcionArtddl(int idArt)
+        {
+            ArticuloAS articuloAS = new ArticuloAS();
+            Articulo art = articuloAS.ArticuloPorId(idArt);
+            
+            return art.Descripcion.ToString();
+        }
+        private void LoadSyP(int idArticulo = -1, string colorSelec = "-1", string talleSelec = "-1")
+        {
+            MostarElentoSelecionado("div_gral_dgvSyp");
+
+            if (colorSelec == "-1")
+            {
+                ColorAS color = new ColorAS();
+                ddlColor.DataSource = color.listar();
+                ddlColor.DataValueField = "Id";
+                ddlColor.DataTextField = "Descripcion";
+                ddlColor.DataBind();
+            }
+            else
+            {
+                ddlColor.SelectedValue = colorSelec;
+            }
+
+            if (colorSelec == "-1")
+            {
+                TallesAS talle = new TallesAS();
+                ddlTalle.DataSource = talle.listar();
+                ddlTalle.DataValueField = "Id";
+                ddlTalle.DataTextField = "Descripcion";
+                ddlTalle.DataBind();
+            }
+            else
+            {
+                ddlTalle.SelectedValue = talleSelec;
+            }
+
+            ArticuloAS articulo = new ArticuloAS();
+
+            if (idArticulo == -1)
+            {
+                lblNombreArt.Visible = false;
+                txtStock.Enabled = false;
+                btnAceptarPrecio.Enabled = false;
+                txtPrecio.Enabled = false;
+                btnAceptarStock.Enabled = false;
+                dgvSyP.DataSource = articulo.listarConSyP();
+            }
+            else
+            {
+                lblNombreArt.Visible = true;
+                txtStock.Enabled = true;
+                btnAceptarPrecio.Enabled = true;
+                txtPrecio.Enabled = true;
+                btnAceptarStock.Enabled = true;
+                dgvSyP.DataSource = articulo.listarConSyP().Where(a => a.Id == idArticulo);
+            }
+            
+            dgvSyP.DataBind();
+            dgvSyP.Visible = true;
+            dgvSyP.Columns[0].Visible = false;
+            dgvSyP.Columns[1].Visible = false;
+            dgvSyP.Columns[6].Visible = false;
+        }
+        protected void btnAddSyP_Click(object sender, EventArgs e)
+        {
+            ArticuloAS art = new ArticuloAS();
+            ddlArticulo.DataSource = art.listar();
+            ddlArticulo.DataValueField = "Id";
+            ddlArticulo.DataTextField = "Codigo";
+            ddlArticulo.DataBind();
+
+            // Agrega la opción "Todos"
+            ddlArticulo.Items.Insert(0, new ListItem("Todos", "0"));
+
+            LoadSyP();
+        }
+        protected void btnAceptarStock_Click(object sender, EventArgs e)
+        {
+            int idArt = Convert.ToInt32(ddlArticulo.SelectedValue);
+            int idColor = Convert.ToInt32(ddlColor.SelectedValue);
+            int idTalle = Convert.ToInt32(ddlTalle.SelectedValue);
+            int cantidad = Convert.ToInt32(txtStock.Text);
+
+            ArticuloAS artAS = new ArticuloAS();
+            
+            artAS.ActuaclizarStock(idArt, idColor, idTalle, cantidad);
+            LoadSyP(Convert.ToInt32(ddlArticulo.SelectedValue), ddlColor.SelectedValue, ddlTalle.SelectedValue);
+            
+        }
+        protected void btnAceptarPrecio_Click(object sender, EventArgs e)
+        {
+            int idArt = Convert.ToInt32(ddlArticulo.SelectedValue);
+            int idColor = Convert.ToInt32(ddlColor.SelectedValue);
+            int idTalle = Convert.ToInt32(ddlTalle.SelectedValue);
+            float precio = Convert.ToSingle(txtPrecio.Text);
+
+            ArticuloAS artAS = new ArticuloAS();
+
+            artAS.ActuaclizarPrecio(idArt, idColor, idTalle, precio);
+            LoadSyP(Convert.ToInt32(ddlArticulo.SelectedValue), ddlColor.SelectedValue, ddlTalle.SelectedValue);
+        }
+        protected void ddlArticulo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlArticulo.SelectedIndex > 0)
+            {
+                int idSeleccionado = Convert.ToInt32(ddlArticulo.SelectedValue);
+                lblNombreArt.Text = DescripcionArtddl(idSeleccionado);
+
+                txtStock.Text = "";
+                txtPrecio.Text = "";
+                LoadSyP(idSeleccionado);
+            }
+            else
+            {
+                LoadSyP();
+            }
+        }
+        protected void dgvSyP_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            // Obtén el Id del artículo desde la fila seleccionada
+            int id = Convert.ToInt32(e.Keys["IdRegSyP"]);
+            ArticuloAS artAS = new ArticuloAS();
+            artAS.EliminarSyP(id);
+
+            if (ddlArticulo.SelectedIndex >= 0)
+            {
+                int idSeleccionado = Convert.ToInt32(ddlArticulo.SelectedValue);
+                lblNombreArt.Text = DescripcionArtddl(idSeleccionado);
+
+                LoadSyP(idSeleccionado);
+            }
+
+        }
+        /* SECCION DE VENTAS */
+        protected void btnViewSell_Click(object sender, EventArgs e)
+        {
+        }
+
+        /* SECCION DE REPORTES*/
+        protected void btnReportStockPorArticulo_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("wfreport_stockporarticulo.aspx");
+        }
+        protected void btnReportStockYPrecio_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("wfreport_stockyprecios.aspx");
         }
     }
 }

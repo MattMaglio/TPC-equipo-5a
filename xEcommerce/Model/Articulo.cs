@@ -8,6 +8,7 @@ namespace Model
 {
     public class Articulo
     {
+        public int IdRegSyP { get; set; }
         public int Id { get; set; }
         public string Codigo { get; set; }
         public string Descripcion { get; set; }
