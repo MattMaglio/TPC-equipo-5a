@@ -1162,3 +1162,89 @@ BEGIN
     END CATCH
 END;
 GO
+
+CREATE OR ALTER VIEW Operaciones.VW_StockYPreciosParaArt AS
+SELECT a.Id AS "Id de Articulo",
+    c.Id AS "Id de Color",
+    c.Codigo AS "Codigo de Color",
+    c.Descripcion AS "Descripcion de Color",
+    t.Id AS "Id de Talle",
+    t.Codigo AS "Codigo de Talle",
+    t.Descripcion AS "Descripcion de Talle",
+    ISNULL(s.Cantidad,0) AS "Cantidad",
+    ISNULL(p.Precio,0) AS "Precio"
+FROM Operaciones.Precios p
+INNER JOIN Catalogo.Articulos a ON p.IdArticulo = a.Id
+INNER JOIN Catalogo.Colores c ON p.IdColor = c.Id
+INNER JOIN Catalogo.Talles t ON p.IdTalle = t.Id
+LEFT JOIN Operaciones.Stock s
+    ON p.IdArticulo = s.IdArticulo
+    AND p.IdColor = s.IdColor
+    AND p.IdTalle = s.IdTalle
+;
+GO
+
+
+CREATE PROCEDURE [Catalogo].[ObtenerTallesPorIdParaDetalle]
+@Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+SELECT DISTINCT
+    t.Id AS "Id de Talle",
+    t.Codigo AS "Codigo de Talle",
+    t.Descripcion AS "Descripcion de Talle"
+FROM Operaciones.Precios p
+INNER JOIN Catalogo.Articulos a ON p.IdArticulo = a.Id
+INNER JOIN Catalogo.Talles t ON p.IdTalle = t.Id
+WHERE a.Id = @Id;
+END
+GO
+
+CREATE PROCEDURE [Catalogo].[ObtenerColoresPorIdParaDetalle]
+ @Id INT
+ AS
+BEGIN
+    SET NOCOUNT ON;
+SELECT DISTINCT
+    c.Id AS "Id de Color",
+    c.Codigo AS "Codigo de Color",
+    c.Descripcion AS "Descripcion de Color"
+FROM Operaciones.Precios p
+INNER JOIN Catalogo.Articulos a ON p.IdArticulo = a.Id
+INNER JOIN Catalogo.Colores c ON p.IdColor = c.Id
+WHERE a.Id = @Id;
+END
+GO
+
+CREATE   PROCEDURE [Catalogo].[ObtenerPrecioPorIdParaDetalle]
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        a.Id AS ProductId,
+		p.IdColor,
+		c.Descripcion AS Color, 
+		p.IdTalle,
+		t.Descripcion AS Talle,
+		p.Precio
+		  FROM
+        Operaciones.Precios p
+	LEFT JOIN
+		Catalogo.Articulos a ON a.Id = p.IdArticulo 
+	INNER JOIN 
+		Catalogo.Colores c ON c.Id = p.IdColor
+	INNER JOIN 
+		Catalogo.Talles t ON t.Id = p.IdTalle
+    WHERE
+        a.Estado = 1 AND a.Id = @Id; 
+END
+GO
+
+
+
+
+
+
