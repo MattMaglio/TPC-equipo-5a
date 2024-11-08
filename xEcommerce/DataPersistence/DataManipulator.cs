@@ -79,9 +79,15 @@ namespace DataPersistence
             {
                 throw new InvalidOperationException("La conexión no ha sido configurada.");
             }
-
-            object result = sqlQuery.ExecuteScalar();
-            return result;
+            try
+            {
+                object result = sqlQuery.ExecuteScalar();
+                return result; 
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error al ejecutar la consulta", ex);
+            }
         }
         public int getLastInsertedId()
         {
