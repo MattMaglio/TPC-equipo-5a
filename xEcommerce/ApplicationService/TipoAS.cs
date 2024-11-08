@@ -11,6 +11,29 @@ namespace ApplicationService
 {
     public class TipoAS
     {
+        public void EliminarTipo(int id)
+        {
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+            try
+            {
+                query.configSqlProcedure("Catalogo.SP_EliminarTipo");
+                query.configSqlConexion(conexion.getConnection());
+                conexion.openConnection();
+                query.configSqlParams("@Id", id);
+                query.exectCommand();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error al eliminar la Marca: " + ex.Message, ex);
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
+        }
         public List<Tipo> listar()
         {
             SqlDataReader result;
@@ -30,6 +53,7 @@ namespace ApplicationService
                     aux.Id = (int)result["Id"];
                     aux.Codigo = (string)result["Codigo"];
                     aux.Descripcion = (string)result["Descripcion"];
+                    aux.Estado = (bool)result["Estado"];
 
                     lista.Add(aux);
                 }
@@ -46,7 +70,6 @@ namespace ApplicationService
                 data.closeConnection();
             }
         }
-
     }
 }
 

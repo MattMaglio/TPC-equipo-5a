@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +8,7 @@ namespace Model
 {
     public class Articulo
     {
+        public int IdRegSyP { get; set; }
         public int Id { get; set; }
         public string Codigo { get; set; }
         public string Descripcion { get; set; }
@@ -20,5 +21,7 @@ namespace Model
         public List <Imagen> Imagen { get; set; }
         public int Stock { get; set; }
         public float Precio { get; set; }
+        public bool Estado { get; set; }
+
     }
 }

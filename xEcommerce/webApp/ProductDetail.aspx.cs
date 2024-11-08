@@ -168,6 +168,12 @@ namespace webApp
                     {
                         decimal precio = (decimal)precioReader["Precio"];
                         lblPrecio.Text = "Precio: $" + precio.ToString("F2");
+                        //float precioFloat = (float)precioReader["Precio"];
+                        //lblPrecio.Text = "Precio: $" + precioFloat.ToString("F2");
+                        //float precioFloat = (float)precioReader["Precio"];
+                        //decimal precioDecimal = Convert.ToDecimal(precioFloat);
+                        //lblPrecio.Text = "Precio: $" + precioDecimal.ToString("F2");
+
                         precioEncontrado = true;
                         break;
                     }

@@ -111,7 +111,7 @@
     <Content Include="MyAccount.aspx" />
     <Content Include="ProductDetail.aspx" />
     <Content Include="Register.aspx" />
-    <Content Include="report\wfreport.aspx" />
+    <Content Include="wfreport_stockporarticulo.aspx" />
     <Content Include="Sales.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -121,6 +121,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ShopFullGrid.aspx" />
     <Content Include="Web.config" />
+    <Content Include="wfreport_stockyprecios.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutUs.aspx.cs">
@@ -187,12 +188,12 @@
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
-    <Compile Include="report\wfreport.aspx.cs">
-      <DependentUpon>wfreport.aspx</DependentUpon>
+    <Compile Include="wfreport_stockporarticulo.aspx.cs">
+      <DependentUpon>wfreport_stockporarticulo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="report\wfreport.aspx.designer.cs">
-      <DependentUpon>wfreport.aspx</DependentUpon>
+    <Compile Include="wfreport_stockporarticulo.aspx.designer.cs">
+      <DependentUpon>wfreport_stockporarticulo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Sales.aspx.cs">
       <DependentUpon>Sales.aspx</DependentUpon>
@@ -214,6 +215,13 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="wfreport_stockyprecios.aspx.cs">
+      <DependentUpon>wfreport_stockyprecios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfreport_stockyprecios.aspx.designer.cs">
+      <DependentUpon>wfreport_stockyprecios.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -263,7 +271,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="report\report_test.rdlc" />
+    <EmbeddedResource Include="report\report_stockporarticulo.rdlc" />
+    <EmbeddedResource Include="report\report_stockyprecio.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

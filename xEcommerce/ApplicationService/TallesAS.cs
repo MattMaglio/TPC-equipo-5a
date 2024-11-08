@@ -11,6 +11,30 @@ namespace ApplicationService
 {
     public class TallesAS
     {
+        public void EliminarTalle(int id)
+        {
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+            try
+            {
+                query.configSqlProcedure("Catalogo.SP_EliminarTalle");
+                query.configSqlConexion(conexion.getConnection());
+                conexion.openConnection();
+                query.configSqlParams("@Id", id);
+                query.exectCommand();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error al eliminar el Talle: " + ex.Message, ex);
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
+        }
+
         public List<Talle> listar()
         {
             SqlDataReader result;

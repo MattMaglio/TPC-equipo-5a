@@ -45,3 +45,18 @@ BEGIN
     RETURN @Id;
 END;
 GO
+
+CREATE FUNCTION Catalogo.FC_ValidarCodigoActivo(@Codigo varchar(10))
+RETURNS INT
+AS
+BEGIN
+    DECLARE @Activo INT;
+
+    SELECT @Activo = Estado
+    FROM Catalogo.Articulos
+    WHERE Codigo = @Codigo
+
+    RETURN @Activo
+END;
+
+GO
