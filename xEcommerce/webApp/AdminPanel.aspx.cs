@@ -230,7 +230,7 @@ namespace webApp
                     throw new Exception("El detalle del articulo no puede exceder los 250 caracteres.");
                 }
 
-                // Asignar valores a las propiedades del artículo
+                // ASIGNAMOS VALORES CAPTURADOS AL ARTICULO
 
                 articulo.Codigo = txtCodeArticle.Text;
                 articulo.Descripcion = txtDescripcion.Text;
@@ -243,7 +243,26 @@ namespace webApp
                 articulo.Tipo.Id = int.Parse(ddListType.SelectedValue);
                 articulo.Categoria.Id = int.Parse(ddListCategory.SelectedValue);
 
+                // Creamos lista de imagenes para guardarlos
+                articulo.Imagen = new List<Imagen>();
+                string imagen1 = txtImagen1.Text.Trim(); // funcion trim elimina espacios en blanco
+                string imagen2 = txtImagen2.Text.Trim();
+                string imagen3 = txtImagen3.Text.Trim();
 
+                // agregamos las imagenes solo si  las url no estan vacias
+                if (!string.IsNullOrEmpty(imagen1))
+                {
+                    articulo.Imagen.Add(new Imagen { UrlImagen = imagen1 });
+                }
+                if (!string.IsNullOrEmpty(imagen2))
+                {
+                    articulo.Imagen.Add(new Imagen { UrlImagen = imagen2 });
+                }
+                if (!string.IsNullOrEmpty(imagen3))
+                {
+                    articulo.Imagen.Add(new Imagen { UrlImagen = imagen3 });
+                }
+                // depende el modo es como va a guardar
                 if (IsEditMode)
                 {
                     data.ModificarArticulo(articulo);
@@ -372,13 +391,15 @@ namespace webApp
         {
 
         }
-
         // Agregar - Modificar Tipificaciones
         private void LimpiarFormulario_Tipificacion()
         {
             ddlTipoTipific.SelectedIndex = 0;
             txtCodTipific.Text = string.Empty;
             txtDescTipific.Text = string.Empty;
+            txtImagen1.Text = string.Empty;
+            txtImagen2.Text = string.Empty;
+            txtImagen3.Text = string.Empty;
         }
         protected void btnAddTipific_Click(object sender, EventArgs e)
         {
@@ -442,7 +463,6 @@ namespace webApp
             labelMsj.Visible = true;
             LimpiarFormulario_Tipificacion();
         }
-
         // Ver Tipificaciones
         private void LoadTipific(int Tipific)
         {
@@ -662,7 +682,6 @@ namespace webApp
 
 
         }
-
         // Stock y Precio
         private string DescripcionArtddl(int idArt)
         {
@@ -802,7 +821,7 @@ namespace webApp
         protected void btnViewSell_Click(object sender, EventArgs e)
         {
         }
-
+        
         /* SECCION DE REPORTES*/
         protected void btnReportStockPorArticulo_Click(object sender, EventArgs e)
         {
@@ -811,6 +830,13 @@ namespace webApp
         protected void btnReportStockYPrecio_Click(object sender, EventArgs e)
         {
             Response.Redirect("wfreport_stockyprecios.aspx");
+        }
+
+        protected void txtImagen1_TextChanged(object sender, EventArgs e)
+        {
+           IdImagen1.ImageUrl = txtImagen1.Text;
+           IdImagen2.ImageUrl = txtImagen2.Text;
+           IdImagen3.ImageUrl = txtImagen3.Text;
         }
     }
 }

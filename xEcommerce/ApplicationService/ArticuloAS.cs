@@ -14,7 +14,6 @@ namespace ApplicationService
 {
     public class ArticuloAS
     {
-
         public List<Articulo> listar()
         {
             List<Articulo> lista = new List<Articulo>();
@@ -504,8 +503,15 @@ namespace ApplicationService
                 query.configSqlParams("@IdMarca", articulo.Marca.Id);
                 query.configSqlParams("@IdCategoria", articulo.Categoria.Id);
                 query.configSqlParams("@Detalle", articulo.Detalle);
+                
+                //ejecutamos la consulta y obtenemos el id 
+                int idArticulo = Convert.ToInt32(query.exectScalar());
 
-                query.exectCommand();
+                //guardamos la imagenes
+                foreach (var imagen in articulo.Imagen)
+                {
+                    GuardarImagen(idArticulo,imagen.UrlImagen);
+                }
             }
             catch (Exception ex )
             {
@@ -517,6 +523,32 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
 
+        }
+        private void GuardarImagen(int idArticulo, string urlImagen)
+        {
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+
+            try
+            {
+                query.configSqlProcedure("Catalogo.InsertarImagen");
+                query.configSqlConexion(conexion.getConnection());
+                conexion.openConnection();
+
+                query.configSqlParams("@IdArticulo", idArticulo);
+                query.configSqlParams("@UrlImagen", urlImagen);
+
+                query.exectCommand();   
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
         }
         public void DeleteArticulo(int IdArticulo)
         {     
