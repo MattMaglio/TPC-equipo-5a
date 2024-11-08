@@ -167,8 +167,7 @@
             z-index: 0;
             border-radius: 10px;
         }
-
-            .bn5:before {
+        .bn5:before {
                 content: "";
                 background: linear-gradient( 45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000 );
                 position: absolute;
@@ -183,8 +182,7 @@
                 opacity: 0;
                 transition: opacity 0.3s ease-in-out;
                 border-radius: 10px;
-            }
-
+        }
         @keyframes glowingbn5 {
             0% {
                 background-position: 0 0;
@@ -198,19 +196,15 @@
                 background-position: 0 0;
             }
         }
-
         .bn5:active {
             color: #000;
         }
-
-            .bn5:active:after {
+        .bn5:active:after {
                 background: transparent;
-            }
-
+        }
         .bn5:hover:before {
             opacity: 1;
         }
-
         .bn5:after {
             z-index: -1;
             content: "";
@@ -222,6 +216,33 @@
             top: 0;
             border-radius: 10px;
         }
+        .customLabel{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente moderna */
+            font-size: 12.5px; 
+            font-weight: 600; 
+            color: #111;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1); 
+            letter-spacing: 1px; 
+            line-height: 1.5; 
+            padding: 5px; 
+            background-color: rgba(255, 255, 255, 0.7); 
+            border-radius: 8px; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+        }
+        .h2{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente moderna */
+            font-size: 30px; 
+            font-weight: 600; 
+            color: #111;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2); 
+            letter-spacing: 1px; 
+            line-height: 1.5; 
+            padding: 5px; 
+            background-color:  rgba(200, 200, 200, 0.7);
+            border-radius: 8px; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+        }
+       
     </style>
 
     <div class="container mt-4">
@@ -236,8 +257,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingArticles">
                         <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseArticles" aria-expanded="false" aria-controls="collapseArticles">
-                            Articulos
-                           
+                            Articulos  
                         </button>
                     </h2>
                     <div id="collapseArticles" class="accordion-collapse collapse" aria-labelledby="headingArticles" data-bs-parent="#adminAccordion">
@@ -377,7 +397,19 @@
 
                     <!-- DROP DOWN LIST CATEGORIA -->
                     <asp:DropDownList ID="ddListCategory" runat="server" CssClass="form-control"></asp:DropDownList>
-
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            <asp:TextBox runat="server" PlaceHolder="Url Imagen1" ID="txtImagen1" CssClass="form-control"
+                                AutoPostBack="true" OnTextChanged="txtImagen1_TextChanged" />
+                            <asp:Image ImageUrl="https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp" Width="25%" ID="IdImagen1" runat="server" />
+                             <asp:TextBox runat="server" PlaceHolder="Url Imagen2" ID="txtImagen2" CssClass="form-control"
+                                 AutoPostBack="true" OnTextChanged="txtImagen1_TextChanged" />
+                             <asp:Image ImageUrl="https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp" Width="25%" ID="IdImagen2" runat="server" />
+                             <asp:TextBox runat="server" PlaceHolder="Url Imagen3" ID="txtImagen3" CssClass="form-control"
+                             AutoPostBack="true" OnTextChanged="txtImagen1_TextChanged" />
+                         <asp:Image ImageUrl="https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp" Width="25%" ID="IdImagen3" runat="server" />
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
                     <asp:Button ID="btnSaveArticle" runat="server" CssClass="bn5" OnClick="btnSaveArticle_Click" Text="Guardar articulo" />
                     <a type="button" class="bn5" href="AdminPanel.aspx">Cancelar</a>
 
@@ -400,6 +432,7 @@
                 </div>
 
                 <div>
+                      <!-- Grilla de articulos -->
                 <asp:GridView ID="dgvArticles" runat="server" CssClass="table table-bordered mt-4" DataKeyNames="Id" AutoGenerateColumns="False"
                     OnRowDeleting="dgvArticles_RowDeleting" OnRowCommand="dgvArticles_RowCommand" OnRowUpdating="dgvArticles_RowUpdating" 
                     AllowPaging="True" OnPageIndexChanging="dgvArticles_PageIndexChanging" PageSize="5">
@@ -413,8 +446,6 @@
                         <asp:BoundField DataField="Categoria.Descripcion" HeaderText="Categoria" />
                         <asp:BoundField DataField="Detalle" HeaderText="Detalle" />
                         <asp:BoundField DataField="Estado" HeaderText="Estado" />
-
-
                         <asp:TemplateField HeaderText="Acción">
                             <ItemTemplate>
                                 <asp:Button Text="Modificar" CssClass="btn btn-primary"
@@ -443,7 +474,6 @@
             <!-- Alta y Modificacion de Tipificaciones (Ok)-->
             <div class="form-tipific" id="div_gral_frmTip" runat="server" visible="false">
                 <div class="mt-3">
-
                     <div id="titulo_add_frm_tip" runat="server" visible="true">
                         <h4>Agregar nueva tipificacion</h4>
                     </div>
@@ -466,7 +496,7 @@
             <!-- Grilla de control de Tipificaciones (Ok) -->
             <div class="dgviewTipificaciones" id="div_gral_dgvTip" visible="false" runat="server">
                 
-                <asp:Label ID="lblSelecTipific" runat="server" Text="Selecione la tipificacion que desea visualizar"></asp:Label>
+                <asp:Label ID="lblSelecTipific" runat="server" Text="Selecione la tipificacion que desea visualizar: " CssClass="customLabel"></asp:Label>
                 <asp:Button ID="btnTipificMarca" CssClass="btn btn-primary" OnClick="btnTipificMarca_Click" runat="server" Text="Marca"/>
                
                 <asp:Button ID="btnTipificTipo" CssClass="btn btn-primary" OnClick="btnTipificTipo_Click" runat="server" Text="Tipo"/>

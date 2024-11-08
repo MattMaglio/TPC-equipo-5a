@@ -1162,3 +1162,53 @@ BEGIN
     END CATCH
 END;
 GO
+
+
+CREATE PROCEDURE Catalogo.InsertarNuevoArticulo
+    @Codigo VARCHAR(10),
+    @Descripcion VARCHAR(255),
+    @IdTipo INT,
+    @IdMarca INT,
+    @IdCategoria INT,
+    @Detalle VARCHAR(255)
+AS
+BEGIN
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        --insertamos en la tabla articulo
+        INSERT INTO Articulos (Codigo, Descripcion, IdTipo, IdMarca, IdCategoria, Detalle)
+        VALUES (@Codigo, @Descripcion, @IdTipo, @IdMarca, @IdCategoria, @Detalle);
+
+        -- capturamos el id ingresado
+        SELECT SCOPE_IDENTITY() AS IdArticulo;
+
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+       
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
+GO
+
+CREATE PROCEDURE Catalogo.InsertarImagen
+    @IdArticulo INT,
+    @UrlImagen VARCHAR(255)
+AS
+BEGIN
+    BEGIN TRANSACTION; 
+    BEGIN TRY
+        -- insertamos la imagen relacionada con el articulo
+        INSERT INTO Catalogo.ImagenArticulos(IdArticulo, UrlImagen)
+        VALUES (@IdArticulo, @UrlImagen);
+
+        COMMIT TRANSACTION; 
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION; 
+        THROW;
+    END CATCH
+END;
+GO
