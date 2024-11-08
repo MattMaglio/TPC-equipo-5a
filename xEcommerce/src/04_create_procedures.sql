@@ -341,7 +341,8 @@ GO
 CREATE OR ALTER PROCEDURE Operaciones.SP_StockYPrecio
 AS
 BEGIN
-    SELECT "Id de Articulo",
+    SELECT "Id",
+        "Id de Articulo",
         "Codigo de Articulo",
     	"Descripcion de Articulo",
         "Id de Color",
@@ -358,7 +359,7 @@ END;
 GO
 
 CREATE OR ALTER PROCEDURE Operaciones.SP_Listado_StockYPrecio_Filtrado
-@Codigo VARCHAR(10)
+    @Codigo VARCHAR(10)
 AS
 BEGIN
     SELECT "Codigo de Articulo",
@@ -376,7 +377,7 @@ END;
 GO
 
 CREATE OR ALTER PROCEDURE Operaciones.SP_Articulo_StockYPrecio_Filtrado
-@Id INT
+    @Id INT
 AS
 BEGIN
     SELECT "Id de Articulo",
@@ -494,7 +495,7 @@ AS
 BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
-            DELETE FROM Catalogo.Articulos
+            UPDATE Catalogo.Articulos SET Estado = 0
             WHERE Id = @IdArticulo;
         COMMIT TRANSACTION;
 
@@ -517,7 +518,83 @@ BEGIN
             WHERE Id = @Id;
         COMMIT TRANSACTION;
 
-        PRINT 'Marca eliminada exitosamente.';
+        --PRINT 'Marca eliminada exitosamente.';
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+    END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Catalogo.SP_EliminarTipo
+    @Id INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+            DELETE FROM Catalogo.Tipos
+            WHERE Id = @Id;
+        COMMIT TRANSACTION;
+
+        --PRINT 'Marca eliminada exitosamente.';
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+    END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Catalogo.SP_EliminarCategoria
+    @Id INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+            DELETE FROM Catalogo.Categorias
+            WHERE Id = @Id;
+        COMMIT TRANSACTION;
+
+        --PRINT 'Marca eliminada exitosamente.';
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+    END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Catalogo.SP_EliminarColor
+    @Id INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+            DELETE FROM Catalogo.Colores
+            WHERE Id = @Id;
+        COMMIT TRANSACTION;
+
+        --PRINT 'Marca eliminada exitosamente.';
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+    END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Catalogo.SP_EliminarTalle
+    @Id INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+            DELETE FROM Catalogo.Talles
+            WHERE Id = @Id;
+        COMMIT TRANSACTION;
+
+        --PRINT 'Marca eliminada exitosamente.';
     END TRY
 
     BEGIN CATCH
@@ -781,5 +858,307 @@ BEGIN
 
     -- Ejecutar la consulta dinámica
     EXEC sp_executesql @sql, N'@Id INT', @Id;
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Catalogo.SP_ModificarTipificacion
+    @Tipificacion INT,
+    @Codigo VARCHAR(10),
+    @Descripcion VARCHAR(255)
+AS
+BEGIN
+    -- Iniciar una transacción para asegurar que todas las operaciones se realicen juntas
+    BEGIN TRY
+        BEGIN TRANSACTION;
+            -- Determinar la tabla de inserción según el valor de @Tipificacion
+                IF @Tipificacion = 1
+                BEGIN
+                    UPDATE Catalogo.Marcas SET Descripcion = @Descripcion WHERE Codigo = @Codigo
+                END
+                ELSE IF @Tipificacion = 2
+                BEGIN
+                    UPDATE Catalogo.Tipos SET Descripcion = @Descripcion WHERE Codigo = @Codigo
+                END
+                ELSE IF @Tipificacion = 3
+                BEGIN
+                    UPDATE Catalogo.Categorias SET Descripcion = @Descripcion WHERE Codigo = @Codigo
+                END
+                ELSE IF @Tipificacion = 4
+                BEGIN
+                    UPDATE Catalogo.Colores SET Descripcion = @Descripcion WHERE Codigo = @Codigo
+                END
+                ELSE IF @Tipificacion = 5
+                BEGIN
+                    UPDATE Catalogo.Talles SET Descripcion = @Descripcion WHERE Codigo = @Codigo
+                END
+            COMMIT TRANSACTION;
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Catalogo.SP_BuscarTipificacionPorId
+    @Tipificacion INT,
+    @Id INT
+AS
+BEGIN
+    -- Iniciar una transacción para asegurar que todas las operaciones se realicen juntas
+    BEGIN TRY
+        BEGIN TRANSACTION;
+            -- Determinar la tabla de inserción según el valor de @Tipificacion
+                IF @Tipificacion = 1
+                BEGIN
+                    SELECT "Codigo", "Descripcion" FROM Catalogo.Marcas WHERE "Id" = @Id;
+                END
+                ELSE IF @Tipificacion = 2
+                BEGIN
+                    SELECT "Codigo", "Descripcion" FROM Catalogo.Tipos WHERE "Id" = @Id;
+                END
+                ELSE IF @Tipificacion = 3
+                BEGIN
+                   SELECT "Codigo", "Descripcion" FROM Catalogo.Categorias WHERE "Id" = @Id;
+                END
+                ELSE IF @Tipificacion = 4
+                BEGIN
+                    SELECT "Codigo", "Descripcion" FROM Catalogo.Colores WHERE "Id" = @Id;
+                END
+                ELSE IF @Tipificacion = 5
+                BEGIN
+                    SELECT "Codigo", "Descripcion" FROM Catalogo.Talles WHERE "Id" = @Id;
+                END
+            COMMIT TRANSACTION;
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Operaciones.SP_Eliminar_StockYPrecio
+    @Id INT
+    /*
+    @IdArt INT,
+    @IdColor INT,
+    @IdTalle INT
+    */
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+            DELETE FROM Operaciones.Stock
+            WHERE "Id" = @Id
+                /*
+                "IdArticulo" = @IdArt
+                AND "IdColor" = @IdColor
+                AND "IdTalle" = @IdTalle
+                */
+
+            DELETE FROM Operaciones.Precios
+            WHERE "Id" = @Id
+                /*
+                "IdArticulo" = @IdArt
+                AND "IdColor" = @IdColor
+                AND "IdTalle" = @IdTalle
+                */
+        COMMIT TRANSACTION;
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Operaciones.SP_CantidadRegistrosStock
+    @IdArt INT,
+    @IdColor INT,
+    @IdTalle INT
+AS
+BEGIN
+    SELECT COUNT("Id") AS "CantidadRegistros"
+    FROM Operaciones.Stock
+    WHERE IdArticulo = @IdArt
+        AND IdColor = @IdColor
+        AND IdTalle = @IdTalle
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Operaciones.SP_InsertarStock
+    @Art VARCHAR(25),
+    @Color VARCHAR(255),
+    @Talle VARCHAR(255),
+    @Cantidad INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+            -- Verifica si hay un registro existente en la tabla de precios para la combinación dada
+            DECLARE @TienePrecio INT;
+            DECLARE @IdArt INT;
+            DECLARE @IdColor INT;
+            DECLARE @IdTalle INT;
+
+            SET @IdArt = (select Id from catalogo.Articulos where "Codigo" = @Art AND Estado = 1)
+            SET @IdColor = (select Id from catalogo.Colores where "Descripcion" = @Color AND Estado = 1)
+            SET @IdTalle = (select Id from catalogo.Talles where "Descripcion" = @Talle AND Estado = 1)
+
+            SET @TienePrecio = (
+                SELECT COUNT(*)
+                FROM Operaciones.Precios
+                WHERE IdArticulo = @IdArt
+                  AND IdColor = @IdColor
+                  AND IdTalle = @IdTalle
+            );
+
+            -- Si no hay registro (es decir, @TienePrecio = 0), inserta un nuevo registro con precio = 0
+            IF @TienePrecio = 0
+            BEGIN
+                INSERT INTO Operaciones.Precios (IdArticulo, IdColor, IdTalle, Precio)
+                VALUES (@IdArt, @IdColor, @IdTalle, 0);
+            END
+
+            -- Inserta el nuevo registro de stock
+            INSERT INTO Operaciones.Stock (IdArticulo, IdColor, IdTalle, Cantidad)
+            VALUES (@IdArt, @IdColor, @IdTalle, @Cantidad);
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Operaciones.SP_ModificarStock
+    @Art INT,
+    @Color INT,
+    @Talle INT,
+    @Cantidad INT
+AS
+BEGIN
+     BEGIN TRY
+        BEGIN TRANSACTION;
+            DECLARE @IdArt INT;
+            DECLARE @IdColor INT;
+            DECLARE @IdTalle INT;
+
+            SET @IdArt = (select Id from catalogo.Articulos where "Codigo" = @Art AND Estado = 1)
+            SET @IdColor = (select Id from catalogo.Colores where "Descripcion" = @Color AND Estado = 1)
+            SET @IdTalle = (select Id from catalogo.Talles where "Descripcion" = @Talle AND Estado = 1)
+
+            UPDATE Operaciones.Stock SET Cantidad = @Cantidad
+            WHERE IdArticulo = @IdArt
+                AND IdColor = @IdColor
+                AND IdTalle = @IdTalle
+        COMMIT TRANSACTION;
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Operaciones.SP_CantidadRegistrosPrecios
+    @IdArt INT,
+    @IdColor INT,
+    @IdTalle INT
+AS
+BEGIN
+    SELECT COUNT("Id") AS "CantidadRegistros"
+    FROM Operaciones.Precios
+    WHERE IdArticulo = @IdArt
+        AND IdColor = @IdColor
+        AND IdTalle = @IdTalle
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Operaciones.SP_InsertarPrecio
+    @Art VARCHAR(25),
+    @Color VARCHAR(255),
+    @Talle VARCHAR(255),
+    @Precio FLOAT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+            DECLARE @IdArt INT;
+            DECLARE @IdColor INT;
+            DECLARE @IdTalle INT;
+
+            SET @IdArt = (select Id from catalogo.Articulos where "Codigo" = @Art AND Estado = 1)
+            SET @IdColor = (select Id from catalogo.Colores where "Descripcion" = @Color AND Estado = 1)
+            SET @IdTalle = (select Id from catalogo.Talles where "Descripcion" = @Talle AND Estado = 1)
+
+            -- Inserta el nuevo registro de precio
+            INSERT INTO Operaciones.Precios (IdArticulo, IdColor, IdTalle, Precio)
+            VALUES (@IdArt, @IdColor, @IdTalle, @Precio);
+
+            -- Verifica si hay un registro existente en la tabla de stock para la combinación dada
+            DECLARE @TieneStock INT;
+            SET @TieneStock = (
+                SELECT COUNT(*)
+                FROM Operaciones.Stock
+                WHERE IdArticulo = @IdArt
+                  AND IdColor = @IdColor
+                  AND IdTalle = @IdTalle
+            );
+
+            -- Si no hay registro de stock, inserta uno nuevo con cantidad = 0
+            IF @TieneStock = 0
+            BEGIN
+                INSERT INTO Operaciones.Stock (IdArticulo, IdColor, IdTalle, Cantidad)
+                VALUES (@IdArt, @IdColor, @IdTalle, 0);
+            END
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Operaciones.SP_ModificarPrecio
+    @Art INT,
+    @Color INT,
+    @Talle INT,
+    @Precio INT
+AS
+BEGIN
+     BEGIN TRY
+        BEGIN TRANSACTION;
+
+            DECLARE @IdArt INT;
+            DECLARE @IdColor INT;
+            DECLARE @IdTalle INT;
+
+            SET @IdArt = (select Id from catalogo.Articulos where "Codigo" = @Art AND Estado = 1)
+            SET @IdColor = (select Id from catalogo.Colores where "Descripcion" = @Color AND Estado = 1)
+            SET @IdTalle = (select Id from catalogo.Talles where "Descripcion" = @Talle AND Estado = 1)
+
+            UPDATE Operaciones.Precios SET Precio = @Precio
+            WHERE IdArticulo = @IdArt
+                AND IdColor = @IdColor
+                AND IdTalle = @IdTalle
+        COMMIT TRANSACTION;
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
 END;
 GO

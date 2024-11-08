@@ -33,7 +33,8 @@ GO
 
 -- Creacion de vista para los listados de precios.
 CREATE OR ALTER VIEW Operaciones.VW_StockYPrecios AS
-SELECT  a.Id AS "Id de Articulo",
+SELECT  p.Id,
+    a.Id AS "Id de Articulo",
     a.Codigo AS "Codigo de Articulo",
     a.Descripcion AS "Descripcion de Articulo",
     c.Id AS "Id de Color",
@@ -104,5 +105,24 @@ INNER JOIN Operaciones.Stock s
     ON p.IdArticulo = s.IdArticulo
     AND p.IdColor = s.IdColor
     AND p.IdTalle = s.IdTalle
+;
+GO
+
+CREATE OR ALTER VIEW Operaciones.VW_StockYPreciosParaArt AS
+SELECT a.Id AS "Id de Articulo",
+    c.Id AS "Id de Color",
+    c.Codigo AS "Codigo de Color",
+    c.Descripcion AS "Descripcion de Color",
+    ISNULL(s.Cantidad,0) AS "Cantidad",
+    ISNULL(p.Precio,0) AS "Precio"
+FROM Operaciones.Precios p
+INNER JOIN Catalogo.Articulos a ON p.IdArticulo = a.Id
+INNER JOIN Catalogo.Colores c ON p.IdColor = c.Id
+INNER JOIN Catalogo.Talles t ON p.IdTalle = t.Id
+LEFT JOIN Operaciones.Stock s
+    ON p.IdArticulo = s.IdArticulo
+    AND p.IdColor = s.IdColor
+    AND p.IdTalle = s.IdTalle
+WHERE a.Id = '1'
 ;
 GO

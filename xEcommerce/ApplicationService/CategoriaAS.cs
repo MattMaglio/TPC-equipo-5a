@@ -11,6 +11,30 @@ namespace ApplicationService
 {
     public class CategoriaAS
     {
+        public void EliminarCate(int id)
+        {
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+            try
+            {
+                query.configSqlProcedure("Catalogo.SP_EliminarCategoria");
+                query.configSqlConexion(conexion.getConnection());
+                conexion.openConnection();
+                query.configSqlParams("@Id", id);
+                query.exectCommand();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error al eliminar la Categoria: " + ex.Message, ex);
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
+        }
+
         public List<Categoria> listar()
         {
             SqlDataReader result;

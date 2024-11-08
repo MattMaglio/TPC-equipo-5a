@@ -99,6 +99,7 @@ VALUES
 
 INSERT INTO Operaciones.Stock (IdArticulo, IdColor, IdTalle, Cantidad)
 VALUES
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART001' ), 1, 2, 20), -- Art 001, Rojo,
 ((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART001' ), 1, 3, 20), -- Art 001, Rojo, M
 ((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART001' ), 2, 4, 12), -- Art 001, Azul, L
 ((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART001' ), 6, 5, 9), -- Art 001, Negro, XL
@@ -114,6 +115,7 @@ VALUES
 
 INSERT INTO Operaciones.Precios (IdArticulo, IdColor, IdTalle, Precio)
 VALUES
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART002' ), 7, 2, 9999), -- Art 002, Dorado, XL
 ((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART001' ), 1, 3, 21000), -- Art 001, Rojo, M
 ((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART001' ), 2, 4, 21000), -- Art 001, Azul, L
 ((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART001' ), 6, 5, 21000), -- Art 001, Negro, XL
