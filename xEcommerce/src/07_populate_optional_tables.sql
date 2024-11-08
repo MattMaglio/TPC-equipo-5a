@@ -110,8 +110,40 @@ VALUES
 ((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART004' ), 2, 3, 0), -- Art 004, Azul, M
 ((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART004' ), 2, 4, 11), -- Art 004, Azul, L
 ((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART005' ), 1, 3, 90), -- Del Art 001, Rojo, M
-((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART005' ), 2, 4, 95) -- Del Art 001, Azul, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART005' ), 2, 4, 95), -- Del Art 001, Azul, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART006' ), 1, 3, 25), -- Art 006, Rojo, M
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART006' ), 2, 4, 30), -- Art 006, Azul, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART006' ), 3, 2, 10), -- Art 006, Verde, S
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART007' ), 4, 5, 15), -- Art 007, Amarrillo, XL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART007' ), 5, 6, 20), -- Art 007, Negro, XXL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART008' ), 2, 3, 50), -- Art 008, Azul, M
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART008' ), 6, 4, 40), -- Art 008, Blanco, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART009' ), 3, 4, 35), -- Art 009, Verde, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART009' ), 7, 5, 12), -- Art 009, Dorado, XL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART010' ), 4, 2, 45), -- Art 010, Amarrillo, S
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART010' ), 1, 3, 20), -- Art 010, Rojo, M
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART011' ), 2, 6, 30), -- Art 011, Azul, XXL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART011' ), 3, 4, 10), -- Art 011, Verde, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART012' ), 4, 3, 25), -- Art 012, Amarrillo, XL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART012' ), 1, 5, 15), -- Art 012, Rojo, XXL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART013' ), 2, 4, 35), -- Art 013, Azul, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART013' ), 5, 5, 20), -- Art 013, Negro, XL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART014' ), 6, 2, 22), -- Art 014, Blanco, S
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART014' ), 3, 7, 18), -- Art 014, Verde, XXXL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART015' ), 7, 3, 60), -- Art 015, Dorado, M
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART015' ), 4, 6, 10), -- Art 015, Amarrillo, XXL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART016' ), 2, 4, 45), -- Art 016, Azul, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART016' ), 1, 5, 30), -- Art 016, Rojo, XL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART017' ), 5, 3, 15), -- Art 017, Negro, M
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART017' ), 6, 4, 12), -- Art 017, Blanco, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART018' ), 3, 2, 40), -- Art 018, Verde, S
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART018' ), 2, 6, 20), -- Art 018, Azul, XXL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART019' ), 7, 4, 15), -- Art 019, Dorado, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART019' ), 5, 5, 10), -- Art 019, Negro, XL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART020' ), 4, 2, 20), -- Art 020, Amarrillo, S
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART020' ), 1, 3, 30) -- Art 020, Rojo, M
 ;
+
 
 INSERT INTO Operaciones.Precios (IdArticulo, IdColor, IdTalle, Precio)
 VALUES
@@ -126,5 +158,36 @@ VALUES
 ((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART004' ), 2, 3, 23999), -- Art 004, Azul, M
 ((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART004' ), 2, 4, 23999), -- Art 004, Azul, L
 ((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART005' ), 1, 3, 999), -- Del Art 001, Rojo, M
-((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART005' ), 2, 4, 995) -- Del Art 001, Azul, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART005' ), 2, 4, 995), -- Del Art 001, Azul, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART006' ), 1, 3, 3500), -- Art 006, Rojo, M
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART006' ), 2, 4, 4000), -- Art 006, Azul, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART006' ), 3, 2, 3200), -- Art 006, Verde, S
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART007' ), 4, 5, 4500), -- Art 007, Amarrillo, XL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART007' ), 5, 6, 4800), -- Art 007, Negro, XXL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART008' ), 2, 3, 3500), -- Art 008, Azul, M
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART008' ), 6, 4, 3800), -- Art 008, Blanco, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART009' ), 3, 4, 5200), -- Art 009, Verde, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART009' ), 7, 5, 4200), -- Art 009, Dorado, XL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART010' ), 4, 2, 2100), -- Art 010, Amarrillo, S
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART010' ), 1, 3, 3000), -- Art 010, Rojo, M
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART011' ), 2, 6, 8500), -- Art 011, Azul, XXL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART011' ), 3, 4, 8200), -- Art 011, Verde, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART012' ), 4, 3, 6000), -- Art 012, Amarrillo, XL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART012' ), 1, 5, 5500), -- Art 012, Rojo, XXL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART013' ), 2, 4, 2500), -- Art 013, Azul, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART013' ), 5, 5, 2900), -- Art 013, Negro, XL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART014' ), 6, 2, 3900), -- Art 014, Blanco, S
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART014' ), 3, 7, 4300), -- Art 014, Verde, XXXL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART015' ), 7, 3, 6000), -- Art 015, Dorado, M
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART015' ), 4, 6, 6800), -- Art 015, Amarrillo, XXL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART016' ), 2, 4, 4000), -- Art 016, Azul, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART016' ), 1, 5, 5500), -- Art 016, Rojo, XL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART017' ), 5, 3, 3700), -- Art 017, Negro, M
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART017' ), 6, 4, 3900), -- Art 017, Blanco, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART018' ), 3, 2, 4600), -- Art 018, Verde, S
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART018' ), 2, 6, 5100), -- Art 018, Azul, XXL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART019' ), 7, 4, 4300), -- Art 019, Dorado, L
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART019' ), 5, 5, 4500), -- Art 019, Negro, XL
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART020' ), 4, 2, 3200), -- Art 020, Amarrillo, S
+((select Id FROM Catalogo.Articulos WHERE Codigo = 'ART020' ), 1, 3, 3900)  -- Art 020, Rojo, M
 ;
