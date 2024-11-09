@@ -24,7 +24,7 @@ namespace webApp
             }
         }
 
-        
+
         private void LoadProductDetails()
         {
             int productId;
@@ -111,7 +111,7 @@ namespace webApp
                     ddlTalle.DataTextField = "Descripcion";
                     ddlTalle.DataBind();
 
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -193,12 +193,28 @@ namespace webApp
         }
 
 
+        protected void btnAgregarACarrito_Click(object sender, EventArgs e)
+        {
+            if (Session["usuario"] != null)
+            {
+                // si el user ya está logueado agrego el producto al carrito ACA VA LA LOGICA
+                Response.Redirect("Sales.aspx", false);
+            }
+            else //user no logueado
+            {
+                // Obtengo el ID del producto desde la URL
+                string productId = Request.QueryString["productId"];
 
+                if (!string.IsNullOrEmpty(productId))
+                {
+                // Guardo el productId en la sesión para usarlo después del login
+                    Session["productId"] = productId;
+                }
 
-
-
-
-
+                Response.Redirect("Login.aspx", false);
+                
+            }
+        }
     }
 
 }

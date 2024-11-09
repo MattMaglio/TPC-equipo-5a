@@ -19,7 +19,7 @@ namespace ApplicationService
 
             try
 			{
-				query.configSqlQuery("Select Id, TipoUser from USUARIOSPRUEBA Where usuario = @user AND pass = @pass");
+				query.configSqlQuery("Select Id, TipoUser from Catalogo.Usuarios Where usuario = @user AND pass = @pass");
 				query.configSqlParams("@user", usuario.User);
 				query.configSqlParams("@pass", usuario.Pass);
 
@@ -49,5 +49,41 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
+
+
+        ///////////////////////////////////////////////////////////////////////////////
+        public void insertUsuario(Usuario usuario)
+        {
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+
+            try
+            {
+                // insert en las tablas CATALOGO:CLIENTES y CATALOGO.DIRECCIONES
+                query.configSqlProcedure("Catalogo.SP_InsertarUsuario");
+
+                // Configuro conexión a DB
+                query.configSqlConexion(conexion.getConnection());
+                conexion.openConnection();
+
+                // Parámetros de la query para el cliente
+                query.configSqlParams("@usuario", usuario.User);
+                query.configSqlParams("@pass", usuario.Pass);
+                
+                // Ejecutar la query para insertar la dirección
+                query.exectCommand();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al insertar el usuario en la base de datos", ex);
+            }
+            finally
+            {
+                // Cierro la conexión
+                conexion.closeConnection();
+            }
+        }
     }
+
 }

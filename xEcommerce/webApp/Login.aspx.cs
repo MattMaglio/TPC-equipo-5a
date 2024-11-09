@@ -35,21 +35,33 @@ namespace webApp
 
             try
             {
+                //intento verificar al user
                 usuario = new Usuario(txtUser.Text, txtPassword.Text, false);
+
+                //chequeo si el login fue exitoso
                 if (usuarioAS.Loguear(usuario))
                 {
+                    //login exitoso, agrego al user a la session
                     Session.Add("usuario", usuario);
-                    Response.Redirect("MyAccount.aspx", false);
 
+                    //chequeo si hay un productId en la session
+                    if (Session["productId"] != null)
+                    {
+                        string productId = Session["productId"].ToString();
+
+                        // Si existe productId, redirijo al detalle del producto para que lo agregue VER CON LA LOGICA DEL CART PARA AGREGARLO
+                        Response.Redirect("ProductDetail.aspx?productId=" + productId, false);
+                    }
+                    else //no habia productId 
+                    {
+                        Response.Redirect("MyAccount.aspx", false);
+                    }
                 }
-                else
+                else //fallo el login
                 {
                     Session.Add("error", "user o pass incorrectos");
                     Response.Redirect("Error.aspx", false);
                 }
-
-
-
 
             }
             catch (Exception ex)

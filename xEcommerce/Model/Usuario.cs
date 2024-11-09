@@ -9,8 +9,8 @@ namespace Model
     //Conjunto de valores constantes con nombre, define posibles para el tipo de usuario
     public enum TipoUsuario
     {
-        NORMAL = 1,
-        ADMIN = 2
+        ADMIN = 1,
+        NORMAL = 2
     }
     public class Usuario
     {
@@ -22,6 +22,7 @@ namespace Model
 
         //public NivelDeAccesso NivAcceso { get; set; }
 
+        public Usuario() { }
         public Usuario(string user, string pass, bool admin) 
         { 
             User = user;
