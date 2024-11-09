@@ -13,5 +13,16 @@ namespace webApp
         {
 
         }
+
+       
+
+        protected void btnMiCuenta_Click1(object sender, EventArgs e)
+        {
+            //if (Session["usuario"] == null)
+            //{
+            //    Session.Add("error", "Ingresá a tu cuenta para continuar");
+            //    Response.Redirect("Login.aspx", false);
+            //}
+        }
     }
 }

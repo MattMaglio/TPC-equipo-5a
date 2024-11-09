@@ -11,7 +11,7 @@ namespace webApp
 {
 
 
-    public partial class Login
+    public partial class CreateUser
     {
 
         /// <summary>
@@ -33,13 +33,13 @@ namespace webApp
         protected global::System.Web.UI.WebControls.Label lblSuccess;
 
         /// <summary>
-        /// txtUser control.
+        /// txtEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUser;
+        protected global::System.Web.UI.WebControls.TextBox txtEmail;
 
         /// <summary>
         /// lblEmailError control.
@@ -69,48 +69,39 @@ namespace webApp
         protected global::System.Web.UI.WebControls.Label lblPasswordError;
 
         /// <summary>
-        /// chkRecordar control.
+        /// txtRepeatPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkRecordar;
+        protected global::System.Web.UI.WebControls.TextBox txtRepeatPassword;
 
         /// <summary>
-        /// btnLogin control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLogin;
+        protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
-        /// btnCreateUser control.
+        /// btnRegistrar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCreateUser;
+        protected global::System.Web.UI.WebControls.Button btnRegistrar;
 
         /// <summary>
-        /// btnRegister control.
+        /// btnCancelRegistrar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRegister;
-
-        /// <summary>
-        /// btnOlvido control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOlvido;
+        protected global::System.Web.UI.WebControls.Button btnCancelRegistrar;
     }
 }
