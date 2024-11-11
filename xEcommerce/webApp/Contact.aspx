@@ -101,20 +101,20 @@
                 <div class="col-md-6 col-xs-12">
                     <div class="contact-us-form">
                         <div class="section-heading">
-                            <h3>Contact Form</h3>
+                            <h3>Contactanos!</h3>
                         </div>  
                         <div class="contact-form">
                             <form action="mail.php" method="post">
-                                <p>Name</p>
-                                <asp:TextBox runat="server" ID="TextBox2" placeholder="Type your name here" CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
+                                <p>Nombre</p>
+                                <asp:TextBox runat="server" ID="TextBox2" placeholder="Escribí tu nombre acá..." CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
                                 
                                 <p>E-mail</p>
-                                <asp:TextBox runat="server" ID="TextBox1" placeholder="Type your E-mail address" CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
+                                <asp:TextBox runat="server" ID="TextBox1" placeholder="Escribí tu mail acá..." CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
                                 
-                                <p>Message</p>
+                                <p>Mensaje</p>
                                 <textarea id="message" rows="4" name="message" required></textarea>
                                 
-                                <input type="submit" value="Send">
+                                <input type="submit" value="Enviar">
                             </form>
                         </div>
                     </div>    
@@ -123,17 +123,17 @@
                 <div class="col-md-6 col-xs-12">
                     <div class="newsletter-area">
                         <div class="section-heading">
-                            <h3>Newsletters</h3>
+                            <h3>Boletín de novedades</h3>
                         </div>
                         <div class="newsletter-box">
                             <form action="#">
-                                <asp:TextBox runat="server" ID="txtEmail" placeholder="Type your E-mail address" CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
+                                <asp:TextBox runat="server" ID="txtEmail" placeholder="Dejá acá tu e-mail para que te enviemos nuestras novedades" CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
 
-                                <button type="submit">Subscribe Now</button>
+                                <button type="submit">Suscribir</button>
                             </form>
                             <div class="subscribing">
                                 <label class="checkbox-title">
-                                    <input type="checkbox" name="subscribe" value="bank" id="transfer"> By subscribing to our newsletter you agree to receive emails from us. 
+                                    <input type="checkbox" name="subscribe" value="bank" id="transfer"> Al suscribirte a nuestro boletín, aceptas recibir correos electrónicos de nuestra parte. 
                                 </label>
                             </div>
                         </div>

@@ -37,14 +37,17 @@
                     <label class="form-check-label" for="chkRecordar">Recordar mis datos</label>
                 </div>
 
-                <br />
+             
 
 
-                <div class="contenedor mb-3 d-flex justify-content-center">
+                <div class="contenedor mb-4 d-flex justify-content-center">
                     <asp:Button ID="btnLogin" runat="server" CssClass="btn btn-dark" OnClick="btnLogin_Click" Text="Ingresar" />
+                    <asp:Button ID="btnOlvido" runat="server" CssClass="btn btn-link text-muted" Text="Olvidaste la contraseña?" />
+
+                </div>
+                <div>
                     <asp:Button ID="btnCreateUser" runat="server" CssClass="btn btn-outline-secondary" OnClick="btnCreateUser_Click" Text="Registrar cuenta" />
                     <asp:Button ID="btnRegister" runat="server" CssClass="btn btn-outline-secondary" OnClick="btnRegister_Click" Text="CreateAccount Falsa" />
-                    <asp:Button ID="btnOlvido" runat="server" CssClass="btn btn-link text-muted" Text="Olvidaste la contraseña?" />
                 </div>
 
 

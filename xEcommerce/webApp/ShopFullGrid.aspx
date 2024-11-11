@@ -1,6 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ShopFullGrid.aspx.cs" Inherits="webApp.ShopFullGrid" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+    <style>
+
+ 
+
+
+    </style>
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -9,34 +18,38 @@
         <br />
         <br />
 
-        <div class="row mb-4">
 
-            <div class="col-md-4">
-                <h5>Filter by Category</h5>
-                <asp:DropDownList ID="ddlCategoria" runat="server" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" class="form-control">
-                </asp:DropDownList>
-            </div>
-            <div class="col-md-4">
-                <h5>Filter by Brand</h5>
-                <asp:DropDownList ID="ddlMarca" runat="server" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" class="form-control">
-                </asp:DropDownList>
-            </div>
-            <div class="col-md-4">
-                <h5>Filter by Product Type</h5>
-                <asp:DropDownList ID="ddlTipo" runat="server" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" class="form-control">
-                </asp:DropDownList>
-            </div>
-            
-        </div>
-          
-            <div class="col-md-12 text-center mb-3">
-                <asp:Button ID="btnMostrarTodos" runat="server" Text="Mostrar Todos" OnClick="btnMostrarTodos_Click" CssClass="btn btn-secondary" />
-            </div>
+      <div class="row mb-4">
+    <div class="col-md-3">
+        <h5>Categoría</h5>
+        <asp:DropDownList ID="ddlCategoria" runat="server" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" class="form-control">
+        </asp:DropDownList>
+    </div>
+
+    <div class="col-md-3">
+        <h5>Marca</h5>
+        <asp:DropDownList ID="ddlMarca" runat="server" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" class="form-control">
+        </asp:DropDownList>
+    </div>
+
+    <div class="col-md-3">
+        <h5>Tipo de artículo</h5>
+        <asp:DropDownList ID="ddlTipo" runat="server" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" class="form-control">
+        </asp:DropDownList>
+    </div>
+
+    <div class="col-md-3 text-end">
+        
+      <h5 style="color:white">letras en blanco</h5>
+        <asp:Button ID="btnMostrarTodos" runat="server" Text="Mostrar Todos" OnClick="btnMostrarTodos_Click" CssClass="btn btn-secondary" />
+    </div>
+</div>
+
 
        
         <br />
 
-        <!-- Aquí va el Repeater para mostrar los articulos -->
+       
         <div class="row" id="productList">
 
 
@@ -48,11 +61,11 @@
                             <div class="card-body">
                                 <h5 class="card-title"><%# Eval("Name") %></h5>
                                 <p class="card-text"><%# Eval("Detalle") %></p>
-                                <%--         <p class="card-text"><strong>Price: $<%# Eval("Price", "{0:F2}") %></strong></p>--%>
-                                <p class="card-text">Category: <%# Eval("CategoriaDescripcion") %></p>
-                                <p class="card-text">Brand: <%# Eval("MarcaDescripcion") %></p>
-                                <p class="card-text">Type: <%# Eval("TipoDescripcion") %></p>
-                                <a href="ProductDetail.aspx?ProductId=<%# Eval("ProductId") %>" class="btn btn-secondary">View Details</a>
+                                <%--         <p class="card-text"><strong>Precio: $<%# Eval("Price", "{0:F2}") %></strong></p>--%>
+                                <p class="card-text">Categoría: <%# Eval("CategoriaDescripcion") %></p>
+                                <p class="card-text">Marca: <%# Eval("MarcaDescripcion") %></p>
+                                <p class="card-text">Tipo: <%# Eval("TipoDescripcion") %></p>
+                                <a href="ProductDetail.aspx?ProductId=<%# Eval("ProductId") %>" class="btn btn-secondary"></h6></h6>Ver detalles</a>
                             </div>
                         </div>
                     </div>
@@ -62,12 +75,12 @@
 
         </div>
 
-        <div class="text-center mt-4">
+        <%--<div class="text-center mt-4">
             <a href="#" class="btn btn-light">View More</a>
         </div>
         <br />
         <br />
-    </div>
+    </div>--%>
 
 </asp:Content>
 

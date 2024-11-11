@@ -70,17 +70,17 @@
         </button>
     </div>
     <div class="container py-5">
-        <h1 class="display-4 fw-bold">Elevate Your Style</h1>
-        <p class="lead">Discover our latest collection of premium clothing. Designed for comfort, style, and confidence.</p>
-        <asp:HyperLink ID="lnkShopNow" runat="server" Text="Shop Now" NavigateUrl="ShopFullGrid.aspx" CssClass="btn btn-light me-2" />
-        <asp:HyperLink ID="lnkLearnMore" runat="server" Text="Learn More" NavigateUrl="AboutUs.aspx" CssClass="btn btn-outline-light" />
+        <h1 class="display-4 fw-bold">Lleva tu estilo al siguiente nivel</h1>
+        <p class="lead">Descubre nuestra nueva colección de ropa premium. Diseñada para brindarte comodidad, estilo y confianza..</p>
+        <asp:HyperLink ID="lnkShopNow" runat="server" Text="Ver artículos" NavigateUrl="ShopFullGrid.aspx" CssClass="btn btn-light me-2" />
+        <asp:HyperLink ID="lnkLearnMore" runat="server" Text="Sobre nosotros" NavigateUrl="AboutUs.aspx" CssClass="btn btn-outline-light" />
     </div>
 </section>
 
 
     <section class="featured-products py-5">
     <div class="container">
-        <h2 class="text-center mb-4">Featured Products</h2>
+        <h2 class="text-center mb-4">Más vendidos</h2>
        
         <div class="row">
             <asp:Repeater ID="rptFeaturedProducts" runat="server">
@@ -91,7 +91,7 @@
                             <div class="product-card-body">
                                 <h5 class="card-title"><%# Eval("Name") %></h5>
                                 <%--<p class="card-text">$<%# Eval("Price", "{0:F2}") %></p>--%>
-                                <asp:Button ID="btnGoToShop" runat="server" Text="Let´s go!" OnClick="btnGoToShop_Click" CssClass="btn btn-secondary" />
+                                <asp:Button ID="btnGoToShop" runat="server" Text="Ver más!" OnClick="btnGoToShop_Click" CssClass="btn btn-secondary" />
 
 
                             </div>
@@ -103,23 +103,15 @@
     </div>
 </section>
 
-
-
-
-
-
-
-
-    
 <section class="newsletter py-5">
     <div class="container text-center">
-        <h2>Join Our Community</h2>
-        <p>Subscribe to our newsletter for exclusive offers, style tips, and new arrivals.</p>
+        <h2>Sé parte de nuestra comunidad</h2>
+        <p>Suscribite a nuestro boletín para recibir ofertas exclusivas, consejos de estilo y las últimas novedades.</p>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="input-group mb-3">
-                    <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" placeholder="Enter your email" />
-                    <asp:Button ID="btnSubscribe" runat="server" Text="Subscribe" CssClass="btn btn-light" />
+                    <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" placeholder="Ingresá tu email" />
+                    <asp:Button ID="btnSubscribe" runat="server" Text="Suscribirme" CssClass="btn btn-light" />
                 </div>
             </div>
         </div>

@@ -190,13 +190,13 @@
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbarNav">
                                     <ul class="navbar-nav">
-                                        <li class="nav-item"><a class="nav-link" href="Default.aspx">Home</a></li>
+<%--                                        <li class="nav-item"><a class="nav-link" href="Default.aspx">Inicio</a></li>--%>
                                         <li class="nav-item"><a class="nav-link" href="ShopFullGrid.aspx">Artículos</a></li>
 
                                         <li class="nav-item"><a class="nav-link" href="AboutUS.aspx">Nosotros</a></li>
                                         <li class="nav-item"><a class="nav-link" href="Contact.aspx">Contacto</a></li>
                                         <li class="nav-item">
-                                            <asp:Literal ID="litAdminPanel" runat="server" Text="<a class='nav-link' href='AdminPanel.aspx'>Admin Panel</a>" Visible="false" /></li>
+                                            <asp:Literal ID="litAdminPanel" runat="server" Text="<a class='nav-link' href='AdminPanel.aspx'>Panel de Administrador</a>" Visible="false" /></li>
 
 
 
@@ -207,7 +207,7 @@
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-12">
                             <div class="search-box">
-                                <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                                <input type="text" class="form-control" placeholder="Buscar" aria-label="Search">
                                 <button class="btn" type="button"><i class="fas fa-search"></i></button>
                             </div>
                         </div>
@@ -222,13 +222,13 @@
                         </button>
                         <div class="collapse navbar-collapse" id="mobileMenu">
                             <ul class="navbar-nav">
-                                <li class="nav-item"><a class="nav-link" href="Default.aspx">Home</a></li>
-                                <li class="nav-item"><a class="nav-link" href="ShopFullGrid.aspx">Products</a></li>
+<%--                                <li class="nav-item"><a class="nav-link" href="Default.aspx">Inicio</a></li>--%>
+                                <li class="nav-item"><a class="nav-link" href="ShopFullGrid.aspx">Artículos</a></li>
 
-                                <li class="nav-item"><a class="nav-link" href="AboutUs.aspx">About us</a></li>
-                                <li class="nav-item"><a class="nav-link" href="Contact.aspx">Contact</a></li>
+                                <li class="nav-item"><a class="nav-link" href="AboutUs.aspx">Nosotros</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Contact.aspx">Contacto</a></li>
                                 <li class="nav-item">
-                                    <asp:Literal ID="Literal1" runat="server" Text="<a class='nav-link' href='AdminPanel.aspx'>Admin Panel</a>" Visible="false" /></li>
+                                    <asp:Literal ID="Literal1" runat="server" Text="<a class='nav-link' href='AdminPanel.aspx'>Panel de Administrador</a>" Visible="false" /></li>
 
 
                             </ul>

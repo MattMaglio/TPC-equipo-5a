@@ -393,6 +393,17 @@
             <button class="btnApply">Apply</button>
         </div>
 
+
+        <!-- BOTON PARA PROCESAR COMPRA --- DISPARA PEDIDO DE DATOS PERSONALES -->
+            <div class="mt-4 text-center">
+        <button class="bn5">Confirmar pedido</button>
+        <button class="bn6">Cancelar</button>
+    </div>
+
+
+
+        <%--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
+
         <!-- Sección de Datos de Envío -->
         <div class="section-title">Shipping Data</div>
         <form>
@@ -418,6 +429,8 @@
             </div>
         </form>
 
+        <%--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
+
         <!-- Sección de Métodos de Pago -->
         <div class="section-title">Payment Methods</div>
         <form>
@@ -441,6 +454,8 @@
             </div>
         </form>
 
+        <%--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
+
         <!-- Sección de Método de Envío -->
         <div class="section-title">Shipping Method</div>
         <form>
@@ -457,6 +472,8 @@
                 </label>
             </div>
         </form>
+
+        <%--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
 
         <!-- Botón de Confirmar Compra -->
         <div class="mt-4 text-center">
