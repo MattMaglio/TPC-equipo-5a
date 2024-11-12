@@ -1,7 +1,7 @@
 -- Procedures Generales
 USE XECOMMERCE;
 GO
-
+Catalogo.SP_ModificarArticulo
 CREATE OR ALTER PROCEDURE Catalogo.BuscarArticulos @cod_articulo VARCHAR(10) AS
 SELECT Id,
     Codigo,
@@ -1212,3 +1212,24 @@ BEGIN
     END CATCH
 END;
 GO
+
+CREATE OR ALTER PROCEDURE Catalogo_SPBorrarImagen
+    @Id INT
+AS
+BEGIN
+  
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        DELETE FROM Catalogo.ImagenArticulos
+        WHERE Id = @Id;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END;      
+    END CATCH;
+END;
+

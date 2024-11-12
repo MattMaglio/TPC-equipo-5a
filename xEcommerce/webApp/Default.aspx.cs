@@ -40,7 +40,7 @@ namespace webApp
             catch (Exception ex)
 
             {
-                //error
+                throw ex;
             }
             finally
             {

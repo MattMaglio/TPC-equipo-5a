@@ -397,19 +397,65 @@
 
                     <!-- DROP DOWN LIST CATEGORIA -->
                     <asp:DropDownList ID="ddListCategory" runat="server" CssClass="form-control"></asp:DropDownList>
-                    <asp:UpdatePanel runat="server">
-                        <ContentTemplate>
-                            <asp:TextBox runat="server" PlaceHolder="Url Imagen1" ID="txtImagen1" CssClass="form-control"
-                                AutoPostBack="true" OnTextChanged="txtImagen1_TextChanged" />
-                            <asp:Image ImageUrl="https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp" Width="25%" ID="IdImagen1" runat="server" />
-                             <asp:TextBox runat="server" PlaceHolder="Url Imagen2" ID="txtImagen2" CssClass="form-control"
-                                 AutoPostBack="true" OnTextChanged="txtImagen1_TextChanged" />
-                             <asp:Image ImageUrl="https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp" Width="25%" ID="IdImagen2" runat="server" />
-                             <asp:TextBox runat="server" PlaceHolder="Url Imagen3" ID="txtImagen3" CssClass="form-control"
-                             AutoPostBack="true" OnTextChanged="txtImagen1_TextChanged" />
-                         <asp:Image ImageUrl="https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp" Width="25%" ID="IdImagen3" runat="server" />
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
+                  
+  <asp:UpdatePanel ID="UpdatePanelImagenes" runat="server">
+    <ContentTemplate>
+        <div class="image-item">
+            <!-- Imagen 1 -->
+            <asp:Image ID="IdImagen1" runat="server" 
+                       ImageUrl='<%# Eval("UrlImagen") %>' 
+                       Width="25%" />
+            
+            <!-- Campo de texto para modificar la URL de la imagen -->
+            <asp:TextBox ID="txtImagen1" runat="server" CssClass="form-control"
+                         Text='<%# Eval("UrlImagen") %>' 
+                         Placeholder="URL Imagen" AutoPostBack="true" OnTextChanged="txtImagen1_TextChanged"
+                         />
+
+            <!-- Botón de Eliminar -->
+            <asp:Button ID="btnEliminarImagen1" runat="server" 
+                        Text="Eliminar" CssClass="btn btn-danger" 
+                        OnClientClick="return confirm('¿Estás seguro de que deseas borrar esta imagen?');" 
+                        CommandArgument='<%# Eval("Id") %>'  OnClick="btnEliminarImagen1_Click" />
+        </div>
+
+        <div class="image-item">
+            <!-- Imagen 2 -->
+            <asp:Image ID="IdImagen2" runat="server" 
+                       ImageUrl='<%# Eval("UrlImagen") %>' 
+                       Width="25%" />
+            
+            <!-- Campo de texto para modificar la URL de la imagen -->
+            <asp:TextBox ID="txtImagen2" runat="server" CssClass="form-control"
+                         Text='<%# Eval("UrlImagen") %>' 
+                         Placeholder="URL Imagen" AutoPostBack="true" OnTextChanged="txtImagen2_TextChanged"
+                         />
+            <!-- Botón de Eliminar -->
+            <asp:Button ID="btnEliminarImagen2" runat="server" 
+                        Text="Eliminar" CssClass="btn btn-danger" 
+                        OnClientClick="return confirm('¿Estás seguro de que deseas borrar esta imagen?');" 
+                        CommandArgument='<%# Eval("Id") %>' CommandName="idImagen2" OnClick="btnEliminarImagen2_Click" />
+        </div>
+
+        <div class="image-item">
+            <!-- Imagen 3 -->
+            <asp:Image ID="IdImagen3" runat="server" 
+                       ImageUrl='<%# Eval("UrlImagen") %>' 
+                       Width="25%" />
+            <!-- Campo de texto para modificar la URL de la imagen -->
+            <asp:TextBox ID="txtImagen3" runat="server" CssClass="form-control"
+                         Text='<%# Eval("UrlImagen") %>' 
+                         Placeholder="URL Imagen" AutoPostBack="true" OnTextChanged="txtImagen3_TextChanged"
+                         />
+            <!-- Botón de Eliminar -->
+            <asp:Button ID="btnEliminarImagen3" runat="server" 
+                        Text="Eliminar" CssClass="btn btn-danger" 
+                        OnClientClick="return confirm('¿Estás seguro de que deseas borrar esta imagen?');" 
+                        CommandArgument='<%# Eval("Id") %>' CommandName="idImagen3" OnClick="btnEliminarImagen3_Click" />
+        </div>
+    </ContentTemplate>
+</asp:UpdatePanel>
+
                     <asp:Button ID="btnSaveArticle" runat="server" CssClass="bn5" OnClick="btnSaveArticle_Click" Text="Guardar articulo" />
                     <a type="button" class="bn5" href="AdminPanel.aspx">Cancelar</a>
 
@@ -470,6 +516,7 @@
                 </asp:GridView>
                 </div>
             </div>
+           
 
             <!-- Alta y Modificacion de Tipificaciones (Ok)-->
             <div class="form-tipific" id="div_gral_frmTip" runat="server" visible="false">
@@ -604,4 +651,5 @@
         </div>
     </div>
     <%-- FIN de RIGHT PANEL --%>
+
 </asp:Content>

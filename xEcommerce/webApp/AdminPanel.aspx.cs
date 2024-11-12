@@ -18,6 +18,7 @@ namespace webApp
 {
     public partial class AdminPanel : System.Web.UI.Page
     {
+        
         public bool IsEditMode
         {
             get { return ViewState["IsEditMode"] != null && (bool)ViewState["IsEditMode"]; }
@@ -36,6 +37,7 @@ namespace webApp
             {
                 if (!IsPostBack)
                 {
+                   
                     /*// Inicializa el formulario como no visible al cargar la página
                     addArticleForm.Visible = false;
                     if (Request.QueryString["id"]!= null)
@@ -126,10 +128,18 @@ namespace webApp
             txtDescripcion.Text = string.Empty;
             txtDetalle.Text = string.Empty;
 
-
             ddListType.SelectedIndex = 0;
             ddListBrand.SelectedIndex = 0;
             ddListCategory.SelectedIndex = 0;
+
+            txtImagen1.Text = string.Empty;
+            IdImagen1.ImageUrl = string.Empty;
+
+            txtImagen2.Text = string.Empty;
+            IdImagen2.ImageUrl = string.Empty;
+            
+            txtImagen3.Text = string.Empty;
+            IdImagen3.ImageUrl = string.Empty;
 
         }
         protected string GetStatusIcon(object status)
@@ -179,10 +189,6 @@ namespace webApp
             ddListType.DataBind();
 
             LimpiarFormulario();
-        }
-        protected void txtImageUrl_TextChanged(object sender, EventArgs e)
-        {
-            //imgPreview.ImageUrl = txtImageUrl.Text;
         }
         protected void btnSaveArticle_Click(object sender, EventArgs e)
         {
@@ -274,6 +280,7 @@ namespace webApp
                 labelMsj.Text = "¡Se ha agregado exitosamente!";
                 labelMsj.Visible = true;
                 LimpiarFormulario();
+                labelMsj.Visible = false;
             }
             catch (Exception ex)
             {
@@ -306,6 +313,7 @@ namespace webApp
         }
         protected void dgvArticles_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            //MODO MODIFICAR
             ArticuloAS data = new ArticuloAS();
             if (e.CommandName == "Modificar")
             {
@@ -324,7 +332,7 @@ namespace webApp
                     // Asignar el primer artículo de la lista al objeto articulo
                     Articulo articulo = listaArticulos[0];
 
-                    // Rellenar los controles con la información del artículo
+                    //pre cargarmos los datos en el formulario
 
                     txtCodeArticle.Text = articulo.Codigo;
                     
@@ -354,9 +362,51 @@ namespace webApp
                     ddListCategory.DataBind();
 
                     ddListCategory.SelectedValue = articulo.Categoria.Id.ToString();
+                    
+                    if (articulo.Imagen != null)
+                    {
+                        // Verifico si hay al menos una imagen y que no sea nula
+                        if (articulo.Imagen.Count > 0 && articulo.Imagen[0] != null)
+                        {
+                            txtImagen1.Text = articulo.Imagen[0].UrlImagen;
+                            IdImagen1.ImageUrl = articulo.Imagen[0].UrlImagen;
+                        }
+                        else
+                        {
+                            // Limpia el campo si no hay imagen
+                            txtImagen1.Text = string.Empty;
+                            IdImagen1.ImageUrl = null;
+                        }
+
+                     
+                        if (articulo.Imagen.Count > 1 && articulo.Imagen[1] != null)
+                        {
+                            txtImagen2.Text = articulo.Imagen[1].UrlImagen;
+                            IdImagen2.ImageUrl = articulo.Imagen[1].UrlImagen;
+                        }
+                        else
+                        {
+                            // Limpiar el campo si no hay imagen
+                            txtImagen2.Text = string.Empty; 
+                            IdImagen2.ImageUrl = null;
+                        }
+
+                       
+                        if (articulo.Imagen.Count > 2 && articulo.Imagen[2] != null)
+                        {
+                            txtImagen3.Text = articulo.Imagen[2].UrlImagen;
+                            IdImagen3.ImageUrl = articulo.Imagen[2].UrlImagen;
+                        }
+                        else
+                        {
+                           
+                            txtImagen3.Text = string.Empty;
+                            IdImagen3.ImageUrl = null;
+                        }
+                    }
 
 
-                    // Hacer visible el formulario para editar
+                    // Mostramos el formulario para editar
                     MostarElentoSelecionado("div_gral_frmArt");
                     titulo_add_frm_art.Visible = false;
                     titulo_mod_frm_art.Visible = true;
@@ -397,9 +447,7 @@ namespace webApp
             ddlTipoTipific.SelectedIndex = 0;
             txtCodTipific.Text = string.Empty;
             txtDescTipific.Text = string.Empty;
-            txtImagen1.Text = string.Empty;
-            txtImagen2.Text = string.Empty;
-            txtImagen3.Text = string.Empty;
+            
         }
         protected void btnAddTipific_Click(object sender, EventArgs e)
         {
@@ -831,12 +879,82 @@ namespace webApp
         {
             Response.Redirect("wfreport_stockyprecios.aspx");
         }
-
         protected void txtImagen1_TextChanged(object sender, EventArgs e)
         {
-           IdImagen1.ImageUrl = txtImagen1.Text;
-           IdImagen2.ImageUrl = txtImagen2.Text;
-           IdImagen3.ImageUrl = txtImagen3.Text;
+            IdImagen1.ImageUrl = txtImagen1.Text;
+        }
+
+        protected void txtImagen2_TextChanged(object sender, EventArgs e)
+        {
+            IdImagen2.ImageUrl = txtImagen2.Text;
+        }
+
+        protected void txtImagen3_TextChanged(object sender, EventArgs e)
+        {
+            IdImagen3.ImageUrl = txtImagen3.Text;
+        }
+
+        protected void btnEliminarImagen1_Click(object sender, EventArgs e)
+        {
+            ArticuloAS data = new ArticuloAS();
+       
+            try
+            {   //OBTENEMOS EL ID DEL IMAGEN SELECCIONADA
+                // *ELIMINAMOS DE LA BASE DE DATOS, LIMPIAMOS EL TXT Y COLOCAMOS PLACERHOLDER
+                
+                int imagenId = Convert.ToInt32(txtCodeArticle.);
+                data.EliminarImagen(imagenId);
+                txtImagen2.Text = string.Empty;
+                IdImagen2.ImageUrl = "https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp"; // Plac
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+
+
+        }
+
+        protected void btnEliminarImagen2_Click(object sender, EventArgs e)
+        {
+            ArticuloAS data = new ArticuloAS();
+            try
+            {   //OBTENEMOS EL ID DEL IMAGEN SELECCIONADA
+                // *ELIMINAMOS DE LA BASE DE DATOS, LIMPIAMOS EL TXT Y COLOCAMOS PLACERHOLDER
+                Button btnEliminar = (Button)sender;
+                int imagenId = Convert.ToInt32(btnEliminar.CommandArgument);
+                data.EliminarImagen(imagenId);
+                txtImagen2.Text = string.Empty;
+                IdImagen2.ImageUrl = "https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp"; // Plac
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        protected void btnEliminarImagen3_Click(object sender, EventArgs e)
+        { 
+
+            ArticuloAS data = new ArticuloAS();
+            try
+            {   //OBTENEMOS EL ID DEL IMAGEN SELECCIONADA
+                // *ELIMINAMOS DE LA BASE DE DATOS, LIMPIAMOS EL TXT Y COLOCAMOS PLACERHOLDER
+                Button btnEliminar = (Button)sender;
+                int imagenId = Convert.ToInt32(btnEliminar.CommandArgument);
+                data.EliminarImagen(imagenId);
+                txtImagen3.Text = string.Empty;
+                IdImagen3.ImageUrl = "https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp"; // Plac
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 }
