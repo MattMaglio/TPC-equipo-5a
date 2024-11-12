@@ -263,21 +263,21 @@ namespace ApplicationService
                             Detalle = result["Detalle"].ToString(),
                             Tipo = new Tipo
                             {
-                                Id = (int)result["IdTipo"],
-                                Codigo = result["CodigoTipo"].ToString(),
-                                Descripcion = result["DescripcionTipo"].ToString()
+                                Id = (int)result["Id Tipo"],
+                                Codigo = result["Codigo Tipo"].ToString(),
+                                Descripcion = result["Descripcion Tipo"].ToString()
                             },
                             Marca = new Marca
                             {
-                                Id = (int)result["IdMarca"],
-                                Codigo = result["CodigoMarca"].ToString(),
-                                Descripcion = result["DescripcionMarca"].ToString()
+                                Id = (int)result["Id Marca"],
+                                Codigo = result["Codigo Marca"].ToString(),
+                                Descripcion = result["Descripcion Marca"].ToString()
                             },
                             Categoria = new Categoria
                             {
-                                Id = (int)result["IdCategoria"],
-                                Codigo = result["CodigoCategoria"].ToString(),
-                                Descripcion = result["DescripcionCategoria"].ToString()
+                                Id = (int)result["Id Categoria"],
+                                Codigo = result["Codigo Categoria"].ToString(),
+                                Descripcion = result["Descripcion Categoria"].ToString()
                             },
                             Imagen = new List<Imagen>() // Inicializamos la lista de img
                         };

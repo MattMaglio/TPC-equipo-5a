@@ -413,10 +413,9 @@
                          />
 
             <!-- Botón de Eliminar -->
-            <asp:Button ID="btnEliminarImagen1" runat="server" 
-                        Text="Eliminar" CssClass="btn btn-danger" 
-                        OnClientClick="return confirm('¿Estás seguro de que deseas borrar esta imagen?');" 
-                        CommandArgument='<%# Eval("Id") %>'  OnClick="btnEliminarImagen1_Click" />
+            <asp:Button ID="btnEliminarUrl1" runat="server" 
+                        Text="Limpiar url" CssClass="btn btn-danger" 
+                        OnClick="btnEliminarUrl1_Click" />
         </div>
 
         <div class="image-item">
@@ -431,10 +430,9 @@
                          Placeholder="URL Imagen" AutoPostBack="true" OnTextChanged="txtImagen2_TextChanged"
                          />
             <!-- Botón de Eliminar -->
-            <asp:Button ID="btnEliminarImagen2" runat="server" 
-                        Text="Eliminar" CssClass="btn btn-danger" 
-                        OnClientClick="return confirm('¿Estás seguro de que deseas borrar esta imagen?');" 
-                        CommandArgument='<%# Eval("Id") %>' CommandName="idImagen2" OnClick="btnEliminarImagen2_Click" />
+            <asp:Button ID="btnEliminarUrl2" runat="server" 
+                        Text="Limpiar url" CssClass="btn btn-danger" 
+                         OnClick="btnEliminarUrl2_Click" />
         </div>
 
         <div class="image-item">
@@ -448,10 +446,9 @@
                          Placeholder="URL Imagen" AutoPostBack="true" OnTextChanged="txtImagen3_TextChanged"
                          />
             <!-- Botón de Eliminar -->
-            <asp:Button ID="btnEliminarImagen3" runat="server" 
-                        Text="Eliminar" CssClass="btn btn-danger" 
-                        OnClientClick="return confirm('¿Estás seguro de que deseas borrar esta imagen?');" 
-                        CommandArgument='<%# Eval("Id") %>' CommandName="idImagen3" OnClick="btnEliminarImagen3_Click" />
+            <asp:Button ID="btnEliminarUrl3" runat="server" 
+                        Text="Limpiar url" CssClass="btn btn-danger" 
+                        OnClick="btnEliminarUrl3_Click" />
         </div>
     </ContentTemplate>
 </asp:UpdatePanel>

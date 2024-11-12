@@ -204,13 +204,13 @@ namespace webApp
         protected global::System.Web.UI.WebControls.TextBox txtImagen1;
 
         /// <summary>
-        /// btnEliminarImagen1 control.
+        /// btnEliminarUrl1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminarImagen1;
+        protected global::System.Web.UI.WebControls.Button btnEliminarUrl1;
 
         /// <summary>
         /// IdImagen2 control.
@@ -231,13 +231,13 @@ namespace webApp
         protected global::System.Web.UI.WebControls.TextBox txtImagen2;
 
         /// <summary>
-        /// btnEliminarImagen2 control.
+        /// btnEliminarUrl2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminarImagen2;
+        protected global::System.Web.UI.WebControls.Button btnEliminarUrl2;
 
         /// <summary>
         /// IdImagen3 control.
@@ -258,13 +258,13 @@ namespace webApp
         protected global::System.Web.UI.WebControls.TextBox txtImagen3;
 
         /// <summary>
-        /// btnEliminarImagen3 control.
+        /// btnEliminarUrl3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminarImagen3;
+        protected global::System.Web.UI.WebControls.Button btnEliminarUrl3;
 
         /// <summary>
         /// btnSaveArticle control.

@@ -169,6 +169,9 @@ namespace webApp
             MostarElentoSelecionado("div_gral_frmArt");
 
             IsEditMode = false;
+            titulo_add_frm_art.Visible = true;
+            titulo_mod_frm_art.Visible = false;
+            txtCodeArticle.Enabled = true;
 
             MarcaAS marca = new MarcaAS();
             ddListBrand.DataSource = marca.listar();
@@ -892,69 +895,25 @@ namespace webApp
         protected void txtImagen3_TextChanged(object sender, EventArgs e)
         {
             IdImagen3.ImageUrl = txtImagen3.Text;
+
         }
 
-        protected void btnEliminarImagen1_Click(object sender, EventArgs e)
+        protected void btnEliminarUrl1_Click(object sender, EventArgs e)
         {
-            ArticuloAS data = new ArticuloAS();
-       
-            try
-            {   //OBTENEMOS EL ID DEL IMAGEN SELECCIONADA
-                // *ELIMINAMOS DE LA BASE DE DATOS, LIMPIAMOS EL TXT Y COLOCAMOS PLACERHOLDER
-                
-                int imagenId = Convert.ToInt32(txtCodeArticle.);
-                data.EliminarImagen(imagenId);
-                txtImagen2.Text = string.Empty;
-                IdImagen2.ImageUrl = "https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp"; // Plac
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-
-
-
+            txtImagen1.Text = string.Empty;
+            IdImagen1.ImageUrl = string.Empty;
         }
 
-        protected void btnEliminarImagen2_Click(object sender, EventArgs e)
+        protected void btnEliminarUrl2_Click(object sender, EventArgs e)
         {
-            ArticuloAS data = new ArticuloAS();
-            try
-            {   //OBTENEMOS EL ID DEL IMAGEN SELECCIONADA
-                // *ELIMINAMOS DE LA BASE DE DATOS, LIMPIAMOS EL TXT Y COLOCAMOS PLACERHOLDER
-                Button btnEliminar = (Button)sender;
-                int imagenId = Convert.ToInt32(btnEliminar.CommandArgument);
-                data.EliminarImagen(imagenId);
-                txtImagen2.Text = string.Empty;
-                IdImagen2.ImageUrl = "https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp"; // Plac
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
+            txtImagen2.Text = string.Empty;
+            IdImagen2.ImageUrl = string.Empty;
         }
 
-        protected void btnEliminarImagen3_Click(object sender, EventArgs e)
-        { 
-
-            ArticuloAS data = new ArticuloAS();
-            try
-            {   //OBTENEMOS EL ID DEL IMAGEN SELECCIONADA
-                // *ELIMINAMOS DE LA BASE DE DATOS, LIMPIAMOS EL TXT Y COLOCAMOS PLACERHOLDER
-                Button btnEliminar = (Button)sender;
-                int imagenId = Convert.ToInt32(btnEliminar.CommandArgument);
-                data.EliminarImagen(imagenId);
-                txtImagen3.Text = string.Empty;
-                IdImagen3.ImageUrl = "https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp"; // Plac
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
+        protected void btnEliminarUrl3_Click(object sender, EventArgs e)
+        {
+            txtImagen3.Text = string.Empty;
+            IdImagen3.ImageUrl = string.Empty;
         }
     }
 }
