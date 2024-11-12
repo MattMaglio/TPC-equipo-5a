@@ -158,7 +158,7 @@ namespace webApp
             }
             catch (Exception ex)
             {
-               
+                throw ex;
             }
             finally
             {
@@ -207,6 +207,7 @@ namespace webApp
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             finally
             {

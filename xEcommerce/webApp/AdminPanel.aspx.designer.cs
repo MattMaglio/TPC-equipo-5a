@@ -177,13 +177,13 @@ namespace webApp
         protected global::System.Web.UI.WebControls.DropDownList ddListCategory;
 
         /// <summary>
-        /// txtImagen1 control.
+        /// UpdatePanelImagenes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtImagen1;
+        protected global::System.Web.UI.UpdatePanel UpdatePanelImagenes;
 
         /// <summary>
         /// IdImagen1 control.
@@ -195,13 +195,22 @@ namespace webApp
         protected global::System.Web.UI.WebControls.Image IdImagen1;
 
         /// <summary>
-        /// txtImagen2 control.
+        /// txtImagen1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtImagen2;
+        protected global::System.Web.UI.WebControls.TextBox txtImagen1;
+
+        /// <summary>
+        /// btnEliminarUrl1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEliminarUrl1;
 
         /// <summary>
         /// IdImagen2 control.
@@ -213,13 +222,22 @@ namespace webApp
         protected global::System.Web.UI.WebControls.Image IdImagen2;
 
         /// <summary>
-        /// txtImagen3 control.
+        /// txtImagen2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtImagen3;
+        protected global::System.Web.UI.WebControls.TextBox txtImagen2;
+
+        /// <summary>
+        /// btnEliminarUrl2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEliminarUrl2;
 
         /// <summary>
         /// IdImagen3 control.
@@ -229,6 +247,24 @@ namespace webApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image IdImagen3;
+
+        /// <summary>
+        /// txtImagen3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtImagen3;
+
+        /// <summary>
+        /// btnEliminarUrl3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEliminarUrl3;
 
         /// <summary>
         /// btnSaveArticle control.
