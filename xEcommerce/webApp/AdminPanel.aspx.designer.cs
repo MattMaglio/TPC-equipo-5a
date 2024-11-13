@@ -69,15 +69,6 @@ namespace webApp
         protected global::System.Web.UI.WebControls.Button btnViewSell;
 
         /// <summary>
-        /// dgvSell control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvSell;
-
-        /// <summary>
         /// btnReportStockPorArticulo control.
         /// </summary>
         /// <remarks>
@@ -562,5 +553,14 @@ namespace webApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView dgvSyP;
+
+        /// <summary>
+        /// dgvSell control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvSell;
     }
 }
