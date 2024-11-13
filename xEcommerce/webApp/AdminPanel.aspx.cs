@@ -144,7 +144,7 @@ namespace webApp
         }
         protected string GetStatusIcon(object status)
         {
-            /* // funcion para poner iconos en los status de las ventas
+             // funcion para poner iconos en los status de las ventas
             if (status == null)
                 return "~/Images/default.png";
 
@@ -153,15 +153,15 @@ namespace webApp
             switch (statusValue)
             {
                 case "completed":
-                    return "~/Images/check.png"; // URL del ícono de completado
+                    return "~/Images/check.png"; // url de completado
                 case "cancelled":
-                    return "~/Images/x.png"; // URL del ícono de cancelación
+                    return "~/Images/x.png"; //cancelado
                 case "in process":
-                    return "~/Images/circle.png"; // URL del ícono en proceso
+                    return "~/Images/circle.png"; // En proceso
                 default:
-                    return "~/Images/default.png"; // Imagen por defecto
-            }*/
-            return "~/Images/default.png";
+                    return "~/Images/default.png"; // img por defecto
+            }
+          
         }
         protected void btnAddArticle_Click(object sender, EventArgs e)
         {
@@ -914,6 +914,27 @@ namespace webApp
         {
             txtImagen3.Text = string.Empty;
             IdImagen3.ImageUrl = string.Empty;
+        }
+
+        protected void btnSaveStatus_Click(object sender, EventArgs e)
+        {
+            // opcional si vamos a utilizar boton para actualizar estado
+        }
+
+        protected void ddlEstadoVenta_TextChanged(object sender, EventArgs e)
+        {
+            VentasAS venta = new VentasAS();
+            DropDownList estado = (DropDownList)sender;
+            // en la grilla la columna estado, obtenemos la accion
+            GridViewRow columna = (GridViewRow)estado.NamingContainer;
+            // con el value podemos actualizar la DB para el estado de esta venta
+            string value = estado.SelectedValue;
+            //obtenemos el id de la venta 
+            string ventaID = dgvSell.DataKeys[columna.RowIndex].Value.ToString();
+            // pasamos a la db para actualizar el estado de la venta 
+            venta.ActualizarEstadoVenta(ventaID, value);
+            // actualizamos la grilla 
+            dgvSell.DataBind();
         }
     }
 }

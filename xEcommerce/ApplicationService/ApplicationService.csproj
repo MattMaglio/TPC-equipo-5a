@@ -52,6 +52,7 @@
     <Compile Include="TallesAS.cs" />
     <Compile Include="TipificacionAS.cs" />
     <Compile Include="TipoAS.cs" />
+    <Compile Include="VentasAS.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\bootstrap-grid.css.map" />
