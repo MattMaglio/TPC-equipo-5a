@@ -83,10 +83,16 @@
                                 <asp:DropDownList ID="ddlTalle" runat="server" OnSelectedIndexChanged="ddlTalle_SelectedIndexChanged" AutoPostBack="True" class="form-control"></asp:DropDownList>
                                 <br />
                                 <br />
+                                 <%--<p class="font-weight-bold"><strong>Cantidad disponible:</strong>--%>
+                                 <asp:Label ID="lblStock" runat="server" Visible="false" CssClass="font-italic"></asp:Label></p>
 
                                 <%--PRECIO--%>
-                                <asp:Label ID="lblPrecio" runat="server" Text="Precio: $" Font-Bold="True" Font-Size="Large"></asp:Label>
+                                <asp:Label ID="lblPrecio" runat="server" Text="Precio: $" Visible="false" Font-Bold="True" Font-Size="Large"></asp:Label>
                                 <%--MODIF FIN--%>
+
+                               <%-- MENSAJE DE NO STOCK--%>
+                                <asp:Label ID="lblNoStock" runat="server" Visible="false" Text="Producto sin stock" Font-Bold="True" Font-Size="Large"></asp:Label>
+
                                 
                                 <br />
                                 <br />
