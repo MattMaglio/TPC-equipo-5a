@@ -4,43 +4,43 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-   
-      <style>
 
+    <style>
         .mt-5, .my-5 {
-    margin-top: 0.1rem !important;
-}
+            margin-top: 0.1rem !important;
+        }
 
         .decorative-border {
-            border: 5px solid black; 
-            border-radius: 10px; 
-            padding: 15px; 
-            box-shadow: 0 4px 10px rgba(128, 128, 128, 0.5); 
+            border: 5px solid black;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(128, 128, 128, 0.5);
         }
 
         .card-title {
-            font-size: 2.5rem; 
-            color: #343a40; 
-            margin-bottom: 15px; 
+            font-size: 2.5rem;
+            color: #343a40;
+            margin-bottom: 15px;
         }
 
         .font-weight-bold {
             font-weight: bold;
+            .font-italic
 
-        .font-italic {
+        {
             font-style: italic;
         }
 
         .text-muted {
-            color: #6c757d; 
+            color: #6c757d;
         }
 
         .mt-3 {
-            margin-top: 1rem; 
+            margin-top: 1rem;
         }
 
         .mb-2 {
-            margin-bottom: 0.5rem; 
+            margin-bottom: 0.5rem;
         }
     </style>
 
@@ -66,38 +66,47 @@
                                 <asp:Label ID="lblProductName" runat="server" CssClass="card-title display-4 font-weight-bold"></asp:Label>
                                 <br />
                                 <br />
-                                <p class="font-weight-bold"><strong>Marca:</strong>
-                                    <asp:Label ID="lblBrand" runat="server" CssClass="font-italic"></asp:Label></p>
-                                <p class="font-weight-bold"><strong>Categoría:</strong>
-                                    <asp:Label ID="lblCategory" runat="server" CssClass="font-italic"></asp:Label></p>
-                                <p class="font-weight-bold"><strong>Tipo:</strong>
-                                    <asp:Label ID="lblType" runat="server" CssClass="font-italic"></asp:Label></p>
+                                <p class="font-weight-bold">
+                                    <strong>Marca:</strong>
+                                    <asp:Label ID="lblBrand" runat="server" CssClass="font-italic"></asp:Label>
+                                </p>
+                                <p class="font-weight-bold">
+                                    <strong>Categoría:</strong>
+                                    <asp:Label ID="lblCategory" runat="server" CssClass="font-italic"></asp:Label>
+                                </p>
+                                <p class="font-weight-bold">
+                                    <strong>Tipo:</strong>
+                                    <asp:Label ID="lblType" runat="server" CssClass="font-italic"></asp:Label>
+                                </p>
                                 <h5 class="mt-3 font-weight-bold">Descripción:</h5>
                                 <asp:Label ID="lblDescription" runat="server" CssClass="text-muted"></asp:Label>
                                 <br />
                                 <br />
+
                                 <h6>Elegir Color</h6>
-                                <asp:DropDownList ID="ddlColor" runat="server" OnSelectedIndexChanged="ddlColor_SelectedIndexChanged" AutoPostBack="True" class="form-control"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlColor" runat="server" OnSelectedIndexChanged="ddlColor_SelectedIndexChanged" AutoPostBack="True" class="form-control">
+                                </asp:DropDownList>
+
                                 <br />
+
                                 <h6>Elegir Talle</h6>
-                                <asp:DropDownList ID="ddlTalle" runat="server" OnSelectedIndexChanged="ddlTalle_SelectedIndexChanged" AutoPostBack="True" class="form-control"></asp:DropDownList>
-                                <br />
-                                <br />
-                                 <%--<p class="font-weight-bold"><strong>Cantidad disponible:</strong>--%>
-                                 <asp:Label ID="lblStock" runat="server" Visible="false" CssClass="font-italic"></asp:Label></p>
+                                <asp:DropDownList ID="ddlTalle" runat="server" OnSelectedIndexChanged="ddlTalle_SelectedIndexChanged" AutoPostBack="True" class="form-control">
+                                </asp:DropDownList>
+
+                                <asp:Label ID="lblStock" runat="server" Visible="false" CssClass="font-italic"></asp:Label></p>
 
                                 <%--PRECIO--%>
                                 <asp:Label ID="lblPrecio" runat="server" Text="Precio: $" Visible="false" Font-Bold="True" Font-Size="Large"></asp:Label>
                                 <%--MODIF FIN--%>
 
-                               <%-- MENSAJE DE NO STOCK--%>
+                                <%-- MENSAJE DE NO STOCK--%>
                                 <asp:Label ID="lblNoStock" runat="server" Visible="false" Text="Producto sin stock" Font-Bold="True" Font-Size="Large"></asp:Label>
 
-                                
+
                                 <br />
                                 <br />
                                 <asp:Button ID="btnAgregarACarrito" class="btn btn-secondary mt-3" runat="server" OnClick="btnAgregarACarrito_Click" Text="Agregar al carrito" />
-                                
+
                             </div>
 
                         </div>

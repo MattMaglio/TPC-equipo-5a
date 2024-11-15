@@ -21,6 +21,12 @@ namespace webApp
             if (!IsPostBack)
             {
                 LoadProductDetails();
+                // Agregar la opción de "Seleccioná Color" en ddlColor
+                ddlColor.Items.Insert(0, new ListItem("Seleccioná Color", "0"));
+
+                // Agregar la opción de "Seleccioná Talle" en ddlTalle
+                ddlTalle.Items.Insert(0, new ListItem("Seleccioná Talle", "0"));
+
             }
         }
 

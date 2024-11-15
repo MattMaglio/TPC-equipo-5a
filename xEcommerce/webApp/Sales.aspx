@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 
-    <%--/////////////////////////////////////////////////////////////////////////////////////////////////--%>
+
 
     <style>
         /*OPCIONES de ENVIO*/
@@ -46,7 +46,7 @@
 
 
 
-        /*/////////////////////////////*/
+
 
         /* Contenedor Principal */
         .main-container {
@@ -443,11 +443,9 @@
         }
     </style>
 
-    <%--//////////////////////////////////////////////////////////////////////////////////////////--%>
+
     <div class="main-container">
         <%--CONTENEDOR PRINCIPAL--%>
-
-
 
         <!-- BLOQUE DE RESUMEN DE COMPRA -->
         <div class="summary-container" id="Div1" runat="server">
@@ -471,14 +469,19 @@
                     <strong>Tu nombre:</strong>
                     <asp:Literal ID="lblNombre" runat="server" Text=""></asp:Literal>
                 </p>
+
+
                 <p>
                     <strong>Tu apellido:</strong>
                     <asp:Literal ID="lblApellido" runat="server" Text=""></asp:Literal>
                 </p>
+                
+
                 <p>
                     <strong>Tu DNI:</strong>
                     <asp:Literal ID="lblDNI" runat="server" Text=""></asp:Literal>
                 </p>
+               
 
                 <%--OPCION DE ENTREGA ELEGIDA--%>
 
@@ -548,7 +551,7 @@
             </div>
             <!-- CIERRE DEL DIV grupoBtnArticulos -->
 
-            <%--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
+
 
 
             <!-- Sección de Datos DEL Comprador -->
@@ -561,16 +564,26 @@
                     <asp:TextBox runat="server" ID="txtNombre" CssClass="form-control"
                         Style="border: black; border-bottom: 1px solid #ccc; background: white; height: auto;" />
                 </div>
+                <asp:Label ID="Label5" runat="server" ForeColor="Red"></asp:Label>
+                <asp:Label ID="Label6" runat="server" ForeColor="Green"></asp:Label>
+
+
                 <div class="form-group">
                     <label for="txtApellido" class="form-label">Apellido</label>
                     <asp:TextBox runat="server" ID="txtApellido" CssClass="form-control"
                         Style="border: black; border-bottom: 1px solid #ccc; background: white; height: auto;" />
                 </div>
+                <asp:Label ID="Label7" runat="server" ForeColor="Red"></asp:Label>
+                <asp:Label ID="Label8" runat="server" ForeColor="Green"></asp:Label>
+
+
                 <div class="form-group">
                     <label for="txtDNI" class="form-label">DNI</label>
                     <asp:TextBox runat="server" ID="txtDNI" CssClass="form-control"
                         Style="border: black; border-bottom: 1px solid #ccc; background: white; height: auto;" />
                 </div>
+                <asp:Label ID="Label3" runat="server" ForeColor="Red"></asp:Label>
+                <asp:Label ID="Label4" runat="server" ForeColor="Green"></asp:Label>
 
                 <!-- Botón para continuar -->
                 <div class="mt-4 text-center">
@@ -587,14 +600,13 @@
             <div id="confirmationSection" runat="server">
 
 
-                <%--///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
 
                 <!-- Opciones de Entrega -->
                 <div id="deliveryOptions" runat="server" class="mt-3">
                     <p class="section-title">Opciones de Entrega</p>
                     <asp:RadioButtonList ID="rblDeliveryOptions" runat="server" OnSelectedIndexChanged="rblDeliveryOptions_SelectedIndexChanged" AutoPostBack="True" OnClientClick="disableUnloadWarning();">
                         <asp:ListItem ID="radioRetiro" runat="server" Text="Retiro en Local en Florida 123 CABA de Lunes a Viernes 10hs a 18hs" Value="Retiro" OnClientClick="disableUnloadWarning();" />
-                        <asp:ListItem ID="radioEnvio" runat="server" Text="Envío a domicilio" Value="Envio" OnClientClick="disableUnloadWarning();"/>
+                        <asp:ListItem ID="radioEnvio" runat="server" Text="Envío a domicilio" Value="Envio" OnClientClick="disableUnloadWarning();" />
                     </asp:RadioButtonList>
                 </div>
                 <!-- CIERRE DEL DIV deliveryOptions -->
@@ -602,8 +614,6 @@
 
 
 
-                <%--/////////////////////////////////////////////////////////////////////--%>
-                <%--SI SE ROMPE ES POR ESTOOOOOO--%>
                 <%--botones de confirmar / cancelar retiro en local--%>
 
                 <div class="mt-4 text-center">
@@ -616,50 +626,70 @@
 
 
 
-                <%--//////////////////////////////////////////////////////////////////////--%>
-                <!-- Formulario para Envío (aparece si selecciona Envío) -->
-                <div id="shippingForm" runat="server" visible="False">
-                    <p>Completá estos datos para enviar tu producto</p>
-                    <div class="form-group">
-                        <label for="txtCalle">Calle</label>
-                        <asp:TextBox runat="server" ID="txtCalle" CssClass="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="txtNumero">Número</label>
-                        <asp:TextBox runat="server" ID="txtNumero" CssClass="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="txtCiudad">Ciudad</label>
-                        <asp:TextBox runat="server" ID="txtCiudad" CssClass="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="txtProvincia">Provincia</label>
-                        <asp:TextBox runat="server" ID="txtProvincia" CssClass="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="txtCP">Código Postal</label>
-                        <asp:TextBox runat="server" ID="txtCP" CssClass="form-control" />
-                    </div>
 
-                    <div class="mt-4 text-center">
-                        <asp:Button ID="btnConfirmoEnvio" runat="server" Text="Si, envíen mi compra" OnClick="btnConfirmoEnvio_Click" CssClass="btn btn-success"  OnClientClick="disableUnloadWarning();"/>
-                    </div>
-                    <div class="mt-4 text-center">
-                        <asp:Button ID="btnCanceloEnvio" runat="server" Text="Prefiero retirar en el local" OnClick="bntCancelarRetiroLocal_Click" CssClass="btn btn-success"  OnClientClick="disableUnloadWarning();"/>
-                    </div>
-                </div>
+                <!-- Formulario para Envío (aparece si selecciona Envío) -->
+               
+                <div id="shippingForm" runat="server" visible="False">
+    <p>Completá estos datos para enviar tu producto</p>
+
+    <!-- Calle -->
+    <div class="form-group">
+        <label for="txtCalle">Calle</label>
+        <asp:TextBox runat="server" ID="txtCalle" CssClass="form-control" />
+    </div>
+    <asp:Label ID="lblCalleError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
+    <asp:Label ID="lblCalleSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
+
+    <!-- Número -->
+    <div class="form-group">
+        <label for="txtNumero">Número</label>
+        <asp:TextBox runat="server" ID="txtNumero" CssClass="form-control" />
+    </div>
+    <asp:Label ID="lblNumeroError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
+    <asp:Label ID="lblNumeroSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
+
+    <!-- Ciudad -->
+    <div class="form-group">
+        <label for="txtCiudad">Ciudad</label>
+        <asp:TextBox runat="server" ID="txtCiudad" CssClass="form-control" />
+    </div>
+    <asp:Label ID="lblCiudadError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
+    <asp:Label ID="lblCiudadSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
+
+    <!-- Provincia -->
+    <div class="form-group">
+        <label for="txtProvincia">Provincia</label>
+        <asp:TextBox runat="server" ID="txtProvincia" CssClass="form-control" />
+    </div>
+    <asp:Label ID="lblProvinciaError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
+    <asp:Label ID="lblProvinciaSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
+
+    <!-- Código Postal -->
+    <div class="form-group">
+        <label for="txtCP">Código Postal</label>
+        <asp:TextBox runat="server" ID="txtCP" CssClass="form-control" />
+    </div>
+    <asp:Label ID="lblCPError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
+    <asp:Label ID="lblCPSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
+
+    <!-- Botones -->
+    <div class="mt-4 text-center">
+        <asp:Button ID="btnConfirmoEnvio" runat="server" Text="Si, envíen mi compra" OnClick="btnConfirmoEnvio_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
+    </div>
+    <div class="mt-4 text-center">
+        <asp:Button ID="btnCanceloEnvio" runat="server" Text="Prefiero retirar en el local" OnClick="bntCancelarRetiroLocal_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
+    </div>
+</div>
+
+
                 <!-- CIERRE DEL DIV shippingForm -->
 
-                <!-- Botón para continuar con el pago -->
-                <%--<div class="mt-4 text-center">
-                    <asp:Button ID="btnContinuePayment" runat="server" Text="Continuar con el Pago" OnClick="btnContinuePayment_Click" CssClass="btn btn-success" />
-                </div>--%>
+
                 <!-- CIERRE DEL DIV DE BOTÓN -->
                 <%--</div>--%><!-- CIERRE  DE confirmationSection -->
 
 
 
-                <%--  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
 
                 <!-- Métodos de pago -->
                 <div id="paymentMethods" runat="server">
@@ -672,22 +702,23 @@
                 </div>
 
 
-                <!-- CIERRE CORRECTO DEL DIV paymentMethods -->
+                <!-- CIERRE  DEL DIV paymentMethods -->
+
                 <%-- BOTONES DE METODOS DE PAGO--%>
                 <%--Si elige Efectivo--%>
                 <div class="mt-4 text-center">
-                    <asp:Button ID="btnConfirmaEfectivo" runat="server" Visible="false" Text="Confirmar pago en Efectivo" OnClick="btnConfirmaEfectivo_Click" CssClass="btn btn-success"  OnClientClick="disableUnloadWarning();"/>
+                    <asp:Button ID="btnConfirmaEfectivo" runat="server" Visible="false" Text="Confirmar pago en Efectivo" OnClick="btnConfirmaEfectivo_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
                 </div>
                 <div class="mt-4 text-center">
-                    <asp:Button ID="btnCancelaEfectivo" runat="server" Visible="false" Text="Cancelar y volver" OnClick="btnCancelaPago_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();"/>
+                    <asp:Button ID="btnCancelaEfectivo" runat="server" Visible="false" Text="Cancelar y volver" OnClick="btnCancelaPago_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
                 </div>
 
                 <%--Si elige Transferencia--%>
                 <div class="mt-4 text-center">
-                    <asp:Button ID="btnConfirmaTransferencia" runat="server" Visible="false" Text="Confirmar pago con Transferencia bancaria" OnClick="btnConfirmaTransferencia_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();"/>
+                    <asp:Button ID="btnConfirmaTransferencia" runat="server" Visible="false" Text="Confirmar pago con Transferencia bancaria" OnClick="btnConfirmaTransferencia_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
                 </div>
                 <div class="mt-4 text-center">
-                    <asp:Button ID="btnCancelaTransferencia" runat="server" Visible="false" Text="Cancelar y volver" OnClick="btnCancelaPago_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();"/>
+                    <asp:Button ID="btnCancelaTransferencia" runat="server" Visible="false" Text="Cancelar y volver" OnClick="btnCancelaPago_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
                 </div>
 
                 <%--Si elige MercadoPago--%>
@@ -695,7 +726,7 @@
                     <asp:Button ID="btnConfirmaMP" runat="server" Visible="false" Text="Confirmar pago con Mercado Pago" OnClick="btnConfirmaMP_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
                 </div>
                 <div class="mt-4 text-center">
-                    <asp:Button ID="btnCancelarMP" runat="server" Visible="false" Text="Cancelar y volver" OnClick="btnCancelaPago_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();"/>
+                    <asp:Button ID="btnCancelarMP" runat="server" Visible="false" Text="Cancelar y volver" OnClick="btnCancelaPago_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
                 </div>
 
                 <!-- Formulario para Tarjeta de Crédito/Débito -->
@@ -728,11 +759,11 @@
                 </div>
 
                 <%--CONFIRMO o CANCELO TODA LA OPERACIÓN--%>
-                <div id="confirmoFinal" runat="server" Visible="False">
+                <div id="confirmoFinal" runat="server" visible="False">
                     <p>Revisá y confirmá tu compra</p>
                 </div>
-                <asp:Button ID="btnTerminarCompra" runat="server" Text="Confirmar la Compra" OnClick="btnTerminarCompra_Click" CssClass="btn btn-success" Visible="false" OnClientClick="disableUnloadWarning();"/>
-                <asp:Button ID="btnCanceloCompra" runat="server" Text="Cancelar la Compra y vaciar el carrito" OnClick="btnCanceloCompra_Click" Visible="false" OnClientClick="return confirm('¿Estás seguro de que deseas cancelar la compra?');" CssClass="btn btn-success"  />
+                <asp:Button ID="btnTerminarCompra" runat="server" Text="Confirmar la Compra" OnClick="btnTerminarCompra_Click" CssClass="btn btn-success" Visible="false" OnClientClick="disableUnloadWarning();" />
+                <asp:Button ID="btnCanceloCompra" runat="server" Text="Cancelar la Compra y vaciar el carrito" OnClick="btnCanceloCompra_Click" Visible="false" OnClientClick="return confirm('¿Estás seguro de que deseas cancelar la compra?');" CssClass="btn btn-success" />
 
 
                 <%--CANCELO LA COMPRA--%>
@@ -743,7 +774,7 @@
                 <div id="terminaLaCompra" runat="server" visible="False">
                     <p>MUCHAS GRACIAS, YA ESTAMOS PROCESANDO TU PEDIDO! REVISA TU CORREO, TE ENVIAMOS TODOS LOS DATOS PARA FINALIZAR EL PAGO</p>
                 </div>
-                <%--<asp:Button ID="btnTerminarCompra" runat="server" Text="Finalizar Compra" OnClick="btnTerminarCompra_Click" CssClass="btn btn-success" />--%>
+
 
                 <%-- boton de finalizar compra--%>
                 <div class="mt-4 text-center">
@@ -753,59 +784,8 @@
             </div>
             <!-- CIERRE DEL DIV CONFIRMATIONsECTION -->
 
-            <!-- Script para evitar retroceso con advertencia -->
-<script type="text/javascript">
-    // Bandera para controlar cuándo activar el evento onbeforeunload
-    let preventUnload = true;
+           
 
-    // Manejar el evento onbeforeunload solo cuando sea necesario
-    window.onbeforeunload = function (e) {
-        if (preventUnload) {
-            const message = "Si sales de esta página, perderás los datos ingresados. ¿Estás seguro de continuar?";
-            e = e || window.event;
-
-            // Para navegadores antiguos
-            if (e) {
-                e.returnValue = message;
-            }
-
-            // Para navegadores modernos
-            return message;
-        }
-    };
-
-    // Manejar específicamente el botón de retroceso del navegador
-    if (window.history && window.history.pushState) {
-        window.history.pushState(null, null, window.location.href);
-        window.onpopstate = function () {
-            if (confirm("¿Estás seguro? Si retrocedes, los datos ingresados se perderán.")) {
-                preventUnload = false; // Permitir retroceso sin advertencia adicional
-                history.back(); // Hacer retroceso explícito
-            } else {
-                window.history.pushState(null, null, window.location.href); // Bloquear retroceso
-            }
-        };
-    }
-
-    // Desactivar advertencia cuando se interactúa con elementos específicos
-    function disableUnloadWarning() {
-        preventUnload = false;
-    }
-
-    // Función para agregar eventos de clic a los RadioButtonLists
-    function attachClickEventsToRadios(listId) {
-        const radios = document.querySelectorAll(`#${listId} input[type="radio"]`);
-        radios.forEach(function (radio) {
-            radio.addEventListener("click", disableUnloadWarning);
-        });
-    }
-
-    // Registrar eventos de clic en los RadioButtonLists al cargar la página
-    window.addEventListener("DOMContentLoaded", function () {
-        attachClickEventsToRadios("<%= rblDeliveryOptions.ClientID %>");
-        attachClickEventsToRadios("<%= rblPaymentMethods.ClientID %>");
-    });
-</script>
 
         </div>
         <!-- CIERRE  DEL DIV MAIN-CONTAINER -->

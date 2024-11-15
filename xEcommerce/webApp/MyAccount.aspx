@@ -4,7 +4,6 @@
 
     <style>
         body {
-            
             margin-top: 20px;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-size: 14px;
@@ -145,20 +144,21 @@
             color: #000;
             transition: 0.2s;
         }
+
         .switcher .switcher-input:checked + .switcher-indicator {
-    background-color: #000; 
-}
+            background-color: #000;
+        }
 
-.switcher .switcher-input:checked + .switcher-indicator .switcher-yes {
-    background-color: #000;
-}
+            .switcher .switcher-input:checked + .switcher-indicator .switcher-yes {
+                background-color: #000;
+            }
 
-.switcher .switcher-input:checked + .switcher-indicator .switcher-no {
-    background-color: transparent; 
-}
+            .switcher .switcher-input:checked + .switcher-indicator .switcher-no {
+                background-color: transparent;
+            }
 
 
-       
+
 
         .btn-outline-primary {
             border-color: #6c757d;
@@ -186,17 +186,17 @@
                 <div class="col-md-3 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
                         <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-info">Info</a>
-<%--                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-social-links">Social links</a>--%>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-notifications">Notifications</a>
+                       <%-- <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>--%>
+<%--                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-info">Info</a>--%>
+                        <%--                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-social-links">Social links</a>--%>
+<%--                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-notifications">Notifications</a>--%>
                     </div>
                 </div>
                 <div class="col-md-9">
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="account-general">
 
-                            <div class="card-body media align-items-center">
+                            <%--<div class="card-body media align-items-center">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="d-block ui-w-80">
                                 <div class="media-body ml-4">
                                     <label class="btn btn-outline-primary">
@@ -208,34 +208,34 @@
 
                                     <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
                                 </div>
-                            </div>
+                            </div>--%>
                             <hr class="border-light m-0">
 
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label class="form-label">Username</label>
+                                    <label class="form-label">Nombre de usuario</label>
                                     <input type="text" class="form-control mb-1" value="GolfEnthusiast">
                                 </div>
-                                <div class="form-group">
+                                <%--<div class="form-group">
                                     <label class="form-label">Name</label>
                                     <input type="text" class="form-control" value="Joel">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Surname</label>
                                     <input type="text" class="form-control" value="Miller">
-                                </div>
+                                </div>--%>
                                 <div class="form-group">
                                     <label class="form-label">E-mail</label>
                                     <input type="text" class="form-control mb-1" value="jmiller@mail.com">
                                 </div>
-                                <div class="form-group">
+                                <%-- <div class="form-group">
                                     <label class="form-label">Company</label>
                                     <input type="text" class="form-control" value="Fireflies Ltd.">
-                                </div>
+                                </div>--%>
                             </div>
 
                         </div>
-                        <div class="tab-pane fade" id="account-change-password">
+                       <%-- <div class="tab-pane fade" id="account-change-password">
                             <div class="card-body pb-2">
 
                                 <div class="form-group">
@@ -253,34 +253,34 @@
                                     <input type="password" class="form-control">
                                 </div>
 
-                            </div>
-                        </div>
+                            </div>--%>
+                       <%-- </div>
                         <div class="tab-pane fade" id="account-info">
                             <div class="card-body pb-2">
 
-                               
+
                                 <div class="form-group">
                                     <label class="form-label">Birthday</label>
                                     <input type="text" class="form-control" value="May 3, 1995">
                                 </div>
-                                                                        <div class="form-group">
-    <label class="form-label">Adresses stored</label>
+                                <div class="form-group">
+                                    <label class="form-label">Adresses stored</label>
                                     <br />
-    <select class="custom-select">
-        <option>742 Evergreen Terrace, SP, USA</option>
-        <option selected="">1640 Riverside Drive, Hill Valley, CA, USA</option>
-        <option>167 Hemdale Street Los Angeles, CA, USA</option>
-        <option>Segurola y Habana, CABA, Argentina</option>
-       
-    </select>
-</div>
-                                    <div class="form-group">
-    <label class="form-label">Add new adress?</label>
-                                    <br />
-    <input type="text" class="form-control" value="new adress...">
-</div>
+                                    <select class="custom-select">
+                                        <option>742 Evergreen Terrace, SP, USA</option>
+                                        <option selected="">1640 Riverside Drive, Hill Valley, CA, USA</option>
+                                        <option>167 Hemdale Street Los Angeles, CA, USA</option>
+                                        <option>Segurola y Habana, CABA, Argentina</option>
 
-                                    <%--<div class="form-group">
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Add new adress?</label>
+                                    <br />
+                                    <input type="text" class="form-control" value="new adress...">
+                                </div>--%>
+
+                                <%--<div class="form-group">
     <label class="form-label">Credit Cards stored</label>
                                     <br />
     <select class="custom-select">
@@ -296,27 +296,22 @@
     <input type="text" class="form-control" value="new credit card...">
 </div>
 
---%>
-
-
-                                
-
-
-                            </div>
+                                --%>
+                            <%--</div>
                             <hr class="border-light m-0">
                             <div class="card-body pb-2">
 
-                             
+
                                 <div class="form-group">
                                     <label class="form-label">Phone</label>
                                     <input type="text" class="form-control" value="+0 (123) 456 7891">
                                 </div>
-                               
+
 
                             </div>
 
-                        </div>
-                      <%--  <div class="tab-pane fade" id="account-social-links">
+                        </div>--%>
+                        <%--  <div class="tab-pane fade" id="account-social-links">
                             <div class="card-body pb-2">
 
                                 <div class="form-group">
@@ -342,8 +337,8 @@
 
                             </div>
                         </div>--%>
-                        
-                        <div class="tab-pane fade" id="account-notifications">
+
+               <%--         <div class="tab-pane fade" id="account-notifications">
                             <div class="card-body pb-2">
 
                                 <h6 class="mb-4">Activity</h6>
@@ -404,18 +399,18 @@
                                         <span class="switcher-label">Weekly product updates</span>
                                     </label>
                                 </div>
-                                
+
 
                             </div>
-                        </div>
+                        </div>--%>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="text-right mt-3">
-            <button type="button" class="btn btn-secondary">Save changes</button>&nbsp;
-      <button type="button" class="btn btn-default">Cancel</button>
+            
+      <<asp:Button ID="btnVolver" runat="server" Text="Volver a Inicio" OnClick="btnVolver_Click" class="btn btn-secondary"/>
         </div>
         <br />
         <br />
