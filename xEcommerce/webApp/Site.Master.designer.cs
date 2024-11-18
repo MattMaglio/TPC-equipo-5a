@@ -33,7 +33,9 @@ namespace webApp
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+
         /// litUserGreeting control.
+
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -101,6 +103,7 @@ namespace webApp
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
+
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
     }

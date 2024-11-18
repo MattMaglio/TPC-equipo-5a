@@ -1,19 +1,80 @@
 -- Procedures Generales
 USE XECOMMERCE;
 GO
+CREATE OR ALTER PROCEDURE Catalogo.SP_ModificarArticulo
+    @Codigo NVARCHAR(50),
+    @Descripcion NVARCHAR(255),
+    @IdTipo INT,
+    @IdMarca INT,
+    @IdCategoria INT,
+    @Detalle VARCHAR(255),
+    @UrlImagen1 VARCHAR(255),
+    @UrlImagen2 VARCHAR(255),
+    @UrlImagen3 VARCHAR(255)
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
 
-CREATE OR ALTER PROCEDURE Catalogo.BuscarArticulos @cod_articulo VARCHAR(10) AS
-SELECT Id,
-    Codigo,
-    IdTipo,
-    IdMarca,
-    IdCategoria,
-    Descripcion,
-    Estado
-FROM Catalogo.Articulos
-WHERE Codigo = @cod_articulo
-;
+        DECLARE @Id INT;
+		-- obtenemos el id del articulo por su codigo
+        SELECT @Id = Id FROM Catalogo.Articulos WHERE Codigo = @Codigo;
+
+        -- Eliminamos imagenes que no coinciden con las URLs obtenidas
+        DELETE FROM Catalogo.ImagenArticulos
+        WHERE IdArticulo = @Id
+        AND UrlImagen NOT IN (ISNULL(@UrlImagen1, ''), ISNULL(@UrlImagen2, ''), ISNULL(@UrlImagen3, ''));
+
+        -- Actualizar la información general del artículo
+        UPDATE Catalogo.Articulos
+        SET Codigo = @Codigo,
+            Descripcion = @Descripcion,
+            IdTipo = @IdTipo,
+            IdMarca = @IdMarca,
+            IdCategoria = @IdCategoria,
+            Detalle = @Detalle
+        WHERE Id = @Id;
+
+		-- insertamos o actualizamos las imagenes asociadas si no existen
+        -- IMAGEN 1
+        IF @UrlImagen1 IS NOT NULL AND @UrlImagen1 <> '' -- si la url no es nula y es distinta de vacio
+        BEGIN -- si la url no existe en la tabla con el id articulo y la imagen proporcionada
+            IF NOT EXISTS(SELECT 1 FROM Catalogo.ImagenArticulos WHERE IdArticulo = @Id AND UrlImagen = @UrlImagen1)
+            BEGIN
+                INSERT INTO Catalogo.ImagenArticulos (IdArticulo, UrlImagen)
+                VALUES (@Id, @UrlImagen1);
+            END
+        END
+
+        -- IMAGEN 2
+        IF @UrlImagen2 IS NOT NULL AND @UrlImagen2 <> ''
+        BEGIN
+            IF NOT EXISTS(SELECT 1 FROM Catalogo.ImagenArticulos WHERE IdArticulo = @Id AND UrlImagen = @UrlImagen2)
+            BEGIN
+                INSERT INTO Catalogo.ImagenArticulos (IdArticulo, UrlImagen)
+                VALUES (@Id, @UrlImagen2);
+            END
+        END
+        -- IMAGEN 3
+        IF @UrlImagen3 IS NOT NULL AND @UrlImagen3 <> ''
+        BEGIN
+            IF NOT EXISTS(SELECT 1 FROM Catalogo.ImagenArticulos WHERE IdArticulo = @Id AND UrlImagen = @UrlImagen3)
+            BEGIN
+                INSERT INTO Catalogo.ImagenArticulos (IdArticulo, UrlImagen)
+                VALUES (@Id, @UrlImagen3);
+            END
+        END
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        -- Manejo de errores
+        THROW;
+    END CATCH
+END;
 GO
+
 
 CREATE OR ALTER PROCEDURE Catalogo.ListarArticulos AS
 SELECT a.Id,
@@ -1163,6 +1224,85 @@ BEGIN
 END;
 GO
 
+CREATE OR ALTER VIEW Operaciones.VW_StockYPreciosParaArt AS
+SELECT a.Id AS "Id de Articulo",
+    c.Id AS "Id de Color",
+    c.Codigo AS "Codigo de Color",
+    c.Descripcion AS "Descripcion de Color",
+    t.Id AS "Id de Talle",
+    t.Codigo AS "Codigo de Talle",
+    t.Descripcion AS "Descripcion de Talle",
+    ISNULL(s.Cantidad,0) AS "Cantidad",
+    ISNULL(p.Precio,0) AS "Precio"
+FROM Operaciones.Precios p
+INNER JOIN Catalogo.Articulos a ON p.IdArticulo = a.Id
+INNER JOIN Catalogo.Colores c ON p.IdColor = c.Id
+INNER JOIN Catalogo.Talles t ON p.IdTalle = t.Id
+LEFT JOIN Operaciones.Stock s
+    ON p.IdArticulo = s.IdArticulo
+    AND p.IdColor = s.IdColor
+    AND p.IdTalle = s.IdTalle
+;
+GO
+
+
+CREATE PROCEDURE [Catalogo].[ObtenerTallesPorIdParaDetalle]
+@Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+SELECT DISTINCT
+    t.Id AS "Id de Talle",
+    t.Codigo AS "Codigo de Talle",
+    t.Descripcion AS "Descripcion de Talle"
+FROM Operaciones.Precios p
+INNER JOIN Catalogo.Articulos a ON p.IdArticulo = a.Id
+INNER JOIN Catalogo.Talles t ON p.IdTalle = t.Id
+WHERE a.Id = @Id;
+END
+GO
+
+CREATE PROCEDURE [Catalogo].[ObtenerColoresPorIdParaDetalle]
+ @Id INT
+ AS
+BEGIN
+    SET NOCOUNT ON;
+SELECT DISTINCT
+    c.Id AS "Id de Color",
+    c.Codigo AS "Codigo de Color",
+    c.Descripcion AS "Descripcion de Color"
+FROM Operaciones.Precios p
+INNER JOIN Catalogo.Articulos a ON p.IdArticulo = a.Id
+INNER JOIN Catalogo.Colores c ON p.IdColor = c.Id
+WHERE a.Id = @Id;
+END
+GO
+
+CREATE   PROCEDURE [Catalogo].[ObtenerPrecioPorIdParaDetalle]
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        a.Id AS ProductId,
+		p.IdColor,
+		c.Descripcion AS Color, 
+		p.IdTalle,
+		t.Descripcion AS Talle,
+		p.Precio
+		  FROM
+        Operaciones.Precios p
+	LEFT JOIN
+		Catalogo.Articulos a ON a.Id = p.IdArticulo 
+	INNER JOIN 
+		Catalogo.Colores c ON c.Id = p.IdColor
+	INNER JOIN 
+		Catalogo.Talles t ON t.Id = p.IdTalle
+    WHERE
+        a.Estado = 1 AND a.Id = @Id; 
+END
+GO
 
 CREATE PROCEDURE Catalogo.InsertarNuevoArticulo
     @Codigo VARCHAR(10),
@@ -1212,3 +1352,23 @@ BEGIN
     END CATCH
 END;
 GO
+
+CREATE OR ALTER PROCEDURE Catalogo_SPBorrarImagen
+    @Id INT
+AS
+BEGIN
+  
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        DELETE FROM Catalogo.ImagenArticulos
+        WHERE Id = @Id;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END;      
+    END CATCH;
+END;
