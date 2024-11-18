@@ -101,20 +101,22 @@
                 <div class="col-md-6 col-xs-12">
                     <div class="contact-us-form">
                         <div class="section-heading">
-                            <h3>Contact Form</h3>
+                            <h3>Formulario de contacto</h3>
                         </div>  
                         <div class="contact-form">
                             <form action="mail.php" method="post">
-                                <p>Name</p>
-                                <asp:TextBox runat="server" ID="TextBox2" placeholder="Type your name here" CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
+                                <p>Nombre</p>
+                                <asp:TextBox runat="server" ID="txtNombre" placeholder="Nombre" CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
                                 
                                 <p>E-mail</p>
-                                <asp:TextBox runat="server" ID="TextBox1" placeholder="Type your E-mail address" CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
+                                <asp:TextBox runat="server" ID="txtEmailContacto" placeholder="Tu email" CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
                                 
-                                <p>Message</p>
-                                <textarea id="message" rows="4" name="message" required></textarea>
+                                <p>Asunto</p>
+                                <asp:TextBox runat="server" ID="txtAsunto" placeholder="Asunto" CssClass="form-control" style="border: none;"></asp:TextBox>
                                 
-                                <input type="submit" value="Send">
+                                <p>Mensaje</p>
+                                <asp:TextBox runat="server" ID="txtMensaje" TextMode="MultiLine"></asp:TextBox>
+                                <asp:Button Text="Enviar" ID="btnEnviar" OnClick="btnEnviar_Click" CssClass="form-control" runat="server" />
                             </form>
                         </div>
                     </div>    
@@ -123,17 +125,17 @@
                 <div class="col-md-6 col-xs-12">
                     <div class="newsletter-area">
                         <div class="section-heading">
-                            <h3>Newsletters</h3>
+                            <h3>Novedades</h3>
                         </div>
                         <div class="newsletter-box">
                             <form action="#">
-                                <asp:TextBox runat="server" ID="txtEmail" placeholder="Type your E-mail address" CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
+                                <asp:TextBox runat="server" ID="txtEmail" placeholder="Tu email" CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
 
-                                <button type="submit">Subscribe Now</button>
+                                <button type="submit">¡Suscribete ahora!</button>
                             </form>
                             <div class="subscribing">
                                 <label class="checkbox-title">
-                                    <input type="checkbox" name="subscribe" value="bank" id="transfer"> By subscribing to our newsletter you agree to receive emails from us. 
+                                    <input type="checkbox" name="subscribe" value="bank" id="transfer"> Suscribete para recibir las novedades via email. 
                                 </label>
                             </div>
                         </div>
@@ -144,7 +146,7 @@
     </div>  
 </div>
 
-
+  
 
 
     

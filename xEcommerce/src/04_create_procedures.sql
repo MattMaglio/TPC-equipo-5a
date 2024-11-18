@@ -1,19 +1,80 @@
 -- Procedures Generales
 USE XECOMMERCE;
 GO
+CREATE OR ALTER PROCEDURE Catalogo.SP_ModificarArticulo
+    @Codigo NVARCHAR(50),
+    @Descripcion NVARCHAR(255),
+    @IdTipo INT,
+    @IdMarca INT,
+    @IdCategoria INT,
+    @Detalle VARCHAR(255),
+    @UrlImagen1 VARCHAR(255),
+    @UrlImagen2 VARCHAR(255),
+    @UrlImagen3 VARCHAR(255)
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
 
-CREATE OR ALTER PROCEDURE Catalogo.BuscarArticulos @cod_articulo VARCHAR(10) AS
-SELECT Id,
-    Codigo,
-    IdTipo,
-    IdMarca,
-    IdCategoria,
-    Descripcion,
-    Estado
-FROM Catalogo.Articulos
-WHERE Codigo = @cod_articulo
-;
+        DECLARE @Id INT;
+		-- obtenemos el id del articulo por su codigo
+        SELECT @Id = Id FROM Catalogo.Articulos WHERE Codigo = @Codigo;
+
+        -- Eliminamos imagenes que no coinciden con las URLs obtenidas
+        DELETE FROM Catalogo.ImagenArticulos
+        WHERE IdArticulo = @Id
+        AND UrlImagen NOT IN (ISNULL(@UrlImagen1, ''), ISNULL(@UrlImagen2, ''), ISNULL(@UrlImagen3, ''));
+
+        -- Actualizar la información general del artículo
+        UPDATE Catalogo.Articulos
+        SET Codigo = @Codigo,
+            Descripcion = @Descripcion,
+            IdTipo = @IdTipo,
+            IdMarca = @IdMarca,
+            IdCategoria = @IdCategoria,
+            Detalle = @Detalle
+        WHERE Id = @Id;
+
+		-- insertamos o actualizamos las imagenes asociadas si no existen
+        -- IMAGEN 1
+        IF @UrlImagen1 IS NOT NULL AND @UrlImagen1 <> '' -- si la url no es nula y es distinta de vacio
+        BEGIN -- si la url no existe en la tabla con el id articulo y la imagen proporcionada
+            IF NOT EXISTS(SELECT 1 FROM Catalogo.ImagenArticulos WHERE IdArticulo = @Id AND UrlImagen = @UrlImagen1)
+            BEGIN
+                INSERT INTO Catalogo.ImagenArticulos (IdArticulo, UrlImagen)
+                VALUES (@Id, @UrlImagen1);
+            END
+        END
+
+        -- IMAGEN 2
+        IF @UrlImagen2 IS NOT NULL AND @UrlImagen2 <> ''
+        BEGIN
+            IF NOT EXISTS(SELECT 1 FROM Catalogo.ImagenArticulos WHERE IdArticulo = @Id AND UrlImagen = @UrlImagen2)
+            BEGIN
+                INSERT INTO Catalogo.ImagenArticulos (IdArticulo, UrlImagen)
+                VALUES (@Id, @UrlImagen2);
+            END
+        END
+        -- IMAGEN 3
+        IF @UrlImagen3 IS NOT NULL AND @UrlImagen3 <> ''
+        BEGIN
+            IF NOT EXISTS(SELECT 1 FROM Catalogo.ImagenArticulos WHERE IdArticulo = @Id AND UrlImagen = @UrlImagen3)
+            BEGIN
+                INSERT INTO Catalogo.ImagenArticulos (IdArticulo, UrlImagen)
+                VALUES (@Id, @UrlImagen3);
+            END
+        END
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        -- Manejo de errores
+        THROW;
+    END CATCH
+END;
 GO
+
 
 CREATE OR ALTER PROCEDURE Catalogo.ListarArticulos AS
 SELECT a.Id,
@@ -1243,8 +1304,71 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE Catalogo.InsertarNuevoArticulo
+    @Codigo VARCHAR(10),
+    @Descripcion VARCHAR(255),
+    @IdTipo INT,
+    @IdMarca INT,
+    @IdCategoria INT,
+    @Detalle VARCHAR(255)
+AS
+BEGIN
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        --insertamos en la tabla articulo
+        INSERT INTO Articulos (Codigo, Descripcion, IdTipo, IdMarca, IdCategoria, Detalle)
+        VALUES (@Codigo, @Descripcion, @IdTipo, @IdMarca, @IdCategoria, @Detalle);
+
+        -- capturamos el id ingresado
+        SELECT SCOPE_IDENTITY() AS IdArticulo;
 
 
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+       
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
+GO
 
+CREATE PROCEDURE Catalogo.InsertarImagen
+    @IdArticulo INT,
+    @UrlImagen VARCHAR(255)
+AS
+BEGIN
+    BEGIN TRANSACTION; 
+    BEGIN TRY
+        -- insertamos la imagen relacionada con el articulo
+        INSERT INTO Catalogo.ImagenArticulos(IdArticulo, UrlImagen)
+        VALUES (@IdArticulo, @UrlImagen);
 
+        COMMIT TRANSACTION; 
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION; 
+        THROW;
+    END CATCH
+END;
+GO
 
+CREATE OR ALTER PROCEDURE Catalogo_SPBorrarImagen
+    @Id INT
+AS
+BEGIN
+  
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        DELETE FROM Catalogo.ImagenArticulos
+        WHERE Id = @Id;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END;      
+    END CATCH;
+END;

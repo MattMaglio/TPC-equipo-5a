@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,6 @@ namespace ApplicationService
 {
     public class ArticuloAS
     {
-
         public List<Articulo> listar()
         {
             List<Articulo> lista = new List<Articulo>();
@@ -229,7 +229,7 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
-        public List<Articulo> ObtenerIdXModificacion(string id="")
+        public List<Articulo> ObtenerIdXModificacion(string id = "")
         {
             List<Articulo> lista = new List<Articulo>();
             DataAccess conexion = new DataAccess();
@@ -238,48 +238,87 @@ namespace ApplicationService
 
             try
             {
-
-                if(!string.IsNullOrEmpty(id) && int.TryParse(id, out int articuloId))
-            {
+                if (!string.IsNullOrEmpty(id) && int.TryParse(id, out int articuloId))
+                {
                     query.configSqlProcedure("Catalogo.ObtenerArticuloPorId");
-                    query.configSqlParams("@Id", articuloId); // agregamos el id
+                    query.configSqlParams("@Id", articuloId);
                 }
                 query.configSqlConexion(conexion.getConnection());
                 conexion.openConnection();
                 result = query.exectQuerry();
+
+                Articulo articuloActual = null;
+
                 while (result.Read())
                 {
-                    Articulo aux = new Articulo
+                    if (articuloActual == null || articuloActual.Id != (int)result["Id"])
                     {
-                        Id = (int)result["Id"],
-                        Codigo = result["Codigo"].ToString(),
-                        Descripcion = result["Descripcion"].ToString(),
-                        Estado = (bool)result["Estado"],
-                        Detalle = result["Detalle"].ToString(),
-                        Marca = new Marca
-                        {
-                            Id = (int)result["Id Marca"],
-                            Codigo = result["Codigo Marca"].ToString(),
-                            Descripcion = result["Descripcion Marca"].ToString()
-                        },
-                        Tipo = new Tipo
-                        {
-                            Id = (int)result["Id Tipo"],
-                            Codigo = result["Codigo Tipo"].ToString(),
-                            Descripcion = result["Descripcion Tipo"].ToString()
-                        },
-                        Categoria = new Categoria
-                        {
-                            Id = (int)result["Id Categoria"],
-                            Codigo = result["Codigo Categoria"].ToString(),
-                            Descripcion = result["Descripcion Categoria"].ToString()
-                        }
-                    };
 
-                    lista.Add(aux); // Añadir el artículo a la lista
+                        articuloActual = new Articulo
+                        {
+                            Id = (int)result["Id"],
+                            Codigo = result["Codigo"].ToString(),
+                            Descripcion = result["Descripcion"].ToString(),
+                            Estado = (bool)result["Estado"],
+                            Detalle = result["Detalle"].ToString(),
+                            Tipo = new Tipo
+                            {
+                                Id = (int)result["Id Tipo"],
+                                Codigo = result["Codigo Tipo"].ToString(),
+                                Descripcion = result["Descripcion Tipo"].ToString()
+                            },
+                            Marca = new Marca
+                            {
+                                Id = (int)result["Id Marca"],
+                                Codigo = result["Codigo Marca"].ToString(),
+                                Descripcion = result["Descripcion Marca"].ToString()
+                            },
+                            Categoria = new Categoria
+                            {
+                                Id = (int)result["Id Categoria"],
+                                Codigo = result["Codigo Categoria"].ToString(),
+                                Descripcion = result["Descripcion Categoria"].ToString()
+                            },
+                            Imagen = new List<Imagen>() // Inicializamos la lista de img
+                        };
+
+                        lista.Add(articuloActual); 
+                    }
+
+                    // si hay la columna es distinto de null , cargame la imagen
+                    if (result["Id"] != DBNull.Value)
+                    {
+                        articuloActual.Imagen.Add(new Imagen
+                        {
+                            Id = (int)result["Id"],
+                            UrlImagen = result["UrlImagen"].ToString()
+                        });
+                    }
                 }
 
                 return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
+        }
+        public void EliminarImagen(int id)
+        {
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+            try
+            {
+                query.configSqlProcedure("Catalogo_SPBorrarImagen");
+                query.configSqlParams("@Id", id);
+                query.configSqlConexion(conexion.getConnection());
+                conexion.openConnection();
+
+                query.exectCommand();
 
             }
             catch (Exception ex)
@@ -292,6 +331,7 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
+        
         public void ActuaclizarPrecio(int idArt, int idColor, int idTalle, float precio)
         {
             DataAccess conexion = new DataAccess();
@@ -472,6 +512,36 @@ namespace ApplicationService
                 query.configSqlParams("@IdMarca", articulo.Marca.Id);
                 query.configSqlParams("@IdCategoria", articulo.Categoria.Id);
                 query.configSqlParams("@Detalle", articulo.Detalle);
+                // query.configSqlParams("@UrlImagen1", articulo.Imagen.Count > 0 ? articulo.Imagen[0].UrlImagen : null);
+                // query.configSqlParams("@UrlImagen2", articulo.Imagen.Count > 1 ? articulo.Imagen[1].UrlImagen : null);
+                // query.configSqlParams("@UrlImagen3", articulo.Imagen.Count > 2 ? articulo.Imagen[2].UrlImagen : null);
+               // IMG 1
+                if (articulo.Imagen.Count > 0 && !string.IsNullOrEmpty(articulo.Imagen[0].UrlImagen))
+                {
+                    query.configSqlParams("@UrlImagen1", articulo.Imagen[0].UrlImagen);
+                }
+                else
+                {
+                    query.configSqlParams("@UrlImagen1", DBNull.Value);
+                }
+                // IMG 2 
+                if (articulo.Imagen.Count > 1 && !string.IsNullOrEmpty(articulo.Imagen[1].UrlImagen))
+                {
+                    query.configSqlParams("@UrlImagen2", articulo.Imagen[1].UrlImagen);
+                }
+                else
+                {
+                    query.configSqlParams("@UrlImagen2", DBNull.Value);
+                }
+                // IMG 3
+                if (articulo.Imagen.Count > 2 && !string.IsNullOrEmpty(articulo.Imagen[2].UrlImagen))
+                {
+                    query.configSqlParams("@UrlImagen3", articulo.Imagen[2].UrlImagen);
+                }
+                else
+                {
+                    query.configSqlParams("@UrlImagen3", DBNull.Value);
+                }
 
                 query.exectCommand();
             }
@@ -504,8 +574,15 @@ namespace ApplicationService
                 query.configSqlParams("@IdMarca", articulo.Marca.Id);
                 query.configSqlParams("@IdCategoria", articulo.Categoria.Id);
                 query.configSqlParams("@Detalle", articulo.Detalle);
+                
+                //ejecutamos la consulta y obtenemos el id 
+                int idArticulo = Convert.ToInt32(query.exectScalar());
 
-                query.exectCommand();
+                //guardamos la imagenes
+                foreach (var imagen in articulo.Imagen)
+                {
+                    GuardarImagen(idArticulo,imagen.UrlImagen);
+                }
             }
             catch (Exception ex )
             {
@@ -517,6 +594,32 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
 
+        }
+        private void GuardarImagen(int idArticulo, string urlImagen)
+        {
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+
+            try
+            {
+                query.configSqlProcedure("Catalogo.InsertarImagen");
+                query.configSqlConexion(conexion.getConnection());
+                conexion.openConnection();
+
+                query.configSqlParams("@IdArticulo", idArticulo);
+                query.configSqlParams("@UrlImagen", urlImagen);
+
+                query.exectCommand();   
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
         }
         public void DeleteArticulo(int IdArticulo)
         {     

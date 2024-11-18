@@ -18,6 +18,7 @@ namespace webApp
 {
     public partial class AdminPanel : System.Web.UI.Page
     {
+        
         public bool IsEditMode
         {
             get { return ViewState["IsEditMode"] != null && (bool)ViewState["IsEditMode"]; }
@@ -36,6 +37,7 @@ namespace webApp
             {
                 if (!IsPostBack)
                 {
+                   
                     /*// Inicializa el formulario como no visible al cargar la página
                     addArticleForm.Visible = false;
                     if (Request.QueryString["id"]!= null)
@@ -126,15 +128,23 @@ namespace webApp
             txtDescripcion.Text = string.Empty;
             txtDetalle.Text = string.Empty;
 
-
             ddListType.SelectedIndex = 0;
             ddListBrand.SelectedIndex = 0;
             ddListCategory.SelectedIndex = 0;
 
+            txtImagen1.Text = string.Empty;
+            IdImagen1.ImageUrl = string.Empty;
+
+            txtImagen2.Text = string.Empty;
+            IdImagen2.ImageUrl = string.Empty;
+            
+            txtImagen3.Text = string.Empty;
+            IdImagen3.ImageUrl = string.Empty;
+
         }
         protected string GetStatusIcon(object status)
         {
-            /* // funcion para poner iconos en los status de las ventas
+             // funcion para poner iconos en los status de las ventas
             if (status == null)
                 return "~/Images/default.png";
 
@@ -143,15 +153,15 @@ namespace webApp
             switch (statusValue)
             {
                 case "completed":
-                    return "~/Images/check.png"; // URL del ícono de completado
+                    return "~/Images/check.png"; // url de completado
                 case "cancelled":
-                    return "~/Images/x.png"; // URL del ícono de cancelación
+                    return "~/Images/x.png"; //cancelado
                 case "in process":
-                    return "~/Images/circle.png"; // URL del ícono en proceso
+                    return "~/Images/circle.png"; // En proceso
                 default:
-                    return "~/Images/default.png"; // Imagen por defecto
-            }*/
-            return "~/Images/default.png";
+                    return "~/Images/default.png"; // img por defecto
+            }
+          
         }
         protected void btnAddArticle_Click(object sender, EventArgs e)
         {
@@ -159,6 +169,9 @@ namespace webApp
             MostarElentoSelecionado("div_gral_frmArt");
 
             IsEditMode = false;
+            titulo_add_frm_art.Visible = true;
+            titulo_mod_frm_art.Visible = false;
+            txtCodeArticle.Enabled = true;
 
             MarcaAS marca = new MarcaAS();
             ddListBrand.DataSource = marca.listar();
@@ -179,10 +192,6 @@ namespace webApp
             ddListType.DataBind();
 
             LimpiarFormulario();
-        }
-        protected void txtImageUrl_TextChanged(object sender, EventArgs e)
-        {
-            //imgPreview.ImageUrl = txtImageUrl.Text;
         }
         protected void btnSaveArticle_Click(object sender, EventArgs e)
         {
@@ -230,7 +239,7 @@ namespace webApp
                     throw new Exception("El detalle del articulo no puede exceder los 250 caracteres.");
                 }
 
-                // Asignar valores a las propiedades del artículo
+                // ASIGNAMOS VALORES CAPTURADOS AL ARTICULO
 
                 articulo.Codigo = txtCodeArticle.Text;
                 articulo.Descripcion = txtDescripcion.Text;
@@ -243,7 +252,26 @@ namespace webApp
                 articulo.Tipo.Id = int.Parse(ddListType.SelectedValue);
                 articulo.Categoria.Id = int.Parse(ddListCategory.SelectedValue);
 
+                // Creamos lista de imagenes para guardarlos
+                articulo.Imagen = new List<Imagen>();
+                string imagen1 = txtImagen1.Text.Trim(); // funcion trim elimina espacios en blanco
+                string imagen2 = txtImagen2.Text.Trim();
+                string imagen3 = txtImagen3.Text.Trim();
 
+                // agregamos las imagenes solo si  las url no estan vacias
+                if (!string.IsNullOrEmpty(imagen1))
+                {
+                    articulo.Imagen.Add(new Imagen { UrlImagen = imagen1 });
+                }
+                if (!string.IsNullOrEmpty(imagen2))
+                {
+                    articulo.Imagen.Add(new Imagen { UrlImagen = imagen2 });
+                }
+                if (!string.IsNullOrEmpty(imagen3))
+                {
+                    articulo.Imagen.Add(new Imagen { UrlImagen = imagen3 });
+                }
+                // depende el modo es como va a guardar
                 if (IsEditMode)
                 {
                     data.ModificarArticulo(articulo);
@@ -255,6 +283,7 @@ namespace webApp
                 labelMsj.Text = "¡Se ha agregado exitosamente!";
                 labelMsj.Visible = true;
                 LimpiarFormulario();
+                labelMsj.Visible = false;
             }
             catch (Exception ex)
             {
@@ -287,6 +316,7 @@ namespace webApp
         }
         protected void dgvArticles_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            //MODO MODIFICAR
             ArticuloAS data = new ArticuloAS();
             if (e.CommandName == "Modificar")
             {
@@ -305,7 +335,7 @@ namespace webApp
                     // Asignar el primer artículo de la lista al objeto articulo
                     Articulo articulo = listaArticulos[0];
 
-                    // Rellenar los controles con la información del artículo
+                    //pre cargarmos los datos en el formulario
 
                     txtCodeArticle.Text = articulo.Codigo;
                     
@@ -335,9 +365,51 @@ namespace webApp
                     ddListCategory.DataBind();
 
                     ddListCategory.SelectedValue = articulo.Categoria.Id.ToString();
+                    
+                    if (articulo.Imagen != null)
+                    {
+                        // Verifico si hay al menos una imagen y que no sea nula
+                        if (articulo.Imagen.Count > 0 && articulo.Imagen[0] != null)
+                        {
+                            txtImagen1.Text = articulo.Imagen[0].UrlImagen;
+                            IdImagen1.ImageUrl = articulo.Imagen[0].UrlImagen;
+                        }
+                        else
+                        {
+                            // Limpia el campo si no hay imagen
+                            txtImagen1.Text = string.Empty;
+                            IdImagen1.ImageUrl = null;
+                        }
+
+                     
+                        if (articulo.Imagen.Count > 1 && articulo.Imagen[1] != null)
+                        {
+                            txtImagen2.Text = articulo.Imagen[1].UrlImagen;
+                            IdImagen2.ImageUrl = articulo.Imagen[1].UrlImagen;
+                        }
+                        else
+                        {
+                            // Limpiar el campo si no hay imagen
+                            txtImagen2.Text = string.Empty; 
+                            IdImagen2.ImageUrl = null;
+                        }
+
+                       
+                        if (articulo.Imagen.Count > 2 && articulo.Imagen[2] != null)
+                        {
+                            txtImagen3.Text = articulo.Imagen[2].UrlImagen;
+                            IdImagen3.ImageUrl = articulo.Imagen[2].UrlImagen;
+                        }
+                        else
+                        {
+                           
+                            txtImagen3.Text = string.Empty;
+                            IdImagen3.ImageUrl = null;
+                        }
+                    }
 
 
-                    // Hacer visible el formulario para editar
+                    // Mostramos el formulario para editar
                     MostarElentoSelecionado("div_gral_frmArt");
                     titulo_add_frm_art.Visible = false;
                     titulo_mod_frm_art.Visible = true;
@@ -372,13 +444,13 @@ namespace webApp
         {
 
         }
-
         // Agregar - Modificar Tipificaciones
         private void LimpiarFormulario_Tipificacion()
         {
             ddlTipoTipific.SelectedIndex = 0;
             txtCodTipific.Text = string.Empty;
             txtDescTipific.Text = string.Empty;
+            
         }
         protected void btnAddTipific_Click(object sender, EventArgs e)
         {
@@ -442,7 +514,6 @@ namespace webApp
             labelMsj.Visible = true;
             LimpiarFormulario_Tipificacion();
         }
-
         // Ver Tipificaciones
         private void LoadTipific(int Tipific)
         {
@@ -662,7 +733,6 @@ namespace webApp
 
 
         }
-
         // Stock y Precio
         private string DescripcionArtddl(int idArt)
         {
@@ -802,7 +872,7 @@ namespace webApp
         protected void btnViewSell_Click(object sender, EventArgs e)
         {
         }
-
+        
         /* SECCION DE REPORTES*/
         protected void btnReportStockPorArticulo_Click(object sender, EventArgs e)
         {
@@ -811,6 +881,60 @@ namespace webApp
         protected void btnReportStockYPrecio_Click(object sender, EventArgs e)
         {
             Response.Redirect("wfreport_stockyprecios.aspx");
+        }
+        protected void txtImagen1_TextChanged(object sender, EventArgs e)
+        {
+            IdImagen1.ImageUrl = txtImagen1.Text;
+        }
+
+        protected void txtImagen2_TextChanged(object sender, EventArgs e)
+        {
+            IdImagen2.ImageUrl = txtImagen2.Text;
+        }
+
+        protected void txtImagen3_TextChanged(object sender, EventArgs e)
+        {
+            IdImagen3.ImageUrl = txtImagen3.Text;
+
+        }
+
+        protected void btnEliminarUrl1_Click(object sender, EventArgs e)
+        {
+            txtImagen1.Text = string.Empty;
+            IdImagen1.ImageUrl = string.Empty;
+        }
+
+        protected void btnEliminarUrl2_Click(object sender, EventArgs e)
+        {
+            txtImagen2.Text = string.Empty;
+            IdImagen2.ImageUrl = string.Empty;
+        }
+
+        protected void btnEliminarUrl3_Click(object sender, EventArgs e)
+        {
+            txtImagen3.Text = string.Empty;
+            IdImagen3.ImageUrl = string.Empty;
+        }
+
+        protected void btnSaveStatus_Click(object sender, EventArgs e)
+        {
+            // opcional si vamos a utilizar boton para actualizar estado
+        }
+
+        protected void ddlEstadoVenta_TextChanged(object sender, EventArgs e)
+        {
+            VentasAS venta = new VentasAS();
+            DropDownList estado = (DropDownList)sender;
+            // en la grilla la columna estado, obtenemos la accion
+            GridViewRow columna = (GridViewRow)estado.NamingContainer;
+            // con el value podemos actualizar la DB para el estado de esta venta
+            string value = estado.SelectedValue;
+            //obtenemos el id de la venta 
+            string ventaID = dgvSell.DataKeys[columna.RowIndex].Value.ToString();
+            // pasamos a la db para actualizar el estado de la venta 
+            venta.ActualizarEstadoVenta(ventaID, value);
+            // actualizamos la grilla 
+            dgvSell.DataBind();
         }
     }
 }

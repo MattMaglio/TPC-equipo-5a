@@ -70,6 +70,21 @@
                                 <h5 class="mt-3 font-weight-bold">Description:</h5>
                                 <asp:Label ID="lblDescription" runat="server" CssClass="text-muted"></asp:Label>
                                 <br />
+                                <br />
+                                <h6>Elegir Color</h6>
+                                <asp:DropDownList ID="ddlColor" runat="server" OnSelectedIndexChanged="ddlColor_SelectedIndexChanged" AutoPostBack="True" class="form-control"></asp:DropDownList>
+                                <br />
+                                <h6>Elegir Talle</h6>
+                                <asp:DropDownList ID="ddlTalle" runat="server" OnSelectedIndexChanged="ddlTalle_SelectedIndexChanged" AutoPostBack="True" class="form-control"></asp:DropDownList>
+                                <br />
+                                <br />
+
+                                <%--PRECIO--%>
+                                <asp:Label ID="lblPrecio" runat="server" Text="Precio: $" Font-Bold="True" Font-Size="Large"></asp:Label>
+                                <%--MODIF FIN--%>
+                                
+                                <br />
+                                <br />
                                 <a href="#" class="btn btn-secondary mt-3">Add to Cart</a>
                             </div>
 
