@@ -21,6 +21,12 @@ namespace webApp
             if (!IsPostBack)
             {
                 LoadProductDetails();
+                // Agregar la opción de "Seleccioná Color" en ddlColor
+                ddlColor.Items.Insert(0, new ListItem("Seleccioná Color", "0"));
+
+                // Agregar la opción de "Seleccioná Talle" en ddlTalle
+                ddlTalle.Items.Insert(0, new ListItem("Seleccioná Talle", "0"));
+
             }
         }
 
@@ -142,6 +148,9 @@ namespace webApp
             LoadPrecio();
         }
 
+
+        /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
         private void LoadPrecio()
         {
             int productId = Convert.ToInt32(Request.QueryString["ProductId"]);
@@ -166,22 +175,40 @@ namespace webApp
 
                     if (colorId == selectedColorId && talleId == selectedTalleId)
                     {
-                        decimal precio = (decimal)precioReader["Precio"];
+                        decimal precio = Convert.ToDecimal(precioReader["Precio"]);
                         lblPrecio.Text = "Precio: $" + precio.ToString("F2");
-                        //float precioFloat = (float)precioReader["Precio"];
-                        //lblPrecio.Text = "Precio: $" + precioFloat.ToString("F2");
-                        //float precioFloat = (float)precioReader["Precio"];
-                        //decimal precioDecimal = Convert.ToDecimal(precioFloat);
-                        //lblPrecio.Text = "Precio: $" + precioDecimal.ToString("F2");
+
+                        // Obtengo la cantidad
+                        int cantidad = Convert.ToInt32(precioReader["Cantidad"]);
+
+                        // Muestro u oculto segun al cantidad
+                        if (cantidad > 0)
+                        {
+                            // Si hay stock, muestro el precio y la cantidad
+                            lblPrecio.Visible = true;
+                            lblStock.Visible = true;
+                            lblStock.Text = "Cantidad disponible: " + cantidad.ToString();
+                            lblNoStock.Visible = false; 
+                        }
+                        else
+                        {
+                            // Si no hay stock, muestro el mensaje de SIN STOCK
+                            lblPrecio.Visible = false;
+                            lblStock.Visible = false;
+                            lblNoStock.Visible = true;
+                        }
 
                         precioEncontrado = true;
                         break;
                     }
                 }
 
+                // Si no encontré precio o stock pongo SIN STOCK
                 if (!precioEncontrado)
                 {
-                    lblPrecio.Text = "Precio no disponible para esta combinación.";
+                    lblPrecio.Visible = false;
+                    lblStock.Visible = false;
+                    lblNoStock.Visible = true;
                 }
 
                 dataAccess.closeConnection();
@@ -193,6 +220,8 @@ namespace webApp
         }
 
 
+
+        
         protected void btnAgregarACarrito_Click(object sender, EventArgs e)
         {
             if (Session["usuario"] != null)

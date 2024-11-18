@@ -115,7 +115,6 @@
                                 <textarea id="message" rows="4" name="message" required></textarea>
                                 
                                 <input type="submit" value="Enviar">
-
                             </form>
                         </div>
                     </div>    
@@ -135,7 +134,6 @@
                             <div class="subscribing">
                                 <label class="checkbox-title">
                                     <input type="checkbox" name="subscribe" value="bank" id="transfer"> Al suscribirte a nuestro boletín, aceptas recibir correos electrónicos de nuestra parte. 
-
                                 </label>
                             </div>
                         </div>
@@ -146,7 +144,7 @@
     </div>  
 </div>
 
-  
+
 
 
     

@@ -11,15 +11,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
 
-    <style>   
+   
+
+
+    <style>
         .content-container {
             margin-top: 15px;
         }
+
         @media (max-width: 768px) {
             .content-container {
                 margin-top: 140px;
             }
         }
+
         html, body {
             height: 100%;
             width: 100%;
@@ -29,6 +34,7 @@
             display: flex;
             flex-direction: column;
         }
+
         body {
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-size: 14px;
@@ -36,12 +42,14 @@
             color: #333;
             background-color: #fff;
         }
+
         footer {
             margin-top: auto;
             background-color: #000;
             color: #fff;
             padding: 20px 0;
         }
+
         .header-top-area .dropdown.show .dropdown-menu {
             display: block;
             opacity: 1;
@@ -51,37 +59,32 @@
         .header-top-area {
             background-color: #000;
             color: #fff;
-            padding: 5px 20px;
-            white-space: nowrap; 
-            text-align:right;
-            width:100%;
-
         }
 
-        .header-top-area a {
+            .header-top-area a {
                 color: #fff;
                 text-decoration: none;
-        }
+            }
 
-        .header-top-area .dropdown-menu {
+            .header-top-area .dropdown-menu {
                 background-color: #333;
                 display: none;
                 opacity: 0;
                 transition: opacity 0.2s ease, transform 0.2s ease;
                 transform: translateY(-10px);
-        }
+            }
 
-        .header-top-area .dropdown-item {
+            .header-top-area .dropdown-item {
                 color: #fff;
+            }
 
-        }
-        .header-top-area .dropdown-item:hover {
+                .header-top-area .dropdown-item:hover {
                     background-color: #444;
-        }
+                }
 
-        .header-top-area .list-inline-item:hover {
+            .header-top-area .list-inline-item:hover {
                 background-color: #444;
-        }
+            }
 
         .main-header-area {
             background-color: #f7f7f7;
@@ -93,38 +96,33 @@
             padding: 10px 15px;
         }
 
-        .navbar-nav .nav-link:hover {
+            .navbar-nav .nav-link:hover {
                 background-color: #e0e0e0;
                 border-radius: 5px;
-        }
+            }
 
         .search-box {
             display: flex;
             align-items: center;
-
         }
 
-        .search-box input {
+            .search-box input {
                 border-radius: 5px 0 0 5px;
                 border: 1px solid #ccc;
                 padding: 10px;
                 width: 80%;
-        }
+            }
 
-        .search-box button {
+            .search-box button {
                 border-radius: 0 5px 5px 0;
                 border: 1px solid #ccc;
                 background-color: #e0e0e0;
                 padding: 10px 15px;
-        }
-        .search-box button:hover {
+            }
+
+                .search-box button:hover {
                     background-color: #d0d0d0;
-        }
-        .col-md-6 text-right{
-           display:flex;
-           text-align:right
-        }
-        
+                }
     </style>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -180,7 +178,7 @@
                         <div class="col-lg-2 col-md-3 col-sm-6">
                             <div class="logo">
                                 <a href="Default.aspx" style="display: flex; align-items: center; text-decoration: none; color: #333;">
-                                    <img width="40" height="48" class="img-fluid" src="https://img.icons8.com/badges/48/shop-arrow.png" alt="xEcommerce" />
+                                    <img width="48" height="48" class="img-fluid" src="https://img.icons8.com/badges/48/shop-arrow.png" alt="xEcommerce" />
                                     <span style="margin-left: 10px; font-size: 20px; font-weight: bold;">xEcommerce</span>
                                 </a>
                             </div>
@@ -202,6 +200,9 @@
                                         <li class="nav-item"><a class="nav-link" href="Contact.aspx">Contacto</a></li>
                                         <li class="nav-item">
                                             <asp:Literal ID="litAdminPanel" runat="server" Text="<a class='nav-link' href='AdminPanel.aspx'>Panel de Administrador</a>" Visible="false" /></li>
+
+
+
 
                                     </ul>
                                 </div>
@@ -249,7 +250,6 @@
         <!-- FIN DE AREA DE PLACE HOLDER (Resto de aspx de la app) -->
 
         <!-- INICIO DE AREA DE FOOTER -->
-
         <footer style="background-color: #000; color: #fff; padding: 40px 0;">
 
             <!-- Area principal -->
@@ -297,61 +297,22 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-        <!--  redes sociales -->
-        <div>
-            <h5>Redes sociales</h5>
-            <ul style="list-style-type: none; padding: 0; display: flex; gap: 15px;">
-                <li>
-                    <a href="https://www.facebook.com" style="color: #fff;">
-                        <img width="50" height="50" src="https://img.icons8.com/color/50/facebook.png" alt="Facebook" />
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.twitter.com" style="color: #fff;">
-                        <img width="50" height="50" src="https://img.icons8.com/color/50/twitter.png" alt="Twitter" />
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.instagram.com" style="color: #fff;">
-                        <img width="50" height="50" src="https://img.icons8.com/color/50/instagram-new.png" alt="Instagram" />
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <!--  Info adicional -->
-        <div>
-            <h5>Información</h5>
-            <ul style="list-style-type: none; padding: 0; color: #fff;">
-                <li><a href="#" style="color: #fff;">Política de Privacidad</a></li>
-                <li><a href="#" style="color: #fff;">Términos de Servicio</a></li>
-                <li><a href="#" style="color: #fff;">Envíos y Devoluciones</a></li>
-                <li><a href="#" style="color: #fff;">Preguntas Frecuentes</a></li>
-            </ul>
-        </div>
 
-        <!-- Columna 4: Datos de contacto -->
-        <div>
-            <h5>Contacto</h5>
-            <p>info@xecommerce.com</p>
-            <p>+123 456 7890</p>
-        </div>
-    </div>
-
-    <!-- Área secundaria -->
-    <div style="background-color: #222; padding: 10px 0;">
-        <div class="container">
-            <div style="text-align:center; width:100%; display: flex; justify-content: center; align-items: center;">
-                <p style="color: #fff; margin: 0;">2024 ® Equipo 5a</p>
+            <!-- Area Sec con el nombre del equipo -->
+            <div style="background-color: #222; padding: 10px 0;">
+                <div class="container">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0;">
+                        <div style="flex-grow: 1; text-align: center;">
+                            <p style="color: #fff; margin: 0;">2024 ® Equipo 5a</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
         </footer>
         <!-- FIN DE AREA DE FOOTER -->
-
+         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -87,6 +87,15 @@ namespace webApp
         protected global::System.Web.UI.WebControls.DropDownList ddlTalle;
 
         /// <summary>
+        /// lblStock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStock;
+
+        /// <summary>
         /// lblPrecio control.
         /// </summary>
         /// <remarks>
@@ -94,6 +103,15 @@ namespace webApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPrecio;
+
+        /// <summary>
+        /// lblNoStock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNoStock;
 
         /// <summary>
         /// btnAgregarACarrito control.
