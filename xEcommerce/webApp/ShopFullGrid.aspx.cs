@@ -28,7 +28,7 @@ namespace webApp
                 ddlCategoria.DataBind();
 
                 // Agregoopción "Selecciona una categoría" al principio
-                ddlCategoria.Items.Insert(0, new ListItem("Select the category", ""));
+                ddlCategoria.Items.Insert(0, new ListItem("...", ""));
 
                 MarcaAS MarcAS = new MarcaAS();
                 List<Marca> listMarcas = MarcAS.listar();
@@ -39,7 +39,7 @@ namespace webApp
                 ddlMarca.DataBind();
 
                 // Agregoopción "Selecciona una marcaprincipio
-                ddlMarca.Items.Insert(0, new ListItem("Select the brand", ""));
+                ddlMarca.Items.Insert(0, new ListItem("...", ""));
 
                 TipoAS TipAS = new TipoAS();
                 List<Tipo> listTipos = TipAS.listar();
@@ -50,7 +50,7 @@ namespace webApp
                 ddlTipo.DataBind();
 
                 // Agrego opción "Selecciona un tipo al principio"
-                ddlTipo.Items.Insert(0, new ListItem("Select the type", ""));
+                ddlTipo.Items.Insert(0, new ListItem("...", ""));
 
                 CargarProductos();
             }

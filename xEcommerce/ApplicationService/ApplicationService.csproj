@@ -85,6 +85,7 @@
     <Compile Include="TallesAS.cs" />
     <Compile Include="TipificacionAS.cs" />
     <Compile Include="TipoAS.cs" />
+    <Compile Include="UsuarioAS.cs" />
     <Compile Include="VentasAS.cs" />
   </ItemGroup>
   <ItemGroup>

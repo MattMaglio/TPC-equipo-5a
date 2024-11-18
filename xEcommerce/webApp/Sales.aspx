@@ -404,53 +404,38 @@
             <button class="btnApply">Aplicar</button>
         </div>
 
-       
-    <!-- Columna Izquierda: Datos de envío -->
-    <div class="fomr-datosEnvio">
-    <!-- Columna Izquierda: Datos de envío -->
-    <div class="columna-envio">
-        <h4 class="titulo-seccion">Datos de envío</h4> <!-- Subtítulo en negrita -->
-        <div class="form-group">
-            <label for="nombre">Nombre</label>
-             
-            <asp:TextBox runat="server" ID="txtNombre" />
-        </div>
-        <div class="form-group">
-            <label for="apellido" style="color:black;">Apellido</label>
-            
-            <asp:TextBox runat="server" ID="txtApellido"   />
-        </div>
-        <div class="form-group">
-            <label for="direccion">Direccion</label>
-            <asp:TextBox runat="server" ID="txtDireccion" />
-        </div>
-        <div class="form-group">
-            <label for="telefono">Telefono</label>
-            <asp:TextBox runat="server" ID="txtNroTelefono" TextMode="Number"  />
-        </div>
-        <div class="form-group">
-            <label for="numeroEnvio">Codigo postal</label>
-            <asp:TextBox runat="server" ID="txtCcp" TextMode="Number" />
-        </div>
+        <!-- BOTON PARA PROCESAR COMPRA --- DISPARA PEDIDO DE DATOS PERSONALES -->
+            <div class="mt-4 text-center">
+        <button class="bn5">Confirmar pedido</button>
+        <button class="bn6">Cancelar</button>
     </div>
 
-    <!-- Columna Derecha: Resumen de Gastos -->
-    <div class="columna-gastos">
-        <h4 class="titulo-seccion-resaltado">Resumen de gastos</h4> <!-- Subtítulo en negrita y resaltado -->
-        <div class="form-group">
-            <asp:Label Text="Subtotal" style="font-size: 15px;" runat="server" />
-           
-            <asp:TextBox runat="server" ID="txtSubtotal"  />
-        </div>
-        <div class="form-group">
-            <asp:Label Text="Iva 21%" style="font-size: 15px;" runat="server" />
-            
-            <asp:TextBox runat="server" ID="txtIva"  />
-        </div>
-        <div class="form-group">
-            <asp:Label Text="Descuento" style="font-size: 15px;" runat="server" />
-           
-            <asp:TextBox runat="server" ID="txtDescuntos"  />
+
+
+        <%--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
+
+        <!-- Sección de Datos de Envío -->
+        <div class="section-title">Shipping Data</div>
+        <form>
+            <div class="form-group">
+                <label for="nombre">Name</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Name" required>
+            </div>
+           <div class="form-group">
+         <label for="nombre">Last name</label>
+         <input type="text" class="form-control" id="txtLastName" placeholder="Last Name" required>
+            </div>
+            <div class="form-group">
+                <label for="Address">Address</label>
+                <input type="text" class="form-control" id="direccion" placeholder="Address" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Phone</label>
+                <input type="tel" class="form-control" id="telefono" placeholder="Contact phone" required>
+            </div>
+            <div class="form-group">
+                <label for="numeroEnvio">Zip Code</label>
+                <input type="text" class="form-control" id="numeroEnvio" placeholder="Zip code" required>
             </div>
         <div class="form-group">
             <asp:Label Text="Total:" style="font-size: 15px;" runat="server" />
@@ -460,6 +445,8 @@
     </div>
 </div>
 
+
+        <%--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
 
         <!-- Sección de Métodos de Pago -->
         <div class="section-title">Metodos de pago</div>
@@ -481,8 +468,11 @@
             </div>
         </form>
 
+     <%--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
+
         <!-- Sección metodo de envio -->
         <div class="section-title">Metodo de envio</div>
+
         <form>
             <div class="form-check">
                 <asp:RadioButton Text="Correo argentino" ID="radiobtnCorreo" Checked="true"  runat="server" />
@@ -493,6 +483,8 @@
                 
             </div>
         </form>
+
+        <%--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
 
         <!-- Botón de Confirmar Compra -->
         <div class="mt-4 text-center">

@@ -11,7 +11,11 @@ namespace webApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["usuario"] == null) //si no hay usuario cargado en sesión debe loguearse para seguir
+            {
+                Session.Add("error", "Ingresá a tu cuenta para continuar");
+                Response.Redirect("Login.aspx", false);
+            }
         }
     }
 }

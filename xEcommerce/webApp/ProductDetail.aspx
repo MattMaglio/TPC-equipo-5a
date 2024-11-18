@@ -6,6 +6,11 @@
 
    
       <style>
+
+        .mt-5, .my-5 {
+    margin-top: 0.1rem !important;
+}
+
         .decorative-border {
             border: 5px solid black; 
             border-radius: 10px; 
@@ -45,7 +50,7 @@
     <br />
 
     <div class="container mt-5">
-        <h1 class="text-center">Product Details</h1>
+        <h1 class="text-center">Detalles del Producto</h1>
         <br />
 
         <div class="row justify-content-center">
@@ -61,13 +66,13 @@
                                 <asp:Label ID="lblProductName" runat="server" CssClass="card-title display-4 font-weight-bold"></asp:Label>
                                 <br />
                                 <br />
-                                <p class="font-weight-bold"><strong>Brand:</strong>
+                                <p class="font-weight-bold"><strong>Marca:</strong>
                                     <asp:Label ID="lblBrand" runat="server" CssClass="font-italic"></asp:Label></p>
-                                <p class="font-weight-bold"><strong>Category:</strong>
+                                <p class="font-weight-bold"><strong>Categoría:</strong>
                                     <asp:Label ID="lblCategory" runat="server" CssClass="font-italic"></asp:Label></p>
-                                <p class="font-weight-bold"><strong>Type:</strong>
+                                <p class="font-weight-bold"><strong>Tipo:</strong>
                                     <asp:Label ID="lblType" runat="server" CssClass="font-italic"></asp:Label></p>
-                                <h5 class="mt-3 font-weight-bold">Description:</h5>
+                                <h5 class="mt-3 font-weight-bold">Descripción:</h5>
                                 <asp:Label ID="lblDescription" runat="server" CssClass="text-muted"></asp:Label>
                                 <br />
                                 <br />
@@ -85,7 +90,8 @@
                                 
                                 <br />
                                 <br />
-                                <a href="#" class="btn btn-secondary mt-3">Add to Cart</a>
+                                <asp:Button ID="btnAgregarACarrito" class="btn btn-secondary mt-3" runat="server" OnClick="btnAgregarACarrito_Click" Text="Agregar al carrito" />
+                                
                             </div>
 
                         </div>
@@ -95,7 +101,7 @@
         </div>
 
         <div class="text-center mt-4">
-            <a href="ShopFullGrid.aspx" class="btn btn-light">Back to Product List</a>
+            <a href="ShopFullGrid.aspx" class="btn btn-light">Volver</a>
         </div>
         <br />
     </div>

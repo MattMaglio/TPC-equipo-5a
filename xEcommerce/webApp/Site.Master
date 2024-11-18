@@ -9,11 +9,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-   
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
 
     <style>   
         .content-container {
-            margin-top: 120px;
+            margin-top: 15px;
         }
         @media (max-width: 768px) {
             .content-container {
@@ -130,31 +130,49 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-   
+
     <form id="form1" runat="server">
-        
+
         <!-- INICIO DE AREA DE HEADER -->
         <header class="header-area">
 
-            <!-- Area de logeo -->
+            <!-- Area de logueo -->
             <div class="header-top-area py-2">
                 <div class="container">
                     <div class="row justify-content-between">
                         <div class="col-md-6 d-none d-md-block">
                         </div>
                         <div class="col-md-6 text-right">
-                            <ul class="list-inline mb-0 d-flex justify-content-end align-items-center">
-                                <li class="list-inline-item"><a href="MyAccount.aspx">Mi cuenta</a></li>
-                                <li class="list-inline-item"><a href="Login.aspx">Ingresar</a></li>
+                            <ul class="list-inline mb-0">
+
                                 <li class="list-inline-item">
-                                    <a href="Sales.aspx"><i class="fas fa-shopping-cart"></i></a>
+                                    <asp:Literal ID="litUserGreeting" runat="server" Visible="false"></asp:Literal>
                                 </li>
+
+                                <li class="list-inline-item">
+                                    <li class="list-inline-item">
+                                        <asp:Literal ID="litMiCuenta" runat="server" Text="<a href='MyAccount.aspx'>Mi cuenta</a>" Visible="false" /></li>
+                                    <li class="list-inline-item">
+                                        <!-- LinkButton con el ícono de ingreso -->
+                                        <asp:Literal ID="litLogin" runat="server" Text="<a href='Login.aspx'><i class='fas fa-sign-in-alt'></i> Ingresar</a>" Visible="false" />
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <asp:Literal ID="litCarrito" runat="server" Text="<a href='Sales.aspx'><i class='fas fa-shopping-cart'></i></a>" Visible="false" />
+                                    </li>
+
+                                    <!-- LinkButton con ícono de salida -->
+                                    <asp:LinkButton ID="lnkSalir" runat="server" Text="Salir" OnClick="lnkSalir_Click" Visible="false">
+                                     <i class="fas fa-sign-out-alt"></i> Salir
+                                     </asp:LinkButton>
+                                </li>
+
+
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="main-header-area py-3">
                 <div class="container">
                     <div class="row align-items-center">
@@ -177,13 +195,13 @@
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbarNav">
                                     <ul class="navbar-nav">
-                                        <li class="nav-item"><a class="nav-link" href="Default.aspx">Inicio</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="ShopFullGrid.aspx">Productos</a></li>
-                                        
-                                        <li class="nav-item"><a class="nav-link" href="AboutUS.aspx">Sobre nosotros</a></li>
+<%--                                        <li class="nav-item"><a class="nav-link" href="Default.aspx">Inicio</a></li>--%>
+                                        <li class="nav-item"><a class="nav-link" href="ShopFullGrid.aspx">Artículos</a></li>
+
+                                        <li class="nav-item"><a class="nav-link" href="AboutUS.aspx">Nosotros</a></li>
                                         <li class="nav-item"><a class="nav-link" href="Contact.aspx">Contacto</a></li>
-                                        
-                                        <li class="nav-item"><a class="nav-link" href="AdminPanel.aspx">Admin Panel</a></li>
+                                        <li class="nav-item">
+                                            <asp:Literal ID="litAdminPanel" runat="server" Text="<a class='nav-link' href='AdminPanel.aspx'>Panel de Administrador</a>" Visible="false" /></li>
 
                                     </ul>
                                 </div>
@@ -206,11 +224,14 @@
                         </button>
                         <div class="collapse navbar-collapse" id="mobileMenu">
                             <ul class="navbar-nav">
-                                <li class="nav-item"><a class="nav-link" href="Default.aspx">Home</a></li>
-                                <li class="nav-item"><a class="nav-link" href="ShopFullGrid.aspx">Products</a></li>
-                                
-                                <li class="nav-item"><a class="nav-link" href="AboutUs.aspx">About us</a></li>
-                                <li class="nav-item"><a class="nav-link" href="Contact.aspx">Contact</a></li>
+<%--                                <li class="nav-item"><a class="nav-link" href="Default.aspx">Inicio</a></li>--%>
+                                <li class="nav-item"><a class="nav-link" href="ShopFullGrid.aspx">Artículos</a></li>
+
+                                <li class="nav-item"><a class="nav-link" href="AboutUs.aspx">Nosotros</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Contact.aspx">Contacto</a></li>
+                                <li class="nav-item">
+                                    <asp:Literal ID="Literal1" runat="server" Text="<a class='nav-link' href='AdminPanel.aspx'>Panel de Administrador</a>" Visible="false" /></li>
+
 
                             </ul>
                         </div>
@@ -219,7 +240,7 @@
             </div>
         </header>
         <!-- FIN DE AREA DE HEADER -->
-        
+
         <!-- INICIO DE AREA DE PLACE HOLDER (Resto de aspx de la app) -->
         <div class="content-container">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
@@ -228,14 +249,55 @@
         <!-- FIN DE AREA DE PLACE HOLDER (Resto de aspx de la app) -->
 
         <!-- INICIO DE AREA DE FOOTER -->
-<footer style="background-color: #000; color: #fff; padding: 40px 0;">
-    <div class="container" style="padding: 20px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
-        
-        <!-- Logo y nombre de la marca -->
-        <div>
-            <div>
-                <img src="https://img.icons8.com/badges/48/shop-arrow.png" alt="xEcommerce" width="48" height="48" />
-                <span style="margin-left: 10px; font-size: 24px; font-weight: bold;">xEcommerce</span>
+
+        <footer style="background-color: #000; color: #fff; padding: 40px 0;">
+
+            <!-- Area principal -->
+            <div style="padding: 20px 0;">
+                <div class="container">
+                    <div style="display: flex;">
+                        <!-- Logo y nombre del comercio-->
+                        <div style="flex: 1; margin-right: 20px;">
+                            <div>
+                                <img src="https://img.icons8.com/badges/48/shop-arrow.png" alt="xEcommerce" width="48" height="48" />
+                                <span style="margin-left: 10px; font-size: 24px; font-weight: bold;">xEcommerce</span>
+                            </div>
+                        </div>
+
+                        <div style="flex: 1;">
+                            <!-- Link de RS -->
+                            <h5>Redes sociales</h5>
+                            <ul style="list-style-type: none; padding: 0; display: flex; gap: 15px;">
+                                <li>
+                                    <a href="https://www.facebook.com" style="color: #fff;">
+                                        <img width="50" height="50" src="https://img.icons8.com/color/50/facebook.png" alt="Facebook" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.twitter.com" style="color: #fff;">
+                                        <img width="50" height="50" src="https://img.icons8.com/color/50/twitter.png" alt="Twitter" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.google-plus.com" style="color: #fff;">
+                                        <img width="50" height="50" src="https://img.icons8.com/color/50/google-plus.png" alt="Google Plus" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com" style="color: #fff;">
+                                        <img width="50" height="50" src="https://img.icons8.com/color/50/instagram-new.png" alt="Instagram" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.pinterest.com" style="color: #fff;">
+                                        <img width="50" height="50" src="https://img.icons8.com/color/50/pinterest.png" alt="Pinterest" />
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <!--  redes sociales -->
@@ -287,8 +349,7 @@
         </div>
     </div>
 
-</footer>
-
+        </footer>
         <!-- FIN DE AREA DE FOOTER -->
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -296,7 +357,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     </form>
 </body>
 </html>
