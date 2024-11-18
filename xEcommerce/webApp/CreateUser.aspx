@@ -34,14 +34,14 @@
             <div class="col-md-6" style="padding-left: 65px;">
                 <div class="mb-3">
                     <label for="txtUser" class="form-label">Usuario</label>
-                    <asp:TextBox runat="server" ID="txtUser" CssClass="form-control" placeholder="Usuario" Style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
+                    <asp:TextBox runat="server" ID="txtUser" CssClass="form-control" autocomplete="off" placeholder="Usuario" Style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
                 </div>
                 <asp:Label ID="lblUserNoValido" runat="server" ForeColor="Red"></asp:Label>
 
                 <%--CONTRASEÑA--%>
                 <div class="mb-3">
                     <label for="txtPassword" class="form-label">Contraseña</label>
-                    <asp:TextBox runat="server" ID="txtPassword" CssClass="form-control" placeholder="Contraseña" TextMode="Password" Style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
+                    <asp:TextBox runat="server" ID="txtPassword" CssClass="form-control" autocomplete="off"  placeholder="Contraseña" TextMode="Password" Style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
                 </div>
                 <asp:Label ID="lblPasswordError" runat="server" ForeColor="Red"></asp:Label>
 
@@ -58,7 +58,7 @@
                 <div class="contenedor mb-3 d-flex justify-content-center">
                     <asp:Button ID="btnRegister" runat="server" CssClass="btn btn-outline-secondary" OnCLick="btnRegister_Click" Text="Crear cuenta" />
                     <asp:Button ID="btnCancelRegistrar" runat="server" CssClass="btn btn-secondary" OnClick="btnCancelRegistrar_Click" Text="Cancelar" />
-                    <asp:Button ID="btnRegistrar" runat="server" CssClass="btn btn-dark" Text="No usar" />
+                    <%--<asp:Button ID="btnRegistrar" runat="server" CssClass="btn btn-dark" Text="No usar" />--%>
                     
                 </div>
 

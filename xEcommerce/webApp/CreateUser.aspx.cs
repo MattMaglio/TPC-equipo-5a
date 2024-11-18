@@ -14,7 +14,14 @@ namespace webApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+               
+                //valores iniciales vacíos
+                txtUser.Text = string.Empty;
+                txtPassword.Text = string.Empty;
+                txtConfirmoPassword.Text = string.Empty;
+            }
         }
 
         protected void btnCancelRegistrar_Click(object sender, EventArgs e)

@@ -178,7 +178,7 @@
 
     <div class="container light-style flex-grow-1 container-p-y">
 
-        <h4 class="font-weight-bold py-3 mb-4">Account settings
+        <h4 class="font-weight-bold py-3 mb-4">Mi Cuenta
         </h4>
 
         <div class="card overflow-hidden">
@@ -214,7 +214,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label class="form-label">Nombre de usuario</label>
-                                    <input type="text" class="form-control mb-1" value="GolfEnthusiast">
+                                    <input type="text" class="form-control mb-1" value="Usuario23">
                                 </div>
                                 <%--<div class="form-group">
                                     <label class="form-label">Name</label>
@@ -226,7 +226,7 @@
                                 </div>--%>
                                 <div class="form-group">
                                     <label class="form-label">E-mail</label>
-                                    <input type="text" class="form-control mb-1" value="jmiller@mail.com">
+                                    <input type="text" class="form-control mb-1" value="usuario23@mail.com">
                                 </div>
                                 <%-- <div class="form-group">
                                     <label class="form-label">Company</label>
@@ -410,7 +410,7 @@
 
         <div class="text-right mt-3">
             
-      <<asp:Button ID="btnVolver" runat="server" Text="Volver a Inicio" OnClick="btnVolver_Click" class="btn btn-secondary"/>
+      <asp:Button ID="btnVolver" runat="server" Text="Volver a Inicio" OnClick="btnVolver_Click" class="btn btn-secondary"/>
         </div>
         <br />
         <br />
