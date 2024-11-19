@@ -298,3 +298,18 @@ BEGIN
     END CATCH
 END;
 GO
+
+
+/*Tabla Usuarios*/
+CREATE TABLE [Catalogo].[Usuarios] (
+    [Id] INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+    [Usuario] VARCHAR(50) NOT NULL,
+    [email] VARCHAR(50) NOT NULL,
+    [Pass] VARCHAR(50) NOT NULL,
+    [nombre] VARCHAR(50) NULL,
+    [apellido] VARCHAR(50) NULL,
+	[dni] VARCHAR (10) NULL,
+    [TipoUser] INT NOT NULL,
+    [Estado] BIT NOT NULL
+);
+GO
