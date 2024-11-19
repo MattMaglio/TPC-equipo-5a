@@ -295,27 +295,7 @@
                         <div class="accordion-body">
                             <ul class="list-group">
                                 <li class="list-group-item">
-                                    <asp:Button Text="View sales" CssClass="btn btn-dark w-100" ID="btnViewSell" OnClick="btnViewSell_Click" runat="server" />
-                                    <!-- GRID PARA MOSTRAR LAS VENTAS -->
-                                    <asp:GridView ID="dgvSell" runat="server" CssClass="table table-bordered mt-4" Visible="false">
-                                        <Columns>
-                                            <asp:BoundField DataField="SellID" HeaderText="ID Venta" />
-                                            <asp:BoundField DataField="User" HeaderText="Usuario" />
-                                            <asp:BoundField DataField="Date" HeaderText="Fecha" />
-                                            <asp:BoundField DataField="Total" HeaderText="Total" />
-                                            <asp:TemplateField HeaderText="Status">
-                                                <ItemTemplate>
-                                                    <asp:Image ID="imgStatus" runat="server" Width="20" Height="20" ImageUrl='<%# GetStatusIcon(Eval("Status")) %>' />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                        </Columns>
-                                    </asp:GridView>
-                                </li>
-                                <li class="list-group-item">
-                                    <a href="modificarCliente.aspx" class="btn btn-dark w-100">Cancelados</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a href="eliminarCliente.aspx" class="btn btn-dark w-100">Exitosos</a>
+                                    <asp:Button Text="Grilla de ventas" CssClass="btn btn-dark w-100" ID="btnViewSell" OnClick="btnViewSell_Click" runat="server" />
                                 </li>
                             </ul>
                         </div>
@@ -354,13 +334,13 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="successModalLabel">Welcome Aboard!</h5>
+                        <h5 class="modal-title" id="successModalLabel">¡Bienvenido!</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        You're Now Registered!
+                        ¡Ya estas registrado!
                
                     </div>
                     <div class="modal-footer">
@@ -397,19 +377,62 @@
 
                     <!-- DROP DOWN LIST CATEGORIA -->
                     <asp:DropDownList ID="ddListCategory" runat="server" CssClass="form-control"></asp:DropDownList>
-                    <asp:UpdatePanel runat="server">
-                        <ContentTemplate>
-                            <asp:TextBox runat="server" PlaceHolder="Url Imagen1" ID="txtImagen1" CssClass="form-control"
-                                AutoPostBack="true" OnTextChanged="txtImagen1_TextChanged" />
-                            <asp:Image ImageUrl="https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp" Width="25%" ID="IdImagen1" runat="server" />
-                             <asp:TextBox runat="server" PlaceHolder="Url Imagen2" ID="txtImagen2" CssClass="form-control"
-                                 AutoPostBack="true" OnTextChanged="txtImagen1_TextChanged" />
-                             <asp:Image ImageUrl="https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp" Width="25%" ID="IdImagen2" runat="server" />
-                             <asp:TextBox runat="server" PlaceHolder="Url Imagen3" ID="txtImagen3" CssClass="form-control"
-                             AutoPostBack="true" OnTextChanged="txtImagen1_TextChanged" />
-                         <asp:Image ImageUrl="https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary-800x450.webp" Width="25%" ID="IdImagen3" runat="server" />
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
+                  
+  <asp:UpdatePanel ID="UpdatePanelImagenes" runat="server">
+    <ContentTemplate>
+        <div class="image-item">
+            <!-- Imagen 1 -->
+            <asp:Image ID="IdImagen1" runat="server" 
+                       ImageUrl='<%# Eval("UrlImagen") %>' 
+                       Width="25%" />
+            
+            <!-- Campo de texto para modificar la URL de la imagen -->
+            <asp:TextBox ID="txtImagen1" runat="server" CssClass="form-control"
+                         Text='<%# Eval("UrlImagen") %>' 
+                         Placeholder="URL Imagen" AutoPostBack="true" OnTextChanged="txtImagen1_TextChanged"
+                         />
+
+            <!-- Botón de Eliminar -->
+            <asp:Button ID="btnEliminarUrl1" runat="server" 
+                        Text="Limpiar url" CssClass="btn btn-danger" 
+                        OnClick="btnEliminarUrl1_Click" />
+        </div>
+
+        <div class="image-item">
+            <!-- Imagen 2 -->
+            <asp:Image ID="IdImagen2" runat="server" 
+                       ImageUrl='<%# Eval("UrlImagen") %>' 
+                       Width="25%" />
+            
+            <!-- Campo de texto para modificar la URL de la imagen -->
+            <asp:TextBox ID="txtImagen2" runat="server" CssClass="form-control"
+                         Text='<%# Eval("UrlImagen") %>' 
+                         Placeholder="URL Imagen" AutoPostBack="true" OnTextChanged="txtImagen2_TextChanged"
+                         />
+            <!-- Botón de Eliminar -->
+            <asp:Button ID="btnEliminarUrl2" runat="server" 
+                        Text="Limpiar url" CssClass="btn btn-danger" 
+                         OnClick="btnEliminarUrl2_Click" />
+        </div>
+
+        <div class="image-item">
+            <!-- Imagen 3 -->
+            <asp:Image ID="IdImagen3" runat="server" 
+                       ImageUrl='<%# Eval("UrlImagen") %>' 
+                       Width="25%" />
+            <!-- Campo de texto para modificar la URL de la imagen -->
+            <asp:TextBox ID="txtImagen3" runat="server" CssClass="form-control"
+                         Text='<%# Eval("UrlImagen") %>' 
+                         Placeholder="URL Imagen" AutoPostBack="true" OnTextChanged="txtImagen3_TextChanged"
+                         />
+            <!-- Botón de Eliminar -->
+            <asp:Button ID="btnEliminarUrl3" runat="server" 
+                        Text="Limpiar url" CssClass="btn btn-danger" 
+                        OnClick="btnEliminarUrl3_Click" />
+        </div>
+    </ContentTemplate>
+</asp:UpdatePanel>
+
                     <asp:Button ID="btnSaveArticle" runat="server" CssClass="bn5" OnClick="btnSaveArticle_Click" Text="Guardar articulo" />
                     <a type="button" class="bn5" href="AdminPanel.aspx">Cancelar</a>
 
@@ -433,7 +456,7 @@
 
                 <div>
                       <!-- Grilla de articulos -->
-                <asp:GridView ID="dgvArticles" runat="server" CssClass="table table-bordered mt-4" DataKeyNames="Id" AutoGenerateColumns="False"
+                <asp:GridView ID="dgvArticles" runat="server" CssClass="table table-dark table-striped-columns" DataKeyNames="Id" AutoGenerateColumns="False"
                     OnRowDeleting="dgvArticles_RowDeleting" OnRowCommand="dgvArticles_RowCommand" OnRowUpdating="dgvArticles_RowUpdating" 
                     AllowPaging="True" OnPageIndexChanging="dgvArticles_PageIndexChanging" PageSize="5">
                     <Columns>
@@ -470,9 +493,10 @@
                 </asp:GridView>
                 </div>
             </div>
+           
 
             <!-- Alta y Modificacion de Tipificaciones (Ok)-->
-            <div class="form-tipific" id="div_gral_frmTip" runat="server" visible="false">
+            <div class="form-tipific" id="div_gral_frmTip"  runat="server" visible="false">
                 <div class="mt-3">
                     <div id="titulo_add_frm_tip" runat="server" visible="true">
                         <h4>Agregar nueva tipificacion</h4>
@@ -505,8 +529,8 @@
                 <asp:Button ID="btnTipificColor" CssClass="btn btn-primary" OnClick="btnTipificColor_Click" runat="server" Text="Color"/>
                 <asp:Button ID="btnTipificTalle" CssClass="btn btn-primary" OnClick="btnTipificTalle_Click" runat="server" Text="Talle"/>
                 
-                <asp:GridView ID="dgvTipific" runat="server" CssClass="table table-bordered mt-4" DataKeyNames="Id" AutoGenerateColumns="False"
-                    OnRowDeleting="dgvTipific_RowDeleting" OnRowCommand="dgvTipific_RowCommand">
+                <asp:GridView ID="dgvTipific" runat="server" CssClass="table table-dark table-striped-columns" DataKeyNames="Id" AutoGenerateColumns="False"
+                        OnRowDeleting="dgvTipific_RowDeleting" OnRowCommand="dgvTipific_RowCommand">
                     <Columns>
 
                         <asp:BoundField DataField="Id" HeaderText="Id"/>
@@ -568,7 +592,7 @@
                     <asp:Button ID="btnAceptarPrecio" OnClick="btnAceptarPrecio_Click" runat="server" Text="Actualziar Precio" />
                 </div>
                 </div>
-                <asp:GridView ID="dgvSyP" runat="server" CssClass="table table-bordered mt-4" DataKeyNames="IdRegSyP" AutoGenerateColumns="False"
+                <asp:GridView ID="dgvSyP" runat="server" CssClass="table table-dark table-striped-columns" DataKeyNames="IdRegSyP" AutoGenerateColumns="False"
                     OnRowDeleting="dgvSyP_RowDeleting">
                     <Columns>
 
@@ -600,8 +624,48 @@
                     </Columns>
                 </asp:GridView>
             </div>
+
+            <asp:UpdatePanel runat="server">
+                <ContentTemplate>
+            <!-- GRID PARA MOSTRAR LAS VENTAS -->
+                 <asp:GridView ID="dgvSell" runat="server" CssClass="table table-dark table-striped-columns" AutoGenerateColumns="false" Visible="false">
+                    <Columns>
+                                <asp:BoundField DataField="IdVenta" HeaderText="ID Venta" />
+                                <asp:BoundField DataField="Usuario" HeaderText="Usuario" />
+                                <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
+                                <asp:BoundField DataField="Total" HeaderText="Total" />
+                                <asp:BoundField DataField="Detalle" HeaderText="Detalle" />
+                        
+                        <asp:TemplateField HeaderText="Status">
+                            <ItemTemplate>
+                               <asp:Image ID="imgIconoStatus" runat="server" Width="20" Height="20" ImageUrl='<%# GetStatusIcon(Eval("Status")) %>' />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        
+                      <asp:TemplateField HeaderText="Cambiar estado">
+                            <ItemTemplate>
+                                <asp:DropDownList runat="server" ID="ddlEstadoVenta" OnTextChanged="ddlEstadoVenta_TextChanged" >
+                                    <asp:ListItem Text="" />
+                                    <asp:ListItem Text="Exitoso" Value="Success"/>
+                                    <asp:ListItem Text="Cancelado" Value="Canceled"/>
+                                    <asp:ListItem Text="En proceso" Value="InProcess" />
+                                </asp:DropDownList>               
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:Button ID="btnSaveStatus" OnClick="btnSaveStatus_Click" Text="Guardar"
+                                    CommandArgument='<%#Eval("IdVenta")%>' runat="server" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+                </ContentTemplate>
+            </asp:UpdatePanel>
         
         </div>
     </div>
     <%-- FIN de RIGHT PANEL --%>
+
 </asp:Content>
