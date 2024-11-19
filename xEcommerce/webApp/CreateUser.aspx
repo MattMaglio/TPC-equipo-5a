@@ -25,7 +25,7 @@
 
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <h1 class="text-start mb-5" style="font-size: 2.5rem;">Crear cuenta</h1>
+            <h1 class="text-start mb-5" style="font-size: 2.5rem;">Crea tu cuenta</h1>
             <asp:Label ID="lblError" runat="server" ForeColor="Red" CssClass="text-center d-block mb-3"></asp:Label>
             <asp:Label ID="lblSuccess" runat="server" ForeColor="Green" CssClass="text-center d-block mb-3"></asp:Label>
 

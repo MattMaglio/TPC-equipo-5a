@@ -16,11 +16,11 @@
     <asp:ScriptManager runat="server"></asp:ScriptManager>
     <style>
         /* Ajustes generales */
-        .container {
+        .container-AP {
             display: flex;
-            flex-wrap: wrap; /* SE ENVUELEN SI NO HAY SUFICIENTE ESPACIO */
+            flex-wrap: wrap;  SE ENVUELEN SI NO HAY SUFICIENTE ESPACIO 
             justify-content: space-between;
-            padding: 10px;
+            padding: 10px 10px 10px 100px;
         }
 
         .left-panel, .right-panel {
@@ -245,7 +245,7 @@
        
     </style>
 
-    <div class="container mt-4">
+    <div class="container-AP mt-4">
         <%-- LEFT PANEL --%>
         <div class="left-panel">
             <h2 class="h2">Admin Panel</h2>
@@ -644,7 +644,7 @@
                         
                       <asp:TemplateField HeaderText="Cambiar estado">
                             <ItemTemplate>
-                                <asp:DropDownList runat="server" ID="ddlEstadoVenta" OnTextChanged="ddlEstadoVenta_TextChanged" >
+<%--                                <asp:DropDownList runat="server" ID="ddlEstadoVenta" OnTextChanged="ddlEstadoVenta_TextChanged" >--%>
                                     <asp:ListItem Text="" />
                                     <asp:ListItem Text="Exitoso" Value="Success"/>
                                     <asp:ListItem Text="Cancelado" Value="Canceled"/>

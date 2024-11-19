@@ -32,10 +32,10 @@
                 <asp:Label ID="Label1" runat="server" ForeColor="Red"></asp:Label>
                 <asp:Label ID="Label2" runat="server" ForeColor="Green"></asp:Label>
 
-                <div class="form-check mb-3">
+                <%--<div class="form-check mb-3">
                     <asp:CheckBox runat="server" ID="chkRecordar" CssClass="form-check-input" />
                     <label class="form-check-label" for="chkRecordar">Recordar mis datos</label>
-                </div>
+                </div>--%>
 
              
 
@@ -45,7 +45,7 @@
                     <asp:Button ID="btnOlvido" runat="server" CssClass="btn btn-link text-muted" Text="Olvidaste la contraseña?" />
 
                
-                    <asp:Button ID="btnCreateUser" runat="server" CssClass="btn btn-outline-secondary" OnClick="btnCreateUser_Click" Text="Registrar cuenta" />
+                    <asp:Button ID="btnCreateUser" runat="server" CssClass="btn btn-outline-secondary" OnClick="btnCreateUser_Click" Text="Crear una cuenta" />
                     <%--<asp:Button ID="btnRegister" runat="server" CssClass="btn btn-outline-secondary" OnClick="btnRegister_Click" Text="CreateAccount Falsa" />--%>
                 </div>
 
