@@ -1372,3 +1372,39 @@ BEGIN
         END;      
     END CATCH;
 END;
+
+
+
+CREATE OR ALTER  PROCEDURE [Catalogo].[SP_InsertarUsuario]
+    @usuario VARCHAR(50),
+	@email VARCHAR(50),
+    @pass VARCHAR(50),
+    @tipoUser INT = 1,       -- Valor predeterminado para TipoUser (1=normal)
+    @estado BIT = 1          -- Valor predeterminado para Estado (1=activo)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+            -- Insertar el nuevo usuario en la tabla Usuarios
+            INSERT INTO Catalogo.Usuarios (Usuario, Email, Pass, TipoUser, Estado) output inserted.Id 
+            VALUES (@usuario, @email, @pass, @tipoUser, @estado);
+
+
+			-- Devuelve el ID recién generado
+			SELECT SCOPE_IDENTITY() AS Id;
+
+            -- Confirmar la transacción si todo sale bien
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            -- Si hay un error, se hace rollback de la transacción
+            ROLLBACK TRANSACTION;
+
+            -- Propagar el error con detalles
+            THROW;  -- Re-lanza el error capturado
+        END CATCH
+END;
+GO
