@@ -1,6 +1,8 @@
 ﻿using ApplicationService;
+using Model;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices.Expando;
 using System.Web;
@@ -16,6 +18,7 @@ namespace webApp
             if (!IsPostBack)
             {
                 // Inicializo las secciones y campos
+                CargarCarrito();
                 shippingData.Visible = false;
                 confirmationSection.Visible = false;
                 transferConfirmation.Visible = false;
@@ -43,15 +46,13 @@ namespace webApp
             // Guardar en la base de datos (implementar lógica en SaveShippingDataToDatabase)
             SaveShippingDataToDatabase(nombre, apellido, dni);
         }
-
         private void SaveShippingDataToDatabase(string nombre, string apellido, string dni)
         {
             // Implementar lógica para guardar los datos en la base de datos
             // Ejemplo de query: "INSERT INTO ShippingDetails (Nombre, Apellido, DNI) VALUES (@Nombre, @Apellido, @DNI)";
         }
 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// BLOQUE DE OPCIONES DE ENTREGA
+        // BLOQUE DE OPCIONES DE ENTREGA
         protected void rblDeliveryOptions_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (rblDeliveryOptions.SelectedValue == "Retiro")
@@ -75,7 +76,6 @@ namespace webApp
                 btnCanceloEnvio.Visible = true;
             }
         }
-
         protected void btnConfirmaRetiroLocal_Click(object sender, EventArgs e)
         {
             paymentMethods.Visible = true;
@@ -83,8 +83,13 @@ namespace webApp
             btnConfirmaRetiroLocal.Visible = false;
             bntCancelarRetiroLocal.Visible=false;
             lblEntrega.Visible = true;
-        }
 
+            lblAmountShipping.Visible = true;
+            lblAmountShipping.Text = "Sin costo";
+
+            string shipping = "retiro";
+            Session.Add("shipping", shipping);
+        }
         protected void bntCancelarRetiroLocal_Click(object sender, EventArgs e)
         {
             // Ocultar las secciones de ingreso de datos y métodos de pago
@@ -119,10 +124,6 @@ namespace webApp
             radioRetiro.Attributes.CssStyle.Add("display", "");  // Asegurarse de que los radios sean visibles
             radioEnvio.Attributes.CssStyle.Add("display", "");
         }
-        /// <summary>
-        /// //////////////////////////////////////////////////////////////////
-        /// </summary>
-
         protected void btnConfirmoEnvio_Click(object sender, EventArgs e)
         {
             deliveryOptions.Visible = false;
@@ -227,17 +228,15 @@ namespace webApp
                 lblProvincia.Visible = true;
                 lblCP.Visible = true;
 
-                lblAmountToPay.Text = $"Monto total: $99 (Incluye {deliveryChoice})";
+                lblAmountShipping.Visible = true;
+                lblAmountShipping.Text = "El envio se abona por separado. Te informaremos el costo del mismo al finalziar la compra.";
+
+                string shipping = "envio";
+                Session.Add("shipping", shipping);
             }
         }
 
-
-
-
-
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-
         protected void btnConfirmarCompra_Click(object sender, EventArgs e)
         {
             
@@ -316,33 +315,27 @@ namespace webApp
                 btnConfirmPayment.Visible = false;
 
                 // Mostrar el monto total de compra
-                decimal monto = 150.00m;
-                lblAmountToPay.Text = "$" + monto.ToString("F2");
+                //decimal monto = 150.00m;
+                //lblAmountToPay.Text = "$" + monto.ToString("F2");
             }
         }
-
         // Método para validar el formato del DNI
         private bool IsDNIValid(string dni)
         {
             return (dni.Length == 7 || dni.Length == 8) && dni.All(char.IsDigit);
         }
-
         // Método para validar que la cadena contenga solo letras
         private bool IsOnlyLetters(string input)
         {
             return input.All(char.IsLetter);
         }
-
         // Método para validar que el campo contenga solo letras y espacios
         private bool IsOnlyLettersAndSpaces(string input)
         {
             return input.All(c => char.IsLetter(c) || char.IsWhiteSpace(c));
         }
-
-
-        /// ////////////////////////////////////////////////////////////////////
-
-
+        
+        // BLOQUE DE PAGO
         protected void rblPaymentMethods_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selectedPaymentMethod = rblPaymentMethods.SelectedValue;
@@ -381,7 +374,6 @@ namespace webApp
                 //transferConfirmation.Visible = true;
             }
         }
-
         protected void btnConfirmPayment_Click(object sender, EventArgs e)
         {
             string selectedPaymentMethod = rblPaymentMethods.SelectedValue;
@@ -405,7 +397,6 @@ namespace webApp
             }
         }
 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
         // BLOQUE DE ARTÍCULOS
         protected void btnConfirmarArticulos_Click(object sender, EventArgs e)
         {
@@ -413,12 +404,10 @@ namespace webApp
             grupoBtnArticulos.Visible = false;
 
         }
-
         protected void btnCancelarArticulos_Click(object sender, EventArgs e)
         {
             Response.Redirect("Default.aspx");
         }
-
         protected void btnConfirmaEfectivo_Click(object sender, EventArgs e)
         {
             //muestro forma de pago en resumen de compra
@@ -443,10 +432,7 @@ namespace webApp
             btnTerminarCompra.Visible = true;
             btnCanceloCompra.Visible = true;
 
-        }
-
-       
-
+        }     
         protected void btnConfirmaTransferencia_Click(object sender, EventArgs e)
         {
             //muestro forma de pago en resumen de compra
@@ -472,7 +458,6 @@ namespace webApp
             btnTerminarCompra.Visible = true;
             btnCanceloCompra.Visible = true;
         }
-
         protected void btnConfirmaMP_Click(object sender, EventArgs e)
         {
             //muestro forma de pago en resumen de compra
@@ -506,7 +491,48 @@ namespace webApp
         //BLOQUE PARA DAR OK A TODA LA COMPRA Y SALIR DEL CARRITO (VER LOGICA DE VACIARLO)
         protected void btnTerminarCompra_Click(object sender, EventArgs e)
         {
-            //ACA VA LA LOGICA PARA GUARDAR LOS DATOS DEL RESUMEN DE COMPRA EN DB Y ARMAR FACTURA
+            // Recuperar el carrito de la sesión
+            var carrito = (List<Carrito>)Session["Carrito"];
+
+            if (carrito == null || carrito.Count == 0)
+            {
+                // Mostrar un mensaje de error si el carrito está vacío
+                //lblError.Text = "El carrito está vacío. No se puede procesar la compra.";
+                //return;
+            }
+
+           
+            var usuario = (Model.Usuario)Session["usuario"];
+            string nombreUsuario = usuario.User;
+
+            float montoTotal = carrito.Sum(item => item.Precio * item.Cantidad);
+
+            bool retiro = false;
+            bool envio = false;
+
+            string tipoShipping = Session["shipping"].ToString();
+            if(tipoShipping == "retiro")
+            {
+                retiro = true;
+            }
+            else
+            {
+                envio = true;
+            }
+            
+            CarritoAS carritoAS = new CarritoAS();
+
+            // Registrar la orden de venta
+            carritoAS.registrarOrdenDeVenta(carrito, nombreUsuario, retiro, envio, montoTotal);
+
+            // Descontar el stock de la venta si se egistro la orden;
+            //if (exito){
+            foreach (var item in carrito)
+            {
+                carritoAS.restarStockVenta(item.ProductoId, item.ColorId, item.TalleId, item.Cantidad);
+            }
+            //}
+
             terminaLaCompra.Visible = true;
             volverHome.Visible = true;
 
@@ -515,12 +541,10 @@ namespace webApp
             btnTerminarCompra.Visible = false;
             btnCanceloCompra.Visible = false;
         }
-
         protected void volverHome_Click(object sender, EventArgs e)
         {
             Response.Redirect("Default.aspx");
         }
-
         protected void btnCancelaPago_Click(object sender, EventArgs e)
         {
             paymentMethods.Visible = true;
@@ -536,7 +560,6 @@ namespace webApp
             rblPaymentMethods.SelectedIndex = -1;
 
         }
-
         protected void btnCanceloCompra_Click(object sender, EventArgs e)
         {
             // Mostrar el mensaje de cancelación
@@ -552,76 +575,15 @@ namespace webApp
             //muestro boton para volver
             volverHome.Visible = true;
         }
-        //private string ObtenerMetodoPago()
-        //{
-        //    if (radiobtnEfectivo.Checked)
-        //        return "Efectivo";
-        //    if (radiobtnTransferencia.Checked)
-        //        return "Transferencia";
-        //    if (radiobtnLinkPago.Checked)
-        //        return "Link de Pago";
+        private void CargarCarrito()
+        {
+            var carrito = (List<Carrito>)Session["Carrito"] ?? new List<Carrito>();
+            rptCarrito.DataSource = carrito;
+            rptCarrito.DataBind();
 
-        //    return "No seleccionado";
-        //}
-        //private string ObtenerMetodoEnvio()
-        //{
-        //    if (radiobtnCorreo.Checked)
-        //        return "Correo argentino";
-        //    if (radiobtnRetiroSucursal.Checked)
-        //        return "Retiro sucursal";
+            float montoTotal = carrito.Sum(item => item.Precio * item.Cantidad);
+            lblAmountToPay.Text = montoTotal.ToString("C");
+        }
 
-        //    return "No seleccionado";
-        //}
-
-        //protected void btnConfirmarCompra_Click(object sender, EventArgs e)
-        //{
-        /* try
-         {
-             //falta obtner la lista de articulos seleccionado
-             // datos del cliente
-             string nombre = txtNombre.Text;
-             string apellido = txtApellido.Text;
-             string direccion = txtDireccion.Text;
-             int telefono = int.Parse(txtNroTelefono.Text);
-             int codigoPostal = int.Parse(txtCcp.Text);
-
-
-             string metodoPago = ObtenerMetodoPago();
-             string metodoEnvio = ObtenerMetodoPago();
-
-             // Capturar el resumen de gastos
-             float subtotal = float.Parse(txtSubtotal.Text);
-             float impuestos = float.Parse(txtIva.Text);
-             float descuentos = float.Parse(txtDescuntos.Text);
-             float total = float.Parse(txtTotal.Text);
-
-             // cuerpo para correo
-             string body = $@"
-             <h2>Confirmación de compra</h2>
-             <p><strong>Cliente:</strong> {nombre} {apellido}</p>
-             <p><strong>Dirección:</strong> {direccion}, CP {codigoPostal}</p>
-             <p><strong>Teléfono:</strong> {telefono}</p>
-             <p><strong>Método de Pago:</strong> {metodoPago}</p>
-             <p><strong>Método de Envío:</strong> {metodoEnvio}</p>
-             <h3>Resumen de Compra</h3>
-             <p><strong>Subtotal:</strong> {subtotal}</p>
-             <p><strong>IVA:</strong> {impuestos}</p>
-             <p><strong>Descuento:</strong> {descuentos}</p>
-             <p><strong>Total:</strong> {total}</p>
-             ";
-
-             // Enviar correo
-             EmailAS emailData = new EmailAS();
-            // emailData.ArmarCorreo(); falta armar correo para confirmacion de pedido
-             emailData.EnviarEmail();
-
-             // Mostrar mensaje de éxito
-             Response.Write("<script>alert('Orden confirmada y correo enviado.');</script>");
-         }
-         catch (Exception ex)
-         {
-             Response.Write($"<script>alert('Error al confirmar la orden: {ex.Message}');</script>");
-         }
-     }*/
     }
 }

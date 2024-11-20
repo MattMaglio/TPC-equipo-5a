@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Model;
+using System.Collections;
 
 namespace webApp
 {
@@ -230,7 +231,49 @@ namespace webApp
             if (Session["usuario"] != null && ((lblPrecio.Visible == true) || (lblStock.Visible == true)))////////AGREGADO
             {
                 // si el user ya está logueado agrego el producto al carrito ACA VA LA LOGICA
-                Response.Redirect("Sales.aspx", false);
+                // Response.Redirect("Sales.aspx", false);
+                
+                int productoId = int.Parse(Request.QueryString["productId"]);
+                string producto = lblProductName.Text.ToString();
+                int colorId = int.Parse(ddlColor.SelectedValue);
+                string color = ddlColor.SelectedItem.Text;
+                int talleId = int.Parse(ddlTalle.SelectedValue);
+                string talle = ddlTalle.SelectedItem.Text;
+                int cantidad = 1; // Cantidad seleccionada por el usuario, hay que poner un selector de cantidad
+
+                // tratamiento de precio 
+                string textoPrecio = lblPrecio.Text;
+                string valorNumerico = textoPrecio.Replace("Precio: $", ""); 
+                float precio = float.Parse(valorNumerico);
+
+                var carrito = (List<Carrito>)Session["Carrito"];
+                
+                var itemExistente = carrito.FirstOrDefault(item =>
+                   item.ProductoId == productoId &&
+                   item.ColorId == colorId &&
+                   item.TalleId == talleId);
+
+                if (itemExistente != null)
+                {
+                    itemExistente.Cantidad += cantidad;
+                }
+                else
+                {
+                    carrito.Add(new Carrito
+                    {
+                        ProductoId = productoId,
+                        Producto = producto,
+                        ColorId = colorId,
+                        Color = color,
+                        TalleId = talleId,
+                        Talle = talle,
+                        Cantidad = cantidad,
+                        Precio = precio
+                    });
+                }
+
+                Session["Carrito"] = carrito;
+                
             }
             else if(((lblPrecio.Visible != true) && (lblStock.Visible == true) || (lblStock.Visible != true) && (lblPrecio.Visible == true)))
             {

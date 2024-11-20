@@ -55,7 +55,6 @@ namespace webApp
                 CargarProductos();
             }
         }
-
         private void CargarProductos()
         {
             DataAccess dataAccess = new DataAccess();
@@ -88,8 +87,6 @@ namespace webApp
                 dataAccess.closeConnection();
             }
         }
-
-
         protected void btnMostrarTodos_Click(object sender, EventArgs e)
         {
             // Limpio DropDownList
@@ -101,7 +98,6 @@ namespace webApp
             // Cargo todos los productos
             CargarTodosLosProductos();
         }
-
         private void CargarTodosLosProductos()
         {
             DataAccess dataAccess = new DataAccess();
@@ -134,9 +130,6 @@ namespace webApp
                 dataAccess.closeConnection();
             }
         }
-
-
-
         private void CargarProductosDestacados()
         {
             DataAccess dataAccess = new DataAccess();
@@ -165,23 +158,18 @@ namespace webApp
                 dataAccess.closeConnection();
             }
         }
-
-
         protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
             FiltrarProductos();
         }
-
         protected void ddlMarca_SelectedIndexChanged(object sender, EventArgs e)
         {
             FiltrarProductos();
         }
-
         protected void ddlTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
             FiltrarProductos();
         }
-
         private void FiltrarProductos()
         {
             DataAccess dataAccess = new DataAccess();

@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Articulo.cs" />
+    <Compile Include="Carrito.cs" />
     <Compile Include="Categoria.cs" />
     <Compile Include="Ciudad.cs" />
     <Compile Include="Cliente.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Marca.cs" />
     <Compile Include="MedioDePago.cs" />
     <Compile Include="NivelDeAccesso.cs" />
+    <Compile Include="Orden.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provincia.cs" />
     <Compile Include="Tipificacion.cs" />

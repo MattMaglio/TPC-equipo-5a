@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 using Model.Scripts;
 using System.Data.SqlClient;
 using System.Collections;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace webApp
 {
@@ -35,18 +36,9 @@ namespace webApp
         {   
             try
             {
-                // Verificar si la sesión del usuario está activa y si tiene permisos de ADMIN
-                if (Session["usuario"] == null ||
-                   ((Usuario)Session["usuario"]).TipoUsuario != TipoUsuario.ADMIN)
-
-                
+                if (!IsPostBack)
                 {
-                    Session.Add("error", "Debes loguearte con permisos de Admin para ingresar a esta sección");
-                    Response.Redirect("ErrorLogueoAdmin.aspx");
-
-
-
-
+                   
                     /*// Inicializa el formulario como no visible al cargar la página
                     addArticleForm.Visible = false;
                     if (Request.QueryString["id"]!= null)
@@ -86,6 +78,9 @@ namespace webApp
                 div_gral_frmTip.Visible = false;
                 // Grilla de Tipificaciones
                 div_gral_dgvTip.Visible = false;
+                // Grilla de Ordenes
+                div_gral_dgvOrden.Visible = false;
+
 
                 switch (grupo)
                 {
@@ -109,6 +104,10 @@ namespace webApp
                         div_gral_dgvSyp.Visible = true;
                         break;
 
+                    case "div_gral_dgvOrden":
+                        div_gral_dgvOrden.Visible = true;
+                        break;
+
                     default:
                         break;
                 }
@@ -127,7 +126,7 @@ namespace webApp
             // Recarga los datos en la grilla
             LoadArticle();
         }
-
+ 
         /* SECCION ARTICULOS */
 
         // Agregar - Modificar articulos
@@ -449,10 +448,7 @@ namespace webApp
             data.DeleteArticulo(IdArticulo);
             LoadArticle();
         }
-        protected void dgvArticles_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
 
-        }
         // Agregar - Modificar Tipificaciones
         private void LimpiarFormulario_Tipificacion()
         {
@@ -523,6 +519,7 @@ namespace webApp
             labelMsj.Visible = true;
             LimpiarFormulario_Tipificacion();
         }
+        
         // Ver Tipificaciones
         private void LoadTipific(int Tipific)
         {
@@ -742,6 +739,7 @@ namespace webApp
 
 
         }
+        
         // Stock y Precio
         private string DescripcionArtddl(int idArt)
         {
@@ -877,11 +875,70 @@ namespace webApp
             }
 
         }
-        /* SECCION DE VENTAS */
+        
+        /* SECCION DE ORDENES-VENTAS */
         protected void btnViewSell_Click(object sender, EventArgs e)
         {
+            MostarElentoSelecionado("div_gral_dgvOrden");
+            loadOrders();
+
         }
-        
+        protected void dgvOrden_RowCommand(object sender, GridViewCommandEventArgs e)
+        {   
+            OrdenAS data = new OrdenAS();
+            if (e.CommandName == "Pagado")
+            {
+                int IdOrden = Convert.ToInt32(e.CommandArgument);
+                data.marcarPagado(IdOrden);
+                loadOrders();
+            }
+            else if (e.CommandName == "Entregado")
+            {
+                int IdOrden = Convert.ToInt32(e.CommandArgument);
+                data.marcarEntregado(IdOrden);
+                loadOrders();
+            }
+            else if (e.CommandName == "Factura")
+            {
+                int IdOrden = Convert.ToInt32(e.CommandArgument);
+                div_input_fnumcomp.Visible = true;
+
+                Session.Add("IdOrdenFnumcomp", IdOrden);
+
+                lblComp.Text = "Ingrese el Numero de comprobante para la orden " + IdOrden + ":";
+                
+
+            }
+        }
+        protected void btnfnumcomp_aceptar_Click(object sender, EventArgs e)
+        {
+            OrdenAS data = new OrdenAS();
+            string fnumcomp = txbCompLetra.Text + " " + txbCompPtoVta.Text + "-" + txbCompNumero.Text;
+            int idOrden = (int)Session["IdOrdenFnumcomp"];
+            data.cargarCompFiscal(idOrden, fnumcomp);
+            loadOrders();
+        }
+        protected void btnfnumcomp_cancelar_Click(object sender, EventArgs e)
+        {
+            div_input_fnumcomp.Visible = false;
+            loadOrders();
+        }
+        protected void dgvOrden_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            OrdenAS data = new OrdenAS();
+            int IdOrden = Convert.ToInt32(e.Keys["Id"]);
+            data.DeleteOrden(IdOrden);
+            loadOrders();
+        }
+        protected void loadOrders()
+        {
+            // Carga el GridView con las ordenes
+            OrdenAS orden = new OrdenAS();
+            dgvOrden.DataSource = orden.listar();
+            dgvOrden.DataBind();
+            dgvOrden.Visible = true;
+            
+        }
         /* SECCION DE REPORTES*/
         protected void btnReportStockPorArticulo_Click(object sender, EventArgs e)
         {
@@ -895,55 +952,33 @@ namespace webApp
         {
             IdImagen1.ImageUrl = txtImagen1.Text;
         }
-
         protected void txtImagen2_TextChanged(object sender, EventArgs e)
         {
             IdImagen2.ImageUrl = txtImagen2.Text;
         }
-
         protected void txtImagen3_TextChanged(object sender, EventArgs e)
         {
             IdImagen3.ImageUrl = txtImagen3.Text;
 
         }
-
         protected void btnEliminarUrl1_Click(object sender, EventArgs e)
         {
             txtImagen1.Text = string.Empty;
             IdImagen1.ImageUrl = string.Empty;
         }
-
         protected void btnEliminarUrl2_Click(object sender, EventArgs e)
         {
             txtImagen2.Text = string.Empty;
             IdImagen2.ImageUrl = string.Empty;
         }
-
         protected void btnEliminarUrl3_Click(object sender, EventArgs e)
         {
             txtImagen3.Text = string.Empty;
             IdImagen3.ImageUrl = string.Empty;
         }
-
         protected void btnSaveStatus_Click(object sender, EventArgs e)
         {
             // opcional si vamos a utilizar boton para actualizar estado
         }
-
-        //protected void ddlEstadoVenta_TextChanged(object sender, EventArgs e)
-        //{
-        //    VentasAS venta = new VentasAS();
-        //    DropDownList estado = (DropDownList)sender;
-        //    // en la grilla la columna estado, obtenemos la accion
-        //    GridViewRow columna = (GridViewRow)estado.NamingContainer;
-        //    // con el value podemos actualizar la DB para el estado de esta venta
-        //    string value = estado.SelectedValue;
-        //    //obtenemos el id de la venta 
-        //    string ventaID = dgvSell.DataKeys[columna.RowIndex].Value.ToString();
-        //    // pasamos a la db para actualizar el estado de la venta 
-        //    venta.ActualizarEstadoVenta(ventaID, value);
-        //    // actualizamos la grilla 
-        //    dgvSell.DataBind();
-        //}
     }
 }
