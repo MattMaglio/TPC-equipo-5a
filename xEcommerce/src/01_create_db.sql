@@ -13,15 +13,16 @@ CREATE SCHEMA Catalogo;
 GO
 CREATE SCHEMA Operaciones;
 GO
-CREATE SCHEMA Usuario;
-GO
+--CREATE SCHEMA Usuario;
+--GO
 CREATE SCHEMA Facturacion;
 GO
-CREATE SCHEMA Shipping;
-GO
+--CREATE SCHEMA Shipping;
+--GO
 
 -- Dim relacionadas a los Productos
 
+DROP TABLE IF EXISTS Catalogo.Tipos;
 CREATE TABLE Catalogo.Tipos (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
@@ -29,6 +30,7 @@ CREATE TABLE Catalogo.Tipos (
     Estado BIT NOT NULL DEFAULT 1
 );
 
+DROP TABLE IF EXISTS Catalogo.Marcas;
 CREATE TABLE Catalogo.Marcas (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
@@ -36,6 +38,7 @@ CREATE TABLE Catalogo.Marcas (
     Estado BIT NOT NULL DEFAULT 1
 );
 
+DROP TABLE IF EXISTS Catalogo.Categorias;
 CREATE TABLE Catalogo.Categorias (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
@@ -43,6 +46,7 @@ CREATE TABLE Catalogo.Categorias (
     Estado BIT NOT NULL DEFAULT 1
 );
 
+DROP TABLE IF EXISTS Catalogo.Colores;
 CREATE TABLE Catalogo.Colores (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
@@ -50,6 +54,7 @@ CREATE TABLE Catalogo.Colores (
     Estado BIT NOT NULL DEFAULT 1
 );
 
+DROP TABLE IF EXISTS Catalogo.Talles;
 CREATE TABLE Catalogo.Talles (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
@@ -57,7 +62,7 @@ CREATE TABLE Catalogo.Talles (
     Estado BIT NOT NULL DEFAULT 1
 );
 
-
+DROP TABLE IF EXISTS Catalogo.Articulos;
 CREATE TABLE Catalogo.Articulos (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
@@ -72,6 +77,7 @@ CREATE TABLE Catalogo.Articulos (
     FOREIGN KEY (IdCategoria) REFERENCES Catalogo.Categorias(Id)
 );
 
+DROP TABLE IF EXISTS Catalogo.ImagenArticulos
 CREATE TABLE Catalogo.ImagenArticulos (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     IdArticulo INT NOT NULL,
@@ -80,33 +86,22 @@ CREATE TABLE Catalogo.ImagenArticulos (
 );
 
 -- Dimensiones Gral. precargadas del sistema
+DROP TABLE IF EXISTS Catalogo.Ciudades;
 CREATE TABLE Catalogo.Ciudades (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR(10) NOT NULL,
     Descripcion VARCHAR(255) NOT NULL
 );
 
+DROP TABLE IF EXISTS Catalogo.Provincias;
 CREATE TABLE Catalogo.Provincias (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Codigo VARCHAR (10) NOT NULL,
     Descripcion VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE Catalogo.EntidadesFinancieras (
-    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-    Codigo VARCHAR (10) NOT NULL,
-    Descripcion VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE Catalogo.MediosPago (
-    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-    IdEntidadFinanciera INT,
-    Codigo VARCHAR (10) NOT NULL,
-    Descripcion VARCHAR(255) NOT NULL,
-    FOREIGN KEY (IdEntidadFinanciera) REFERENCES Catalogo.EntidadesFinancieras(Id)
-);
-
 -- Cliente
+DROP TABLE IF EXISTS Catalogo.Clientes;
 CREATE TABLE Catalogo.Clientes (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(255) NOT NULL,
@@ -116,6 +111,7 @@ CREATE TABLE Catalogo.Clientes (
     Estado BIT NOT NULL DEFAULT 1
 );
 
+DROP TABLE IF EXISTS Catalogo.Direcciones;
 CREATE TABLE Catalogo.Direcciones (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     IdCliente INT NOT NULL,
@@ -130,7 +126,47 @@ CREATE TABLE Catalogo.Direcciones (
     FOREIGN KEY (IdProvincia) REFERENCES Catalogo.Provincias(Id)
 );
 
+DROP TABLE IF EXISTS Catalogo.Usuarios;
+CREATE TABLE Catalogo.Usuarios (
+    Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+    Usuario VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    Pass VARCHAR(50) NOT NULL,
+    nombre VARCHAR(50) NULL,
+    apellido VARCHAR(50) NULL,
+	dni VARCHAR (10) NULL,
+    TipoUser INT NOT NULL,
+    Estado BIT NOT NULL
+);
+
+DROP TABLE IF EXISTS Facturacion.Ordenes;
+CREATE TABLE Facturacion.Ordenes (
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    Fecha DATE NOT NULL,
+    Usuario VARCHAR(25) NOT NULL,
+    TieneEnvio BIT NOT NULL,
+    TieneRetiro BIT NOT NULL,
+    Entregado BIT NOT NULL,
+    ComprobanteFiscal VARCHAR(15) NULL,
+    MontoTotal MONEY NOT NULL,
+    Pagado BIT NOT NULL,
+);
+
+DROP TABLE IF EXISTS Facturacion.DetallesOrdenes;
+CREATE TABLE Facturacion.DetallesOrdenes (
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    IdOrden INT NOT NULL,
+    NumeroLinea INT NOT NULL,
+    Articulo VARCHAR (25) NOT NULL,
+    Color VARCHAR (25) NOT NULL,
+    Talle VARCHAR (25) NOT NULL,
+    Precio MONEY NOT NULL,
+    Cantidad INT NOT NULL,
+    FOREIGN KEY (IdOrden) REFERENCES Facturacion.Ordenes(Id)
+);
+
 -- Tablas de hechos (Operaciones)
+DROP TABLE IF EXISTS Operaciones.Stock;
 CREATE TABLE Operaciones.Stock (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     IdArticulo INT,
@@ -142,6 +178,7 @@ CREATE TABLE Operaciones.Stock (
     FOREIGN KEY (IdTalle) REFERENCES Catalogo.Talles(Id),
 );
 
+DROP TABLE IF EXISTS Operaciones.Precios;
 CREATE TABLE Operaciones.Precios (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     IdArticulo INT NOT NULL,
@@ -153,6 +190,33 @@ CREATE TABLE Operaciones.Precios (
     FOREIGN KEY (IdTalle) REFERENCES Catalogo.Talles(Id)
 );
 
+GO
+/* DEFINICION DE LOS TRIGGERS */
+CREATE OR ALTER TRIGGER Catalogo.TR_EliminarArticulo ON Catalogo.Articulos
+AFTER UPDATE
+AS
+BEGIN
+    BEGIN TRY
+        -- Inicia la transacción
+        BEGIN TRANSACTION;
+
+        -- Primero, eliminamos los registros de Stock y Precios relacionados
+        DELETE FROM Operaciones.Stock
+        WHERE IdArticulo IN (SELECT Id FROM INSERTED);
+
+        DELETE FROM Operaciones.Precios
+        WHERE IdArticulo IN (SELECT Id FROM INSERTED);
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, revertimos la transacción
+        ROLLBACK TRANSACTION;
+    END CATCH
+END;
+GO
+
+/* -- Tabla antigua descontinuada
 -- Tablas relacionadas al envio.
 CREATE TABLE Shipping.DetallesEnvio (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
@@ -234,9 +298,10 @@ CREATE TABLE Facturacion.Facturas (
     FOREIGN KEY (IdEnvio) REFERENCES Shipping.Envios(Id),
     FOREIGN KEY (IdCliente) REFERENCES Catalogo.Clientes(Id)
 );
-
+*/
 -- Tablas de acceso de usuarios y perfiles de seguridad.
-
+-- Tabla antigua descontinuada
+/*
 CREATE TABLE Usuario.NivelAcceso (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     NivelAcceso INT NOT NULL,
@@ -256,45 +321,31 @@ CREATE TABLE Usuario.PerfilUsuario (
 );
 GO
 
--- Tabla antigua descontinuada
-/*
 CREATE TABLE TiposTransporte (
     Id INT NOT NULL PRIMARY KEY,
     Codigo VARCHAR (10) NOT NULL,
     CargaMaxima FLOAT,
     Descripcion VARCHAR(255)
 );
-*/
-/*
+
 CREATE TABLE Transportes (
     Id INT NOT NULL PRIMARY KEY,
     IdTipo INT,
     Patente VARCHAR (10) NOT NULL,
     FOREIGN KEY (IdTipo) REFERENCES TiposTransporte(Id)
 );
+
+CREATE TABLE Catalogo.EntidadesFinancieras (
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    Codigo VARCHAR (10) NOT NULL,
+    Descripcion VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Catalogo.MediosPago (
+    Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    IdEntidadFinanciera INT,
+    Codigo VARCHAR (10) NOT NULL,
+    Descripcion VARCHAR(255) NOT NULL,
+    FOREIGN KEY (IdEntidadFinanciera) REFERENCES Catalogo.EntidadesFinancieras(Id)
+);
 */
-
-/* DEFINICION DE LOS TRIGGERS */
-CREATE OR ALTER TRIGGER Catalogo.TR_EliminarArticulo ON Catalogo.Articulos
-AFTER UPDATE
-AS
-BEGIN
-    BEGIN TRY
-        -- Inicia la transacción
-        BEGIN TRANSACTION;
-
-        -- Primero, eliminamos los registros de Stock y Precios relacionados
-        DELETE FROM Operaciones.Stock
-        WHERE IdArticulo IN (SELECT Id FROM INSERTED);
-
-        DELETE FROM Operaciones.Precios
-        WHERE IdArticulo IN (SELECT Id FROM INSERTED);
-
-        COMMIT TRANSACTION;
-    END TRY
-    BEGIN CATCH
-        -- En caso de error, revertimos la transacción
-        ROLLBACK TRANSACTION;
-    END CATCH
-END;
-GO

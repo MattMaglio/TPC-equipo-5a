@@ -44,6 +44,12 @@ namespace webApp
                     //login exitoso, agrego al user a la session
                     Session.Add("usuario", usuario);
 
+                    //Inicializa la lista del carrito en la sesión:
+                    if (Session["Carrito"] == null)
+                    {
+                        Session["Carrito"] = new List<Carrito>();
+                    }
+
                     //chequeo si hay un productId en la session
                     if (Session["productId"] != null)
                     {

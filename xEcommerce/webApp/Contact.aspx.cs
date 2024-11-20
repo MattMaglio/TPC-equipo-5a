@@ -17,7 +17,7 @@ namespace webApp
 
         protected void btnEnviar_Click(object sender, EventArgs e)
         {
-            EmailAS emailData = new EmailAS();
+           // EmailAS emailData = new EmailAS();
 
             string nombre = txtNombre.Text;
             string asunto = txtAsunto.Text;
@@ -26,8 +26,8 @@ namespace webApp
 
             try
             {
-                emailData.ArmarCorreo(email, nombre, asunto);
-                emailData.EnviarEmail();
+               // emailData.ArmarCorreo(email, nombre, asunto);
+               // emailData.EnviarEmail();
                 Response.Write("<script>alert('Correo enviado exitosamente.');</script>");
 
                 txtNombre.Text = string.Empty;

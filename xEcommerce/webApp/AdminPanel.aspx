@@ -242,7 +242,6 @@
             border-radius: 8px; 
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
         }
-       
     </style>
 
     <div class="container mt-4">
@@ -378,60 +377,60 @@
                     <!-- DROP DOWN LIST CATEGORIA -->
                     <asp:DropDownList ID="ddListCategory" runat="server" CssClass="form-control"></asp:DropDownList>
                   
-  <asp:UpdatePanel ID="UpdatePanelImagenes" runat="server">
-    <ContentTemplate>
-        <div class="image-item">
-            <!-- Imagen 1 -->
-            <asp:Image ID="IdImagen1" runat="server" 
-                       ImageUrl='<%# Eval("UrlImagen") %>' 
-                       Width="25%" />
+                    <asp:UpdatePanel ID="UpdatePanelImagenes" runat="server">
+                    <ContentTemplate>
+                        <div class="image-item">
+                            <!-- Imagen 1 -->
+                            <asp:Image ID="IdImagen1" runat="server" 
+                                        ImageUrl='<%# Eval("UrlImagen") %>' 
+                                        Width="25%" />
             
-            <!-- Campo de texto para modificar la URL de la imagen -->
-            <asp:TextBox ID="txtImagen1" runat="server" CssClass="form-control"
-                         Text='<%# Eval("UrlImagen") %>' 
-                         Placeholder="URL Imagen" AutoPostBack="true" OnTextChanged="txtImagen1_TextChanged"
-                         />
+                            <!-- Campo de texto para modificar la URL de la imagen -->
+                            <asp:TextBox ID="txtImagen1" runat="server" CssClass="form-control"
+                                            Text='<%# Eval("UrlImagen") %>' 
+                                            Placeholder="URL Imagen" AutoPostBack="true" OnTextChanged="txtImagen1_TextChanged"
+                                            />
 
-            <!-- Botón de Eliminar -->
-            <asp:Button ID="btnEliminarUrl1" runat="server" 
-                        Text="Limpiar url" CssClass="btn btn-danger" 
-                        OnClick="btnEliminarUrl1_Click" />
-        </div>
+                            <!-- Botón de Eliminar -->
+                            <asp:Button ID="btnEliminarUrl1" runat="server" 
+                                        Text="Limpiar url" CssClass="btn btn-danger" 
+                                        OnClick="btnEliminarUrl1_Click" />
+                        </div>
 
-        <div class="image-item">
-            <!-- Imagen 2 -->
-            <asp:Image ID="IdImagen2" runat="server" 
-                       ImageUrl='<%# Eval("UrlImagen") %>' 
-                       Width="25%" />
+                    <div class="image-item">
+                        <!-- Imagen 2 -->
+                        <asp:Image ID="IdImagen2" runat="server" 
+                                   ImageUrl='<%# Eval("UrlImagen") %>' 
+                                   Width="25%" />
             
-            <!-- Campo de texto para modificar la URL de la imagen -->
-            <asp:TextBox ID="txtImagen2" runat="server" CssClass="form-control"
-                         Text='<%# Eval("UrlImagen") %>' 
-                         Placeholder="URL Imagen" AutoPostBack="true" OnTextChanged="txtImagen2_TextChanged"
-                         />
-            <!-- Botón de Eliminar -->
-            <asp:Button ID="btnEliminarUrl2" runat="server" 
-                        Text="Limpiar url" CssClass="btn btn-danger" 
-                         OnClick="btnEliminarUrl2_Click" />
-        </div>
+                        <!-- Campo de texto para modificar la URL de la imagen -->
+                        <asp:TextBox ID="txtImagen2" runat="server" CssClass="form-control"
+                                     Text='<%# Eval("UrlImagen") %>' 
+                                     Placeholder="URL Imagen" AutoPostBack="true" OnTextChanged="txtImagen2_TextChanged"
+                                     />
+                        <!-- Botón de Eliminar -->
+                        <asp:Button ID="btnEliminarUrl2" runat="server" 
+                                    Text="Limpiar url" CssClass="btn btn-danger" 
+                                     OnClick="btnEliminarUrl2_Click" />
+                    </div>
 
-        <div class="image-item">
-            <!-- Imagen 3 -->
-            <asp:Image ID="IdImagen3" runat="server" 
-                       ImageUrl='<%# Eval("UrlImagen") %>' 
-                       Width="25%" />
-            <!-- Campo de texto para modificar la URL de la imagen -->
-            <asp:TextBox ID="txtImagen3" runat="server" CssClass="form-control"
-                         Text='<%# Eval("UrlImagen") %>' 
-                         Placeholder="URL Imagen" AutoPostBack="true" OnTextChanged="txtImagen3_TextChanged"
-                         />
-            <!-- Botón de Eliminar -->
-            <asp:Button ID="btnEliminarUrl3" runat="server" 
-                        Text="Limpiar url" CssClass="btn btn-danger" 
-                        OnClick="btnEliminarUrl3_Click" />
-        </div>
-    </ContentTemplate>
-</asp:UpdatePanel>
+                    <div class="image-item">
+                        <!-- Imagen 3 -->
+                        <asp:Image ID="IdImagen3" runat="server" 
+                                   ImageUrl='<%# Eval("UrlImagen") %>' 
+                                   Width="25%" />
+                        <!-- Campo de texto para modificar la URL de la imagen -->
+                        <asp:TextBox ID="txtImagen3" runat="server" CssClass="form-control"
+                                     Text='<%# Eval("UrlImagen") %>' 
+                                     Placeholder="URL Imagen" AutoPostBack="true" OnTextChanged="txtImagen3_TextChanged"
+                                     />
+                        <!-- Botón de Eliminar -->
+                        <asp:Button ID="btnEliminarUrl3" runat="server" 
+                                    Text="Limpiar url" CssClass="btn btn-danger" 
+                                    OnClick="btnEliminarUrl3_Click" />
+                    </div>
+                    </ContentTemplate>
+                    </asp:UpdatePanel>
 
                     <asp:Button ID="btnSaveArticle" runat="server" CssClass="bn5" OnClick="btnSaveArticle_Click" Text="Guardar articulo" />
                     <a type="button" class="bn5" href="AdminPanel.aspx">Cancelar</a>
@@ -457,7 +456,7 @@
                 <div>
                       <!-- Grilla de articulos -->
                 <asp:GridView ID="dgvArticles" runat="server" CssClass="table table-dark table-striped-columns" DataKeyNames="Id" AutoGenerateColumns="False"
-                    OnRowDeleting="dgvArticles_RowDeleting" OnRowCommand="dgvArticles_RowCommand" OnRowUpdating="dgvArticles_RowUpdating" 
+                    OnRowDeleting="dgvArticles_RowDeleting" OnRowCommand="dgvArticles_RowCommand" 
                     AllowPaging="True" OnPageIndexChanging="dgvArticles_PageIndexChanging" PageSize="5">
                     <Columns>
 
@@ -494,7 +493,6 @@
                 </div>
             </div>
            
-
             <!-- Alta y Modificacion de Tipificaciones (Ok)-->
             <div class="form-tipific" id="div_gral_frmTip"  runat="server" visible="false">
                 <div class="mt-3">
@@ -625,44 +623,71 @@
                 </asp:GridView>
             </div>
 
-            <asp:UpdatePanel runat="server">
-                <ContentTemplate>
-            <!-- GRID PARA MOSTRAR LAS VENTAS -->
-                 <asp:GridView ID="dgvSell" runat="server" CssClass="table table-dark table-striped-columns" AutoGenerateColumns="false" Visible="false">
-                    <Columns>
-                                <asp:BoundField DataField="IdVenta" HeaderText="ID Venta" />
-                                <asp:BoundField DataField="Usuario" HeaderText="Usuario" />
-                                <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
-                                <asp:BoundField DataField="Total" HeaderText="Total" />
-                                <asp:BoundField DataField="Detalle" HeaderText="Detalle" />
-                        
-                        <asp:TemplateField HeaderText="Status">
-                            <ItemTemplate>
-                               <asp:Image ID="imgIconoStatus" runat="server" Width="20" Height="20" ImageUrl='<%# GetStatusIcon(Eval("Status")) %>' />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        
-                      <asp:TemplateField HeaderText="Cambiar estado">
-                            <ItemTemplate>
-                                <asp:DropDownList runat="server" ID="ddlEstadoVenta" OnTextChanged="ddlEstadoVenta_TextChanged" >
-                                    <asp:ListItem Text="" />
-                                    <asp:ListItem Text="Exitoso" Value="Success"/>
-                                    <asp:ListItem Text="Cancelado" Value="Canceled"/>
-                                    <asp:ListItem Text="En proceso" Value="InProcess" />
-                                </asp:DropDownList>               
-                            </ItemTemplate>
-                        </asp:TemplateField>
+            <!-- Grilla de control de las ordenes -->
+            <div class="dgviewArticles" id="div_gral_dgvOrden" visible="false" runat="server">
 
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="btnSaveStatus" OnClick="btnSaveStatus_Click" Text="Guardar"
-                                    CommandArgument='<%#Eval("IdVenta")%>' runat="server" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
+                <div id="div_input_fnumcomp" visible="false" runat="server">
+                    <h4> Carga de comprobante Fiscal</h4>
+                    <asp:Label ID="lblComp" runat="server"></asp:Label>
+                    <asp:TextBox ID="txbCompLetra" runat="server" ToolTip="Ej: B" MaxLength="1" Width="25"></asp:TextBox>
+                    <asp:Label ID="lblSep1" runat="server" Text=" "></asp:Label>
+                    <asp:TextBox ID="txbCompPtoVta" runat="server" ToolTip="Ej: 0046" MaxLength="4" Width="40"></asp:TextBox>
+                    <asp:Label ID="lblSep2" runat="server" Text=" - "></asp:Label>
+                    <asp:TextBox ID="txbCompNumero" runat="server" ToolTip="Ej: 00000025" MaxLength="8" Width="80"></asp:TextBox>
+                    <asp:Button ID="btnfnumcomp_aceptar" runat="server" Text="Aceptar" OnClick="btnfnumcomp_aceptar_Click" />
+                    <asp:Button ID="btnfnumcomp_cancelar" runat="server" Text="Cancelar" OnClick="btnfnumcomp_cancelar_Click" />
+                </div>
+                <div>
+                    <h4></h4>
+                    <h4></h4>
+                </div>
+
+                <div>
+                <!-- Grilla de ordenes -->
+                <asp:GridView ID="dgvOrden" runat="server" CssClass="table table-dark table-striped-columns"
+                      OnRowDeleting="dgvOrden_RowDeleting" OnRowCommand="dgvOrden_RowCommand" DataKeyNames="Id" AutoGenerateColumns="False">
+                    <Columns>
+                        <asp:BoundField DataField="Id" HeaderText="Id" />
+                        <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
+                        <asp:BoundField DataField="Usuario" HeaderText="Usuario" />
+                        <asp:BoundField DataField="TieneEnvio" HeaderText="Tiene Envio" />
+                        <asp:BoundField DataField="TieneRetiro" HeaderText="Tiene Retiro" />
+                        <asp:BoundField DataField="Pagado" HeaderText="Pagado" />
+                        <asp:BoundField DataField="Entregado" HeaderText="Entregado" />
+                        <asp:BoundField DataField="MontoTotal" HeaderText="Monto Total" />
+                        <asp:BoundField DataField="ComprobanteFiscal" HeaderText="Comprobante Fiscal" />
+                        <asp:TemplateField HeaderText="Acción">
+                        <ItemTemplate>
+                            
+                            <asp:Button Text="marcar como Pagado" CssClass="btn btn-primary"
+                                CommandName="Pagado"
+                                CommandArgument='<%# Eval("Id") %>'
+                                runat="server"
+                                OnClientClick="return confirm('¿Estás seguro de que desea marcar esta orden como PAGADA?');" />
+                            
+                            <asp:Button Text="marcar como Entregado" CssClass="btn btn-primary"
+                                CommandName="Entregado"
+                                CommandArgument='<%# Eval("Id") %>'
+                                runat="server"
+                                OnClientClick="return confirm('¿Estás seguro de que desea marcar esta orden como ENTREGADA?');" />
+                            
+                            <asp:Button Text="Cargar factura" CssClass="btn btn-primary"
+                                CommandName="Factura"
+                                CommandArgument='<%# Eval("Id") %>'
+                                runat="server" />
+
+                            <asp:Button Text="Eliminar" CssClass="btn btn-danger"
+                                CommandName="Delete"
+                                CommandArgument='<%# Eval("Id") %>'
+                                runat="server"
+                                OnClientClick="return confirm('¿Estás seguro de que deseas borrar esta orden?');" />
+
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+                </div>
+            </div>   
         
         </div>
     </div>

@@ -4,10 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-
-
-
-    <style>
+<style>
         /*OPCIONES de ENVIO*/
 
         /* Formulario de Envío */
@@ -42,12 +39,6 @@
                 background-color: #218838;
             }
 
-
-
-
-
-
-
         /* Contenedor Principal */
         .main-container {
             display: flex;
@@ -56,7 +47,6 @@
             max-width: 1200px;
             margin: 40px auto;
         }
-
 
         /* Contenedor de Resumen de Compra */
         .summary-container {
@@ -68,8 +58,6 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-
-
         .separator {
             border: 0;
             border-top: 4px dashed white; /* Línea discontinua */
@@ -78,8 +66,6 @@
             margin-left: auto;
             margin-right: auto; /* Centrar la línea */
         }
-
-
 
         #confirmationSection {
             /*color: white;*/ /* Cambia el color del texto a blanco */
@@ -91,7 +77,6 @@
             color: white;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
-
 
         /* Detalles de Confirmación en el Resumen */
         #confirmationDetails {
@@ -160,8 +145,6 @@
             padding: 10px;
             border-radius: 5px;
         }
-
-
 
         /* Elementos del carrito */
         .cart-item {
@@ -244,7 +227,6 @@
             border: 1px solid #ced4da;
             border-radius: 5px;
         }
-
 
         .btnApply {
             background-color: #b81515;
@@ -423,7 +405,6 @@
             box-shadow: 0 0 0 4px #232423 inset;
         }
 
-
             .bn6:hover {
                 background-image: linear-gradient( 55deg, transparent 10%, #161616 10% 20%, transparent 20% 30%, #161616 30% 40%, transparent 40% 50%, #161616 50% 60%, transparent 60% 70%, #161616 70% 80%, transparent 80% 90%, #161616 90% 100% );
                 animation: background 3s linear infinite;
@@ -441,48 +422,42 @@
         .alert-danger {
             font-weight: bold;
         }
-    </style>
+</style>
 
+<%--CONTENEDOR PRINCIPAL--%>
+<div class="main-container">
+       
 
-    <div class="main-container">
-        <%--CONTENEDOR PRINCIPAL--%>
-
-        <!-- BLOQUE DE RESUMEN DE COMPRA -->
-        <div class="summary-container" id="Div1" runat="server">
-            <div class="section-title">Resumen de Compra</div>
-            <div id="confirmationDetails" runat="server">
-
-                <p>
-                    <strong>ACÁ CARGAMOS LOS PRODUCTOS Y EL COSTO TOTAL</strong>
-                    <br />
-                    <!-- Monto a abonar -->
-                    <div id="amountToPay" runat="server" class="mt-2">
+    <!-- BLOQUE DE RESUMEN DE COMPRA -->
+    <div class="summary-container" id="Div1" runat="server">
+        <div class="section-title">Resumen de Compra</div>
+        
+        <div id="confirmationDetails" runat="server">
+            <p>    
+                <br />
+                <!-- Monto a abonar -->
+                    <p>
+                        <strong>Monto a abonar: </strong>
+                        <asp:Label ID="lblAmountToPay" runat="server" Text=""></asp:Label>
                         <p>
-                            <strong>Monto a abonar: </strong>
-                            <asp:Label ID="lblAmountToPay" runat="server" Text=""></asp:Label>
-                        </p>
-                    </div>
-                    <br />
+                         <strong>Costo de envio: </strong>
+                        <asp:Label ID="lblAmountShipping" runat="server" Text="" Visible="false"></asp:Label>
+                    </p> 
+                <br />
 
-                    <%--DATOS DEL COMPRADOR--%>
+                <%--DATOS DEL COMPRADOR--%>
                 <p>
                     <strong>Tu nombre:</strong>
                     <asp:Literal ID="lblNombre" runat="server" Text=""></asp:Literal>
                 </p>
-
-
                 <p>
                     <strong>Tu apellido:</strong>
                     <asp:Literal ID="lblApellido" runat="server" Text=""></asp:Literal>
                 </p>
-                
-
                 <p>
                     <strong>Tu DNI:</strong>
                     <asp:Literal ID="lblDNI" runat="server" Text=""></asp:Literal>
                 </p>
-               
-
                 <%--OPCION DE ENTREGA ELEGIDA--%>
 
                 <%--si fue Retiro en local--%>
@@ -509,284 +484,247 @@
                 <p>
                     <asp:Literal ID="lblCP" runat="server" Text="Código postal: "></asp:Literal>
                 </p>
-
                 <%--OPCION DE PAGO--%>
                 <p>
                     <asp:Literal ID="lblFormaDePago" runat="server" Text=""></asp:Literal>
                 </p>
 
-
-            </div>
-            <!-- FALTA CERRAR EL div DE confirmationDetails -->
         </div>
-        <!-- CIERRE CORRECTO DEL DIV summary-container -->
+            <!-- FALTA CERRAR EL div DE confirmationDetails -->
+    </div>
+    <!-- CIERRE summary-container -->
 
-        <%--BLOQUE DE CARGA DE DATOS / ELECCIONES--%>
-        <div class="cart-container">
-            <h2 class="tracking-in-expand" id="articulosAgregados1" runat="server" style="color: white;">Tus compras</h2>
+    <%--BLOQUE DE CARGA DE DATOS / ELECCIONES--%>
+    <div class="cart-container">
+        <h2 class="tracking-in-expand" id="articulosAgregados1" runat="server" style="color: white;">Tus compras</h2>
 
-            <!-- Sección de Artículos en el Carrito -->
-            <div class="section-title" id="articulosAgregados2" runat="server">Artículos en carrito</div>
-            <!-- productos deL carrito -->
-            <div class="cart-item" id="articulosAgregados3" runat="server">
-                <div class="cart-item-details">
-                    <p><strong>ID:</strong> 001</p>
-                    <p><strong>Name:</strong> Example Product</p>
-                    <p><strong>Size:</strong> M</p>
-                    <p><strong>Color:</strong> Red</p>
-                    <p><strong>Brand:</strong> Brand X</p>
-                    <p><strong>Category:</strong> Category Y</p>
-                    <p><strong>Price:</strong> $99</p>
-                </div>
-                <!-- CIERRE DEL DIV cart-item-details -->
-                <button>Delete</button>
+        <!-- Sección de Artículos en el Carrito -->
+        <div class="section-title" id="articulosAgregados2" runat="server">Artículos en carrito</div>
+        <!-- productos deL carrito -->
+        <div class="cart-item" id="articulosAgregados3" runat="server">
+            <asp:Repeater ID="rptCarrito" runat="server">
+            <HeaderTemplate>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Color</th>
+                            <th>Talle</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            </HeaderTemplate>
+            <ItemTemplate>
+                <tr>
+                    <td><%# Eval("Producto") %></td>
+                    <td><%# Eval("Color") %></td>
+                    <td><%# Eval("Talle") %></td>
+                    <td><%# Eval("Cantidad") %></td>
+                    <td><%# Eval("Precio", "{0:C}") %></td>
+                </tr>
+            </ItemTemplate>
+            <FooterTemplate>
+                    </tbody>
+                </table>
+            </FooterTemplate>
+            </asp:Repeater>
+            <!-- CIERRE DEL DIV cart-item-details -->
+            <button>Delete</button>
+         </div>
+        <!-- CIERRE DEL DIV cart-item -->
+
+        <!-- Botón para continuar y cancelar -->
+        <div class="mt-4 text-center" id="grupoBtnArticulos" runat="server">
+            <asp:Button ID="btnConfirmarArticulos" runat="server" class="bn5" OnClick="btnConfirmarArticulos_Click" Text="Continuar compra" OnClientClick="disableUnloadWarning();" />
+            <asp:Button ID="btnCancelarArticulos" runat="server" class="bn5" OnClick="btnCancelarArticulos_Click" Text="Cancelar compra" OnClientClick="disableUnloadWarning();" />
+
+        </div>
+        <!-- CIERRE DEL DIV grupoBtnArticulos -->
+
+        <!-- Sección de Datos DEL Comprador -->
+        <div id="shippingData" runat="server">
+            <div class="section-title">Datos Personales</div>
+
+            <!-- Campos de Nombre, Apellido, DNI -->
+            <div class="form-group">
+                <label for="txtNombre" class="form-label">Nombre</label>
+                <asp:TextBox runat="server" ID="txtNombre" CssClass="form-control" Style="border: black; border-bottom: 1px solid #ccc; background: white; height: auto;" />
             </div>
-            <!-- CIERRE DEL DIV cart-item -->
+            <asp:Label ID="Label5" runat="server" ForeColor="Red"></asp:Label>
+            <asp:Label ID="Label6" runat="server" ForeColor="Green"></asp:Label>
 
-            <!-- Botón para continuar y cancelar -->
-            <div class="mt-4 text-center" id="grupoBtnArticulos" runat="server">
-                <asp:Button ID="btnConfirmarArticulos" runat="server" class="bn5" OnClick="btnConfirmarArticulos_Click" Text="Continuar compra" OnClientClick="disableUnloadWarning();" />
-                <asp:Button ID="btnCancelarArticulos" runat="server" class="bn5" OnClick="btnCancelarArticulos_Click" Text="Cancelar compra" OnClientClick="disableUnloadWarning();" />
-
+            <div class="form-group">
+                <label for="txtApellido" class="form-label">Apellido</label>
+                <asp:TextBox runat="server" ID="txtApellido" CssClass="form-control" Style="border: black; border-bottom: 1px solid #ccc; background: white; height: auto;" />
             </div>
-            <!-- CIERRE DEL DIV grupoBtnArticulos -->
+            <asp:Label ID="Label7" runat="server" ForeColor="Red"></asp:Label>
+            <asp:Label ID="Label8" runat="server" ForeColor="Green"></asp:Label>
 
-
-
-
-            <!-- Sección de Datos DEL Comprador -->
-            <div id="shippingData" runat="server">
-                <div class="section-title">Datos Personales</div>
-
-                <!-- Campos de Nombre, Apellido, DNI -->
-                <div class="form-group">
-                    <label for="txtNombre" class="form-label">Nombre</label>
-                    <asp:TextBox runat="server" ID="txtNombre" CssClass="form-control"
-                        Style="border: black; border-bottom: 1px solid #ccc; background: white; height: auto;" />
-                </div>
-                <asp:Label ID="Label5" runat="server" ForeColor="Red"></asp:Label>
-                <asp:Label ID="Label6" runat="server" ForeColor="Green"></asp:Label>
-
-
-                <div class="form-group">
-                    <label for="txtApellido" class="form-label">Apellido</label>
-                    <asp:TextBox runat="server" ID="txtApellido" CssClass="form-control"
-                        Style="border: black; border-bottom: 1px solid #ccc; background: white; height: auto;" />
-                </div>
-                <asp:Label ID="Label7" runat="server" ForeColor="Red"></asp:Label>
-                <asp:Label ID="Label8" runat="server" ForeColor="Green"></asp:Label>
-
-
-                <div class="form-group">
-                    <label for="txtDNI" class="form-label">DNI</label>
-                    <asp:TextBox runat="server" ID="txtDNI" CssClass="form-control"
-                        Style="border: black; border-bottom: 1px solid #ccc; background: white; height: auto;" />
-                </div>
-                <asp:Label ID="Label3" runat="server" ForeColor="Red"></asp:Label>
-                <asp:Label ID="Label4" runat="server" ForeColor="Green"></asp:Label>
-
-                <!-- Botón para continuar -->
-                <div class="mt-4 text-center">
-                    <asp:Button ID="btnConfirmarCompra" runat="server" class="bn5" OnClick="btnConfirmarCompra_Click" Text="Continuar compra" OnClientClick="disableUnloadWarning();" />
-
-                </div>
-                <!-- CIERRE DEL DIV PARA BOTONES -->
+            <div class="form-group">
+                <label for="txtDNI" class="form-label">DNI</label>
+                <asp:TextBox runat="server" ID="txtDNI" CssClass="form-control" Style="border: black; border-bottom: 1px solid #ccc; background: white; height: auto;" />
             </div>
-            <!-- CIERRE  DEL DIV shippingData -->
+            <asp:Label ID="Label3" runat="server" ForeColor="Red"></asp:Label>
+            <asp:Label ID="Label4" runat="server" ForeColor="Green"></asp:Label>
 
+            <!-- Botón para continuar -->
+            <div class="mt-4 text-center">
+                <asp:Button ID="btnConfirmarCompra" runat="server" class="bn5" OnClick="btnConfirmarCompra_Click" Text="Continuar compra" OnClientClick="disableUnloadWarning();" />
+            </div>
+            <!-- CIERRE DEL DIV PARA BOTONES -->
+        </div>
+        <!-- CIERRE  DEL DIV shippingData -->
 
+        <div id="confirmationSection" runat="server">
 
+            <!-- Opciones de Entrega -->
+            <div id="deliveryOptions" runat="server" class="mt-3">
+                <p class="section-title">Opciones de Entrega</p>
+                <asp:RadioButtonList ID="rblDeliveryOptions" runat="server" OnSelectedIndexChanged="rblDeliveryOptions_SelectedIndexChanged" AutoPostBack="True" OnClientClick="disableUnloadWarning();">
+                    <asp:ListItem ID="radioRetiro" runat="server" Text="Retiro en Local en Florida 123 CABA de Lunes a Viernes 10hs a 18hs" Value="Retiro" OnClientClick="disableUnloadWarning();" />
+                    <asp:ListItem ID="radioEnvio" runat="server" Text="Envío a domicilio" Value="Envio" OnClientClick="disableUnloadWarning();" />
+                </asp:RadioButtonList>
+            </div>
+            <!-- CIERRE DEL DIV deliveryOptions -->
 
-            <div id="confirmationSection" runat="server">
+            <%--botones de confirmar / cancelar retiro en local--%>
 
+            <div class="mt-4 text-center">
+                <asp:Button ID="btnConfirmaRetiroLocal" runat="server" Text="Confirmar y continuar con métodos de pago" OnClick="btnConfirmaRetiroLocal_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
+            </div>
 
+            <div class="mt-4 text-center">
+                <asp:Button ID="bntCancelarRetiroLocal" runat="server" Text="Cancelar retiro por local" OnClick="bntCancelarRetiroLocal_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
+            </div>
 
-                <!-- Opciones de Entrega -->
-                <div id="deliveryOptions" runat="server" class="mt-3">
-                    <p class="section-title">Opciones de Entrega</p>
-                    <asp:RadioButtonList ID="rblDeliveryOptions" runat="server" OnSelectedIndexChanged="rblDeliveryOptions_SelectedIndexChanged" AutoPostBack="True" OnClientClick="disableUnloadWarning();">
-                        <asp:ListItem ID="radioRetiro" runat="server" Text="Retiro en Local en Florida 123 CABA de Lunes a Viernes 10hs a 18hs" Value="Retiro" OnClientClick="disableUnloadWarning();" />
-                        <asp:ListItem ID="radioEnvio" runat="server" Text="Envío a domicilio" Value="Envio" OnClientClick="disableUnloadWarning();" />
-                    </asp:RadioButtonList>
+            <!-- Formulario para Envío (aparece si selecciona Envío) -->
+            <div id="shippingForm" runat="server" visible="False">
+                <p>Completá estos datos para enviar tu producto</p>
+
+                <!-- Calle -->
+                <div class="form-group">
+                    <label for="txtCalle">Calle</label>
+                    <asp:TextBox runat="server" ID="txtCalle" CssClass="form-control" />
                 </div>
-                <!-- CIERRE DEL DIV deliveryOptions -->
+                <asp:Label ID="lblCalleError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
+                <asp:Label ID="lblCalleSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
 
+                <!-- Número -->
+                <div class="form-group">
+                    <label for="txtNumero">Número</label>
+                    <asp:TextBox runat="server" ID="txtNumero" CssClass="form-control" />
+                </div>
+                <asp:Label ID="lblNumeroError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
+                <asp:Label ID="lblNumeroSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
 
+                <!-- Ciudad -->
+                <div class="form-group">
+                    <label for="txtCiudad">Ciudad</label>
+                    <asp:TextBox runat="server" ID="txtCiudad" CssClass="form-control" />
+                </div>
+                <asp:Label ID="lblCiudadError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
+                <asp:Label ID="lblCiudadSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
 
+                <!-- Provincia -->
+                <div class="form-group">
+                    <label for="txtProvincia">Provincia</label>
+                    <asp:TextBox runat="server" ID="txtProvincia" CssClass="form-control" />
+                </div>
+                <asp:Label ID="lblProvinciaError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
+                <asp:Label ID="lblProvinciaSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
 
-                <%--botones de confirmar / cancelar retiro en local--%>
+                <!-- Código Postal -->
+                <div class="form-group">
+                    <label for="txtCP">Código Postal</label>
+                    <asp:TextBox runat="server" ID="txtCP" CssClass="form-control" />
+                </div>
+                <asp:Label ID="lblCPError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
+                <asp:Label ID="lblCPSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
 
+                <!-- Botones -->
                 <div class="mt-4 text-center">
-                    <asp:Button ID="btnConfirmaRetiroLocal" runat="server" Text="Confirmar y continuar con métodos de pago" OnClick="btnConfirmaRetiroLocal_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
+                    <asp:Button ID="btnConfirmoEnvio" runat="server" Text="Si, envíen mi compra" OnClick="btnConfirmoEnvio_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
                 </div>
-
                 <div class="mt-4 text-center">
-                    <asp:Button ID="bntCancelarRetiroLocal" runat="server" Text="Cancelar retiro por local" OnClick="bntCancelarRetiroLocal_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
+                    <asp:Button ID="btnCanceloEnvio" runat="server" Text="Prefiero retirar en el local" OnClick="bntCancelarRetiroLocal_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
                 </div>
+            </div>
+             <!-- CIERRE DEL DIV shippingForm -->
 
+            <!-- Métodos de pago -->
+            <div id="paymentMethods" runat="server">
+                <p class="section-title">Elegí tu medio de pago</p>
+                <asp:RadioButtonList ID="rblPaymentMethods" runat="server" OnSelectedIndexChanged="rblPaymentMethods_SelectedIndexChanged" AutoPostBack="True" OnClientClick="disableUnloadWarning();">
+                    <asp:ListItem Text="Efectivo, abonás en nuestro local en calle Florida 123 CABA de 10hs a 18hs" Value="Efectivo" OnClientClick="disableUnloadWarning();" />
+                    <asp:ListItem Text="Transferencia bancaria" Value="Transferencia" OnClientClick="disableUnloadWarning();" />
+                    <asp:ListItem Text="Mercado Pago" Value="MercadoPago" OnClientClick="disableUnloadWarning();" />
+                </asp:RadioButtonList>
+            </div>
+            <!-- CIERRE  DEL DIV paymentMethods -->
 
+            <%-- BOTONES DE METODOS DE PAGO--%>
 
+            <%--Si elige Efectivo--%>
+            <div class="mt-4 text-center">
+                <asp:Button ID="btnConfirmaEfectivo" runat="server" Visible="false" Text="Confirmar pago en Efectivo" OnClick="btnConfirmaEfectivo_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
+            </div>
+            <div class="mt-4 text-center">
+                <asp:Button ID="btnCancelaEfectivo" runat="server" Visible="false" Text="Cancelar y volver" OnClick="btnCancelaPago_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
+            </div>
 
-                <!-- Formulario para Envío (aparece si selecciona Envío) -->
-               
-                <div id="shippingForm" runat="server" visible="False">
-    <p>Completá estos datos para enviar tu producto</p>
+            <%--Si elige Transferencia--%>
+            <div class="mt-4 text-center">
+                <asp:Button ID="btnConfirmaTransferencia" runat="server" Visible="false" Text="Confirmar pago con Transferencia bancaria" OnClick="btnConfirmaTransferencia_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
+            </div>
+            <div class="mt-4 text-center">
+                <asp:Button ID="btnCancelaTransferencia" runat="server" Visible="false" Text="Cancelar y volver" OnClick="btnCancelaPago_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
+            </div>
 
-    <!-- Calle -->
-    <div class="form-group">
-        <label for="txtCalle">Calle</label>
-        <asp:TextBox runat="server" ID="txtCalle" CssClass="form-control" />
+            <%--Si elige MercadoPago--%>
+            <div class="mt-4 text-center">
+                <asp:Button ID="btnConfirmaMP" runat="server" Visible="false" Text="Confirmar pago con Mercado Pago" OnClick="btnConfirmaMP_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
+            </div>
+            <div class="mt-4 text-center">
+                <asp:Button ID="btnCancelarMP" runat="server" Visible="false" Text="Cancelar y volver" OnClick="btnCancelaPago_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
+            </div>
+
+            <!-- Botón para aceptar -->
+            <div class="mt-4 text-center">
+                <asp:Button ID="btnConfirmPayment" runat="server" Text="Aceptar" OnClick="btnConfirmPayment_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
+            </div>
+
+            <!-- Confirmación Transferencia -->
+            <br />
+            <div id="transferConfirmation" runat="server" visible="False">
+                <p>Te enviamos los datos de pago por correo electrónico. Por favor, revisá tu bandeja de entrada.</p>
+            </div>
+
+            <%--CONFIRMO o CANCELO TODA LA OPERACIÓN--%>
+            <div id="confirmoFinal" runat="server" visible="False">
+                <p>Revisá y confirmá tu compra</p>
+            </div>
+            <asp:Button ID="btnTerminarCompra" runat="server" Text="Confirmar la Compra" OnClick="btnTerminarCompra_Click" CssClass="btn btn-success" Visible="false" OnClientClick="disableUnloadWarning();" />
+            <asp:Button ID="btnCanceloCompra" runat="server" Text="Cancelar la Compra y vaciar el carrito" OnClick="btnCanceloCompra_Click" Visible="false" OnClientClick="return confirm('¿Estás seguro de que deseas cancelar la compra?');" CssClass="btn btn-success" />
+
+            <%--CANCELO LA COMPRA--%>
+            <asp:Label ID="lblCompraCancelada" runat="server" Text="Compra Cancelada" CssClass="alert alert-danger" Visible="False"></asp:Label>
+
+            <%--TERMINO LA COMPRA--%>
+            <div id="terminaLaCompra" runat="server" visible="False">
+                <p>MUCHAS GRACIAS, YA ESTAMOS PROCESANDO TU PEDIDO! REVISA TU CORREO, TE ENVIAMOS TODOS LOS DATOS PARA FINALIZAR EL PAGO</p>
+            </div>
+
+            <%-- boton de finalizar compra--%>
+            <div class="mt-4 text-center">
+                <asp:Button ID="volverHome" runat="server" Visible="false" Text="Volver al Inicio" OnClick="volverHome_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
+            </div>
+
+        </div>
+        <!-- CIERRE DEL DIV CONFIRMATIONsECTION -->
     </div>
-    <asp:Label ID="lblCalleError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
-    <asp:Label ID="lblCalleSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
-
-    <!-- Número -->
-    <div class="form-group">
-        <label for="txtNumero">Número</label>
-        <asp:TextBox runat="server" ID="txtNumero" CssClass="form-control" />
-    </div>
-    <asp:Label ID="lblNumeroError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
-    <asp:Label ID="lblNumeroSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
-
-    <!-- Ciudad -->
-    <div class="form-group">
-        <label for="txtCiudad">Ciudad</label>
-        <asp:TextBox runat="server" ID="txtCiudad" CssClass="form-control" />
-    </div>
-    <asp:Label ID="lblCiudadError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
-    <asp:Label ID="lblCiudadSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
-
-    <!-- Provincia -->
-    <div class="form-group">
-        <label for="txtProvincia">Provincia</label>
-        <asp:TextBox runat="server" ID="txtProvincia" CssClass="form-control" />
-    </div>
-    <asp:Label ID="lblProvinciaError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
-    <asp:Label ID="lblProvinciaSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
-
-    <!-- Código Postal -->
-    <div class="form-group">
-        <label for="txtCP">Código Postal</label>
-        <asp:TextBox runat="server" ID="txtCP" CssClass="form-control" />
-    </div>
-    <asp:Label ID="lblCPError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
-    <asp:Label ID="lblCPSuccess" runat="server" ForeColor="Green" Visible="False"></asp:Label>
-
-    <!-- Botones -->
-    <div class="mt-4 text-center">
-        <asp:Button ID="btnConfirmoEnvio" runat="server" Text="Si, envíen mi compra" OnClick="btnConfirmoEnvio_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
-    </div>
-    <div class="mt-4 text-center">
-        <asp:Button ID="btnCanceloEnvio" runat="server" Text="Prefiero retirar en el local" OnClick="bntCancelarRetiroLocal_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
-    </div>
+<!-- CIERRE  DEL DIV MAIN-CONTAINER -->
 </div>
 
-
-                <!-- CIERRE DEL DIV shippingForm -->
-
-
-                <!-- CIERRE DEL DIV DE BOTÓN -->
-                <%--</div>--%><!-- CIERRE  DE confirmationSection -->
-
-
-
-
-                <!-- Métodos de pago -->
-                <div id="paymentMethods" runat="server">
-                    <p class="section-title">Elegí tu medio de pago</p>
-                    <asp:RadioButtonList ID="rblPaymentMethods" runat="server" OnSelectedIndexChanged="rblPaymentMethods_SelectedIndexChanged" AutoPostBack="True" OnClientClick="disableUnloadWarning();">
-                        <asp:ListItem Text="Efectivo, abonás en nuestro local en calle Florida 123 CABA de 10hs a 18hs" Value="Efectivo" OnClientClick="disableUnloadWarning();" />
-                        <asp:ListItem Text="Transferencia bancaria" Value="Transferencia" OnClientClick="disableUnloadWarning();" />
-                        <asp:ListItem Text="Mercado Pago" Value="MercadoPago" OnClientClick="disableUnloadWarning();" />
-                    </asp:RadioButtonList>
-                </div>
-
-
-                <!-- CIERRE  DEL DIV paymentMethods -->
-
-                <%-- BOTONES DE METODOS DE PAGO--%>
-                <%--Si elige Efectivo--%>
-                <div class="mt-4 text-center">
-                    <asp:Button ID="btnConfirmaEfectivo" runat="server" Visible="false" Text="Confirmar pago en Efectivo" OnClick="btnConfirmaEfectivo_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
-                </div>
-                <div class="mt-4 text-center">
-                    <asp:Button ID="btnCancelaEfectivo" runat="server" Visible="false" Text="Cancelar y volver" OnClick="btnCancelaPago_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
-                </div>
-
-                <%--Si elige Transferencia--%>
-                <div class="mt-4 text-center">
-                    <asp:Button ID="btnConfirmaTransferencia" runat="server" Visible="false" Text="Confirmar pago con Transferencia bancaria" OnClick="btnConfirmaTransferencia_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
-                </div>
-                <div class="mt-4 text-center">
-                    <asp:Button ID="btnCancelaTransferencia" runat="server" Visible="false" Text="Cancelar y volver" OnClick="btnCancelaPago_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
-                </div>
-
-                <%--Si elige MercadoPago--%>
-                <div class="mt-4 text-center">
-                    <asp:Button ID="btnConfirmaMP" runat="server" Visible="false" Text="Confirmar pago con Mercado Pago" OnClick="btnConfirmaMP_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
-                </div>
-                <div class="mt-4 text-center">
-                    <asp:Button ID="btnCancelarMP" runat="server" Visible="false" Text="Cancelar y volver" OnClick="btnCancelaPago_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
-                </div>
-
-                <!-- Formulario para Tarjeta de Crédito/Débito -->
-                <%-- <div id="creditCardForm" runat="server" class="form-group" visible="False">
-                <label for="txtCardHolder" class="form-label">Titular de la Tarjeta</label>
-                <asp:TextBox runat="server" ID="txtCardHolder" CssClass="form-control" />
-                <label for="txtCardNumber" class="form-label">Número de Tarjeta</label>
-                <asp:TextBox runat="server" ID="txtCardNumber" CssClass="form-control" />
-                <label for="ddlCardType" class="form-label">Tipo de Tarjeta</label>
-                <asp:DropDownList runat="server" ID="ddlCardType" CssClass="form-control">
-                    <asp:ListItem Text="Visa" Value="Visa" />
-                    <asp:ListItem Text="MasterCard" Value="MasterCard" />
-                    <asp:ListItem Text="American Express" Value="Amex" />
-                </asp:DropDownList>
-                <label for="txtExpiryDate" class="form-label">Fecha de Vencimiento</label>
-                <asp:TextBox runat="server" ID="txtExpiryDate" CssClass="form-control" />
-                <label for="txtSecurityCode" class="form-label">Código de Seguridad</label>
-                <asp:TextBox runat="server" ID="txtSecurityCode" CssClass="form-control" TextMode="Password" />
-            </div>--%>
-
-                <!-- Botón para aceptar -->
-                <div class="mt-4 text-center">
-                    <asp:Button ID="btnConfirmPayment" runat="server" Text="Aceptar" OnClick="btnConfirmPayment_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
-                </div>
-
-                <!-- Confirmación Transferencia -->
-                <br />
-                <div id="transferConfirmation" runat="server" visible="False">
-                    <p>Te enviamos los datos de pago por correo electrónico. Por favor, revisá tu bandeja de entrada.</p>
-                </div>
-
-                <%--CONFIRMO o CANCELO TODA LA OPERACIÓN--%>
-                <div id="confirmoFinal" runat="server" visible="False">
-                    <p>Revisá y confirmá tu compra</p>
-                </div>
-                <asp:Button ID="btnTerminarCompra" runat="server" Text="Confirmar la Compra" OnClick="btnTerminarCompra_Click" CssClass="btn btn-success" Visible="false" OnClientClick="disableUnloadWarning();" />
-                <asp:Button ID="btnCanceloCompra" runat="server" Text="Cancelar la Compra y vaciar el carrito" OnClick="btnCanceloCompra_Click" Visible="false" OnClientClick="return confirm('¿Estás seguro de que deseas cancelar la compra?');" CssClass="btn btn-success" />
-
-
-                <%--CANCELO LA COMPRA--%>
-                <asp:Label ID="lblCompraCancelada" runat="server" Text="Compra Cancelada" CssClass="alert alert-danger" Visible="False"></asp:Label>
-
-
-                <%--TERMINO LA COMPRA--%>
-                <div id="terminaLaCompra" runat="server" visible="False">
-                    <p>MUCHAS GRACIAS, YA ESTAMOS PROCESANDO TU PEDIDO! REVISA TU CORREO, TE ENVIAMOS TODOS LOS DATOS PARA FINALIZAR EL PAGO</p>
-                </div>
-
-
-                <%-- boton de finalizar compra--%>
-                <div class="mt-4 text-center">
-                    <asp:Button ID="volverHome" runat="server" Visible="false" Text="Volver al Inicio" OnClick="volverHome_Click" CssClass="btn btn-success" OnClientClick="disableUnloadWarning();" />
-                </div>
-
-            </div>
-            <!-- CIERRE DEL DIV CONFIRMATIONsECTION -->
-
-           
-
-
-        </div>
-        <!-- CIERRE  DEL DIV MAIN-CONTAINER -->
 </asp:Content>
