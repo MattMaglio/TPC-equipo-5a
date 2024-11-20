@@ -331,7 +331,6 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
-        
         public void ActuaclizarPrecio(int idArt, int idColor, int idTalle, float precio)
         {
             DataAccess conexion = new DataAccess();
