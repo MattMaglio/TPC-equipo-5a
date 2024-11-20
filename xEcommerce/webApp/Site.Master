@@ -207,12 +207,13 @@
                                 </div>
                             </nav>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-12">
+                        <%--SEARCH--%>
+                       <%-- <div class="col-lg-3 col-md-3 col-sm-12">
                             <div class="search-box">
                                 <input type="text" class="form-control" placeholder="Buscar" aria-label="Search">
                                 <button class="btn" type="button"><i class="fas fa-search"></i></button>
                             </div>
-                        </div>
+                        </div>--%>
                     </div>
                 </div>
             </div>

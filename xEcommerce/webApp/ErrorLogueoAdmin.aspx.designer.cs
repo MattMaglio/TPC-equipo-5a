@@ -11,7 +11,7 @@ namespace webApp
 {
 
 
-    public partial class Error
+    public partial class ErrorLogueoAdmin
     {
 
         /// <summary>

@@ -102,6 +102,10 @@
                                 <%-- MENSAJE DE NO STOCK--%>
                                 <asp:Label ID="lblNoStock" runat="server" Visible="false" Text="Producto sin stock" Font-Bold="True" Font-Size="Large"></asp:Label>
 
+                                <%--MENSAJE DE ELEGIR UNA OPCIÓN--%>
+                                <asp:Label ID="lblEligeUnaOpcion" runat="server" Visible="false" Text="Elegí talle y color del artículo!" Font-Bold="True" Font-Size="Large"></asp:Label>
+
+                                
 
                                 <br />
                                 <br />

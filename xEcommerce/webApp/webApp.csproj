@@ -141,6 +141,7 @@
     <Content Include="CreateUser.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Error.aspx" />
+    <Content Include="ErrorLogueoAdmin.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="ModifyClient.aspx" />
     <Content Include="MyAccount.aspx" />
@@ -200,6 +201,13 @@
     </Compile>
     <Compile Include="Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorLogueoAdmin.aspx.cs">
+      <DependentUpon>ErrorLogueoAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorLogueoAdmin.aspx.designer.cs">
+      <DependentUpon>ErrorLogueoAdmin.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

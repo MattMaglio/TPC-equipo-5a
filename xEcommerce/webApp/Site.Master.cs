@@ -25,7 +25,7 @@ namespace webApp
                     //HEADER
                     litMiCuenta.Visible = false;  // Ocultar "Mi Cuenta" para ADMIN
                     litLogin.Visible = false; // no veo el login
-                    litCarrito.Visible = false; // no veo el cart
+                    litCarrito.Visible = true; // veo el cart
                     lnkSalir.Visible = true;//veo SALIR
                     litAdminPanel.Visible = true; //veo AdminPanel
 

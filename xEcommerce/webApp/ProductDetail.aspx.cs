@@ -189,7 +189,8 @@ namespace webApp
                             lblPrecio.Visible = true;
                             lblStock.Visible = true;
                             lblStock.Text = "Cantidad disponible: " + cantidad.ToString();
-                            lblNoStock.Visible = false; 
+                            lblNoStock.Visible = false;
+                            lblEligeUnaOpcion.Visible = false;
                         }
                         else
                         {
@@ -197,6 +198,7 @@ namespace webApp
                             lblPrecio.Visible = false;
                             lblStock.Visible = false;
                             lblNoStock.Visible = true;
+                            lblEligeUnaOpcion.Visible = false;
                         }
 
                         precioEncontrado = true;
@@ -210,6 +212,7 @@ namespace webApp
                     lblPrecio.Visible = false;
                     lblStock.Visible = false;
                     lblNoStock.Visible = true;
+                    lblEligeUnaOpcion.Visible = false;
                 }
 
                 dataAccess.closeConnection();
@@ -225,7 +228,7 @@ namespace webApp
         
         protected void btnAgregarACarrito_Click(object sender, EventArgs e)
         {
-            if (Session["usuario"] != null)
+            if (Session["usuario"] != null && ((lblPrecio.Visible == true) || (lblStock.Visible == true)))////////AGREGADO
             {
                 // si el user ya está logueado agrego el producto al carrito ACA VA LA LOGICA
                 // Response.Redirect("Sales.aspx", false);
@@ -271,6 +274,13 @@ namespace webApp
 
                 Session["Carrito"] = carrito;
                 
+            }
+            else if(((lblPrecio.Visible != true) && (lblStock.Visible == true) || (lblStock.Visible != true) && (lblPrecio.Visible == true)))
+            {
+                lblEligeUnaOpcion.Visible = true;
+                lblNoStock.Visible = false;
+
+
             }
             else //user no logueado
             {
