@@ -35,9 +35,18 @@ namespace webApp
         {   
             try
             {
-                if (!IsPostBack)
+                // Verificar si la sesión del usuario está activa y si tiene permisos de ADMIN
+                if (Session["usuario"] == null ||
+                   ((Usuario)Session["usuario"]).TipoUsuario != TipoUsuario.ADMIN)
+
+                
                 {
-                   
+                    Session.Add("error", "Debes loguearte con permisos de Admin para ingresar a esta sección");
+                    Response.Redirect("ErrorLogueoAdmin.aspx");
+
+
+
+
                     /*// Inicializa el formulario como no visible al cargar la página
                     addArticleForm.Visible = false;
                     if (Request.QueryString["id"]!= null)
@@ -921,20 +930,20 @@ namespace webApp
             // opcional si vamos a utilizar boton para actualizar estado
         }
 
-        protected void ddlEstadoVenta_TextChanged(object sender, EventArgs e)
-        {
-            VentasAS venta = new VentasAS();
-            DropDownList estado = (DropDownList)sender;
-            // en la grilla la columna estado, obtenemos la accion
-            GridViewRow columna = (GridViewRow)estado.NamingContainer;
-            // con el value podemos actualizar la DB para el estado de esta venta
-            string value = estado.SelectedValue;
-            //obtenemos el id de la venta 
-            string ventaID = dgvSell.DataKeys[columna.RowIndex].Value.ToString();
-            // pasamos a la db para actualizar el estado de la venta 
-            venta.ActualizarEstadoVenta(ventaID, value);
-            // actualizamos la grilla 
-            dgvSell.DataBind();
-        }
+        //protected void ddlEstadoVenta_TextChanged(object sender, EventArgs e)
+        //{
+        //    VentasAS venta = new VentasAS();
+        //    DropDownList estado = (DropDownList)sender;
+        //    // en la grilla la columna estado, obtenemos la accion
+        //    GridViewRow columna = (GridViewRow)estado.NamingContainer;
+        //    // con el value podemos actualizar la DB para el estado de esta venta
+        //    string value = estado.SelectedValue;
+        //    //obtenemos el id de la venta 
+        //    string ventaID = dgvSell.DataKeys[columna.RowIndex].Value.ToString();
+        //    // pasamos a la db para actualizar el estado de la venta 
+        //    venta.ActualizarEstadoVenta(ventaID, value);
+        //    // actualizamos la grilla 
+        //    dgvSell.DataBind();
+        //}
     }
 }
