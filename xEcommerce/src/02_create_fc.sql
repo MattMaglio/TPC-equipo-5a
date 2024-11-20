@@ -1,7 +1,7 @@
 USE XECOMMERCE;
 GO
 
-CREATE FUNCTION Operaciones.FC_TotalStockPorCodigo (@CodigoProducto VARCHAR(50))
+CREATE OR ALTER FUNCTION Operaciones.FC_TotalStockPorCodigo (@CodigoProducto VARCHAR(50))
 RETURNS INT
 AS
 BEGIN
@@ -16,7 +16,7 @@ BEGIN
 END;
 GO
 
-CREATE FUNCTION  Catalogo.FC_ObtenerCodigoArticulo (@CodigoProducto VARCHAR(10))
+CREATE OR ALTER FUNCTION Catalogo.FC_ObtenerCodigoArticulo (@CodigoProducto VARCHAR(10))
 RETURNS INT
 AS
 BEGIN
@@ -31,7 +31,7 @@ BEGIN
 END;
 GO
 
-CREATE FUNCTION Catalogo.FC_ObtenerIdCliente(@DNI varchar(10))
+CREATE OR ALTER FUNCTION Catalogo.FC_ObtenerIdCliente(@DNI varchar(10))
 RETURNS INT
 AS
 BEGIN
@@ -46,7 +46,7 @@ BEGIN
 END;
 GO
 
-CREATE FUNCTION Catalogo.FC_ValidarCodigoActivo(@Codigo varchar(10))
+CREATE OR ALTER FUNCTION Catalogo.FC_ValidarCodigoActivo(@Codigo varchar(10))
 RETURNS INT
 AS
 BEGIN

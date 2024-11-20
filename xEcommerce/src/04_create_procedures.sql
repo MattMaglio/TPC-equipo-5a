@@ -311,20 +311,43 @@ FROM Catalogo.ImagenArticulos
 ;
 GO
 
-CREATE OR ALTER PROCEDURE Catalogo.ListarArticulosConImagen AS
+CREATE OR ALTER PROCEDURE [Catalogo].[ListarArticulosConImagen]
+    @IdCategoria INT = NULL,
+    @IdMarca INT = NULL,
+    @IdTipo INT = NULL
+AS
 BEGIN
     SELECT
         a.Id AS ProductId,
         a.Codigo AS Code,
         a.Descripcion AS Name,
-        i.UrlImagen AS ImageUrl
+        i.UrlImagen AS ImageUrl,
+        a.IdTipo,
+        a.IdMarca,
+        a.IdCategoria,
+        a.Detalle,
+        a.Estado,
+        c.Descripcion AS CategoriaDescripcion,
+        m.Descripcion AS MarcaDescripcion,
+        t.Descripcion AS TipoDescripcion
     FROM
         Catalogo.Articulos a
     LEFT JOIN
         Catalogo.ImagenArticulos i ON a.Id = i.IdArticulo
+
+
+    LEFT JOIN
+        Catalogo.Categorias c ON a.IdCategoria = c.Id
+    LEFT JOIN
+        Catalogo.Marcas m ON a.IdMarca = m.Id
+    LEFT JOIN
+        Catalogo.Tipos t ON a.IdTipo = t.Id
     WHERE
-        a.Estado = 1;
-END;
+        a.Estado = 1
+        AND (@IdCategoria IS NULL OR a.IdCategoria = @IdCategoria)
+        AND (@IdMarca IS NULL OR a.IdMarca = @IdMarca)
+        AND (@IdTipo IS NULL OR a.IdTipo = @IdTipo);
+END
 GO
 
 CREATE OR ALTER PROCEDURE Catalogo.SP_InsertarArticulo
@@ -1246,7 +1269,7 @@ LEFT JOIN Operaciones.Stock s
 GO
 
 
-CREATE PROCEDURE [Catalogo].[ObtenerTallesPorIdParaDetalle]
+CREATE OR ALTER PROCEDURE [Catalogo].[ObtenerTallesPorIdParaDetalle]
 @Id INT
 AS
 BEGIN
@@ -1262,7 +1285,7 @@ WHERE a.Id = @Id;
 END
 GO
 
-CREATE PROCEDURE [Catalogo].[ObtenerColoresPorIdParaDetalle]
+CREATE OR ALTER PROCEDURE [Catalogo].[ObtenerColoresPorIdParaDetalle]
  @Id INT
  AS
 BEGIN
@@ -1278,7 +1301,7 @@ WHERE a.Id = @Id;
 END
 GO
 
-CREATE   PROCEDURE [Catalogo].[ObtenerPrecioPorIdParaDetalle]
+CREATE OR ALTER PROCEDURE [Catalogo].[ObtenerPrecioPorIdParaDetalle]
     @Id INT
 AS
 BEGIN
@@ -1287,50 +1310,21 @@ BEGIN
     SELECT
         a.Id AS ProductId,
 		p.IdColor,
-		c.Descripcion AS Color, 
+		c.Descripcion AS Color,
 		p.IdTalle,
 		t.Descripcion AS Talle,
 		p.Precio
 		  FROM
         Operaciones.Precios p
 	LEFT JOIN
-		Catalogo.Articulos a ON a.Id = p.IdArticulo 
-	INNER JOIN 
+		Catalogo.Articulos a ON a.Id = p.IdArticulo
+	INNER JOIN
 		Catalogo.Colores c ON c.Id = p.IdColor
-	INNER JOIN 
+	INNER JOIN
 		Catalogo.Talles t ON t.Id = p.IdTalle
     WHERE
-        a.Estado = 1 AND a.Id = @Id; 
+        a.Estado = 1 AND a.Id = @Id;
 END
-GO
-
-CREATE PROCEDURE Catalogo.InsertarNuevoArticulo
-    @Codigo VARCHAR(10),
-    @Descripcion VARCHAR(255),
-    @IdTipo INT,
-    @IdMarca INT,
-    @IdCategoria INT,
-    @Detalle VARCHAR(255)
-AS
-BEGIN
-    BEGIN TRANSACTION;
-    BEGIN TRY
-        --insertamos en la tabla articulo
-        INSERT INTO Articulos (Codigo, Descripcion, IdTipo, IdMarca, IdCategoria, Detalle)
-        VALUES (@Codigo, @Descripcion, @IdTipo, @IdMarca, @IdCategoria, @Detalle);
-
-        -- capturamos el id ingresado
-        SELECT SCOPE_IDENTITY() AS IdArticulo;
-
-
-        COMMIT TRANSACTION;
-    END TRY
-    BEGIN CATCH
-       
-        ROLLBACK TRANSACTION;
-        THROW;
-    END CATCH
-END;
 GO
 
 CREATE PROCEDURE Catalogo.InsertarImagen
@@ -1338,16 +1332,16 @@ CREATE PROCEDURE Catalogo.InsertarImagen
     @UrlImagen VARCHAR(255)
 AS
 BEGIN
-    BEGIN TRANSACTION; 
+    BEGIN TRANSACTION;
     BEGIN TRY
         -- insertamos la imagen relacionada con el articulo
         INSERT INTO Catalogo.ImagenArticulos(IdArticulo, UrlImagen)
         VALUES (@IdArticulo, @UrlImagen);
 
-        COMMIT TRANSACTION; 
+        COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
-        ROLLBACK TRANSACTION; 
+        ROLLBACK TRANSACTION;
         THROW;
     END CATCH
 END;
@@ -1357,7 +1351,7 @@ CREATE OR ALTER PROCEDURE Catalogo_SPBorrarImagen
     @Id INT
 AS
 BEGIN
-  
+
     BEGIN TRY
         BEGIN TRANSACTION;
 
@@ -1369,6 +1363,324 @@ BEGIN
     BEGIN CATCH
         BEGIN
             ROLLBACK TRANSACTION;
-        END;      
+        END;
     END CATCH;
 END;
+GO
+
+CREATE OR ALTER PROCEDURE [Catalogo].[ObtenerArticuloPorIdParaCards]
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        a.Id AS ProductId,
+        a.Descripcion AS Name,
+        i.UrlImagen AS ImageUrl,
+         a.Detalle,
+        a.IdTipo,
+        a.IdMarca,
+        a.IdCategoria,
+        a.Estado,
+        c.Descripcion AS CategoriaDescripcion,
+        m.Descripcion AS MarcaDescripcion,
+        t.Descripcion AS TipoDescripcion
+    FROM
+        Catalogo.Articulos a
+    LEFT JOIN
+        Catalogo.ImagenArticulos i ON a.Id = i.IdArticulo
+    LEFT JOIN
+        Catalogo.Categorias c ON a.IdCategoria = c.Id
+    LEFT JOIN
+        Catalogo.Marcas m ON a.IdMarca = m.Id
+    LEFT JOIN
+        Catalogo.Tipos t ON a.IdTipo = t.Id
+    WHERE
+        a.Estado = 1 AND a.Id = @Id;  -- Aquí filtras por el ID
+END;
+GO
+
+CREATE OR ALTER PROCEDURE [Catalogo].[ObtenerColoresPorIdParaDetalle]
+@Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+SELECT DISTINCT
+    c.Id AS "Id de Color",
+    c.Codigo AS "Codigo de Color",
+    c.Descripcion AS "Descripcion de Color"
+FROM Operaciones.Precios p
+INNER JOIN Catalogo.Articulos a ON p.IdArticulo = a.Id
+INNER JOIN Catalogo.Colores c ON p.IdColor = c.Id
+WHERE a.Id = @Id;
+END
+GO
+
+CREATE  OR ALTER PROCEDURE [Catalogo].[ObtenerTallesPorIdParaDetalle]
+@Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+SELECT DISTINCT
+    t.Id AS "Id de Talle",
+    t.Codigo AS "Codigo de Talle",
+    t.Descripcion AS "Descripcion de Talle"
+FROM Operaciones.Precios p
+INNER JOIN Catalogo.Articulos a ON p.IdArticulo = a.Id
+INNER JOIN Catalogo.Talles t ON p.IdTalle = t.Id
+WHERE a.Id = @Id;
+END
+GO
+
+CREATE  OR ALTER PROCEDURE [Catalogo].[ObtenerStockPorIdParaDetalle]
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        a.Id AS ProductId,
+        s.IdColor,
+        c.Descripcion AS Color,
+        s.IdTalle,
+        t.Descripcion AS Talle,
+        s.Cantidad
+          FROM
+        Operaciones.Stock s
+    LEFT JOIN
+        Catalogo.Articulos a ON a.Id = s.IdArticulo
+    INNER JOIN
+        Catalogo.Colores c ON c.Id = s.IdColor
+    INNER JOIN
+        Catalogo.Talles t ON t.Id = s.IdTalle
+    WHERE
+        a.Estado = 1 AND a.Id = @Id;
+END
+GO
+
+CREATE OR ALTER PROCEDURE [Catalogo].[ObtenerSyPPorIdParaDetalle]
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT"Id de Articulo",
+    "Id de Color",
+     "Codigo de Color",
+     "Descripcion de Color",
+     "Id de Talle",
+     "Codigo de Talle",
+    "Descripcion de Talle",
+    "Cantidad",
+     "Precio"
+FROM Operaciones.VW_StockYPreciosParaArt
+
+    WHERE
+        "Id de Articulo" = @Id;
+END
+GO
+
+CREATE OR ALTER PROCEDURE [Catalogo].[SP_InsertarUsuario]
+    @usuario VARCHAR(50),
+    @pass VARCHAR(50),
+    @tipoUser INT = 1,       -- Valor predeterminado para TipoUser (2=normal)
+    @estado BIT = 1          -- Valor predeterminado para Estado (1=activo)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+            -- Insertar el nuevo usuario en la tabla Usuarios
+            INSERT INTO Catalogo.Usuarios (Usuario, Pass, TipoUser, Estado)
+            VALUES (@usuario, @pass, @tipoUser, @estado);
+
+            -- Confirmar la transacción si todo sale bien
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            -- Si hay un error, se hace rollback de la transacción
+            ROLLBACK TRANSACTION;
+
+            -- Propagar el error con detalles
+            THROW;  -- Re-lanza el error capturado
+        END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Operaciones.SP_RestarStockDeVenta
+    @IdArt INT,
+    @IdColor INT,
+    @IdTalle INT,
+    @Cantidad INT
+AS
+BEGIN
+    UPDATE Operaciones.Stock SET Cantidad = Cantidad - @Cantidad
+    WHERE IdArticulo = @IdArt
+    AND IdColor = @IdColor
+    AND IdTalle = @IdTalle
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Facturacion.SP_CrearOrdenJSON
+    @Usuario varchar(25),
+    @Carrito NVARCHAR(MAX), -- JSON con los productos
+    @TotalAPagar MONEY,
+    @TieneEnvio BIT,
+    @TieneRetiro BIT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @IdOrden INT;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Insertar en OrdenesCabecera
+        INSERT INTO Facturacion.Ordenes (Usuario, Fecha, TieneEnvio, TieneRetiro, Entregado, MontoTotal, Pagado)
+        VALUES (@Usuario, GETDATE(), @TieneEnvio, @TieneRetiro, 0, @TotalAPagar, 0);
+
+        -- Obtener el ID de la orden
+        SET @IdOrden = SCOPE_IDENTITY();
+
+        -- Insertar en OrdenesDetalle
+        INSERT INTO Facturacion.DetallesOrdenes (IdOrden, NumeroLinea, Articulo, Color, Talle, Cantidad, Precio)
+        SELECT
+            @IdOrden AS IdOrden,
+            JSON_VALUE(Value, '$.NumeroLinea') AS NumeroLinea,
+            JSON_VALUE(Value, '$.Articulo') AS Articulo,
+            JSON_VALUE(Value, '$.Color') AS Color,
+            JSON_VALUE(Value, '$.Talle') AS Talle,
+            JSON_VALUE(Value, '$.Cantidad') AS Cantidad,
+            JSON_VALUE(Value, '$.Precio') AS Precio
+        FROM OPENJSON(@Carrito);
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+
+        -- Repropagar el error
+        THROW;
+    END CATCH;
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Facturacion.SP_ListarOrdenes AS
+SELECT Id,
+	Fecha,
+    Usuario,
+    TieneEnvio,
+    TieneRetiro,
+    Entregado,
+    ComprobanteFiscal,
+    MontoTotal,
+    Pagado
+FROM Facturacion.Ordenes;
+GO
+
+CREATE OR ALTER PROCEDURE Facturacion.SP_EliminarOrden
+    @IdOrden INT
+AS
+BEGIN
+    BEGIN TRY
+        -- Inicia la transacción
+        BEGIN TRANSACTION;
+
+        -- Verifica si existen registros asociados a la orden
+        IF EXISTS (SELECT 1 FROM Facturacion.DetallesOrdenes WHERE IdOrden = @IdOrden)
+        BEGIN
+            -- Actualiza el stock sumando la cantidad de los productos en el detalle
+            UPDATE Operaciones.Stock
+            SET Stock.Cantidad = Stock.Cantidad + Detalle.Cantidad
+            FROM Operaciones.Stock AS Stock
+            INNER JOIN Facturacion.DetallesOrdenes AS Detalle ON 1 = 1
+            INNER JOIN Catalogo.Articulos AS Articulo ON Articulo.Descripcion = Detalle.Articulo
+            INNER JOIN Catalogo.Colores AS Color ON Color.Descripcion = Detalle.Color
+            INNER JOIN Catalogo.Talles AS Talle ON Talle.Descripcion = Detalle.Talle
+            WHERE Stock.IdArticulo = Articulo.Id
+              AND Stock.IdColor = Color.Id
+              AND Stock.IdTalle = Talle.Id
+              AND Detalle.IdOrden = @IdOrden;
+
+            -- Elimina los registros de la tabla de detalles
+            DELETE FROM Facturacion.DetallesOrdenes
+            WHERE IdOrden = @IdOrden;
+            DELETE FROM Facturacion.Ordenes
+            WHERE Id = @IdOrden;
+        END
+        -- Confirma la transacción
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, revierte la transacción
+        ROLLBACK TRANSACTION;
+    END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Facturacion.SP_marcarPagado
+    @IdOrden INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        IF EXISTS (SELECT 1 FROM Facturacion.DetallesOrdenes WHERE IdOrden = @IdOrden)
+        BEGIN
+            UPDATE Facturacion.Ordenes
+            SET Pagado = 1
+            WHERE Id = @IdOrden;
+        END
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+    END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Facturacion.SP_marcarEntregado
+    @IdOrden INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        IF EXISTS (SELECT 1 FROM Facturacion.DetallesOrdenes WHERE IdOrden = @IdOrden)
+        BEGIN
+            UPDATE Facturacion.Ordenes
+            SET Entregado = 1
+            WHERE Id = @IdOrden;
+        END
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+    END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Facturacion.SP_cargarCompFiscal
+    @IdOrden INT,
+    @compFiscal VARCHAR(15)
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        IF EXISTS (SELECT 1 FROM Facturacion.DetallesOrdenes WHERE IdOrden = @IdOrden)
+        BEGIN
+            UPDATE Facturacion.Ordenes
+            SET ComprobanteFiscal = @compFiscal
+            WHERE Id = @IdOrden;
+        END
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+    END CATCH
+END;
+GO
