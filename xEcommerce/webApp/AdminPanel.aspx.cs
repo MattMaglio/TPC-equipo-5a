@@ -56,13 +56,6 @@ namespace webApp
 
                 Session.Add("Error", ex);
             }
-
-
-            /* dgvPanelAdmin.DataSource = clients.listar(); // CLIENTES
-             dgvPanelAdmin.DataBind(); 
-
-             dgvPanelAdmin.DataSource = sell.listar(); // VENTAS
-             dgvPanelAdmin.DataBind(); */
         }
         protected void MostarElentoSelecionado(string grupo)
         {
@@ -80,7 +73,6 @@ namespace webApp
                 div_gral_dgvTip.Visible = false;
                 // Grilla de Ordenes
                 div_gral_dgvOrden.Visible = false;
-
 
                 switch (grupo)
                 {
@@ -202,7 +194,7 @@ namespace webApp
             LimpiarFormulario();
         }
         protected void btnSaveArticle_Click(object sender, EventArgs e)
-        {
+        {   //BOTON PARA GUARDAR/MODIFICAR ARTICULO
             try
             {
                 //CAPTURAMOS LOS VALORES INGRESADOS EN EL FORMULARIO
@@ -313,7 +305,7 @@ namespace webApp
             dgvArticles.Columns[7].Visible = false;
         }
         protected void btnViewArticles_Click(object sender, EventArgs e) 
-        {
+        {   // BOTON VER ARTICULOS EN GRILLA
             MostarElentoSelecionado("div_gral_dgvArt");
             LoadArticle(); // Cargar y mostrar artículos en el GridView
         }
@@ -442,7 +434,7 @@ namespace webApp
             }
         }
         protected void dgvArticles_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
+        {   // MODO MODIFICAR EN LA GRILLA
             int IdArticulo = Convert.ToInt32(e.Keys["Id"]);
             ArticuloAS data = new ArticuloAS();
             data.DeleteArticulo(IdArticulo);
@@ -653,7 +645,7 @@ namespace webApp
             }
         }
         protected void dgvTipific_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
+        {   // COMANDO PARA MODIFICAR TIPIFICACIONES EN GRILLA 
             if (e.CommandName == "Modificar") {
 
                 IsEditMode = true;
@@ -684,7 +676,7 @@ namespace webApp
         }
         protected void dgvTipific_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-
+            // COMANDO DE LA GRILLA PARA BORRAR TIPIFICACIONES
             int Id = Convert.ToInt32(e.Keys["Id"]);
             try
             {

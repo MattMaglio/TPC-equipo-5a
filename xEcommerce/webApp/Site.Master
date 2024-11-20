@@ -142,15 +142,12 @@
                         </div>
                         <div class="col-md-6 text-right">
                             <ul class="list-inline mb-0">
-
                                 <li class="list-inline-item">
                                     <asp:Literal ID="litUserGreeting" runat="server" Visible="false"></asp:Literal>
                                 </li>
-
-                                <li class="list-inline-item">
-                                    <li class="list-inline-item">
+                                <li class="list-inline-item">  
                                         <asp:Literal ID="litMiCuenta" runat="server" Text="<a href='MyAccount.aspx'>Mi cuenta</a>" Visible="false" />
-                                    </li>
+                                </li>
                                     <li class="list-inline-item">
                                         <!-- LinkButton con el ícono de ingreso -->
                                         <asp:Literal ID="litLogin" runat="server" Text="<a href='Login.aspx'><i class='fas fa-sign-in-alt'></i> Ingresar</a>" Visible="false" />
@@ -159,11 +156,11 @@
                                         <asp:Literal ID="litCarrito" runat="server" Text="<a href='Sales.aspx'><i class='fas fa-shopping-cart'></i></a>" Visible="false" />
                                     </li>
                                     <!-- LinkButton con ícono de salida -->
+                                    <li>
                                     <asp:LinkButton ID="lnkSalir" runat="server" Text="Salir" OnClick="lnkSalir_Click" Visible="false">
                                      <i class="fas fa-sign-out-alt"></i> Salir
                                      </asp:LinkButton>
-                                </li>
-
+                                    </li>
                             </ul>
                         </div>
                     </div>

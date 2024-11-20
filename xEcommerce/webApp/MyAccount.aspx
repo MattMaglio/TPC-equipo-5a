@@ -162,7 +162,7 @@
 
         .btn-outline-primary {
             border-color: #6c757d;
-            / background: transparent;
+            background: transparent;
             color: #6c757d;
             transition: background-color 0.3s, color 0.3s;
         }
