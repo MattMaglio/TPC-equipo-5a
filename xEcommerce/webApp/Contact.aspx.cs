@@ -3,21 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Net.Mail;
 
 namespace webApp
 {
     public partial class Contact : System.Web.UI.Page
-    {   
+    {
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
-
-        /*protected void btnEnviar_Click(object sender, EventArgs e)
+        protected void btnEnviar_Click(object sender, EventArgs e)
         {   // capturamos los valores del formulario de contacto
             string nombre = txtNombre.Text;
             string asunto = txtAsunto.Text;
@@ -41,7 +38,7 @@ namespace webApp
                 return;
                 //otra alternativa
                 //Session.Add("error", "Por favor, ingresa un correo electrónico válido.");
-               // Response.Redirect(Request.Url.AbsoluteUri);  // Redirige a la misma pag para mostrar el error
+                // Response.Redirect(Request.Url.AbsoluteUri);  // Redirige a la misma pag para mostrar el error
                 //return;
             }
 
@@ -51,10 +48,10 @@ namespace webApp
                 return;
             }
 
-            //EmailAS emailData = new EmailAS();
+            EmailAS emailData = new EmailAS();
 
 
-           try
+            try
             {
                 emailData.ArmarCorreo(email, nombre, asunto);
                 emailData.EnviarEmail();
@@ -68,26 +65,24 @@ namespace webApp
                 // enviamos a la pagina de inicio
                 Response.Redirect("Default.aspx");
             }
-           catch (Exception ex)
-           {
+            catch (Exception ex)
+            {
 
                 Response.Write($"<script>alert('Error al enviar el correo: {ex.Message}');</script>");
-           }
+            }
 
-        }*/
-
+        }
         private bool IsValidEmail(string email)
         {   // funciono para validar si es un formato email valido el que se ingreso
             try
             {
-                var addr = new System.Net.Mail.MailAddress(email); 
+                var addr = new System.Net.Mail.MailAddress(email);
                 return addr.Address == email;  // Verifica si el correo ingresado es igual al que se genero con MailAddress
             }
             catch
             {
-                return false;  
+                return false;
             }
         }
-
     }
 }
