@@ -433,7 +433,7 @@ namespace webApp
             else if (e.CommandName == "Actualizar")
             {
                 int IdArticulo = Convert.ToInt32(e.CommandArgument);
-                LoadSyP();
+                LoadSyP(IdArticulo);
             }
         }
         protected void dgvArticles_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -786,6 +786,17 @@ namespace webApp
             }
             else
             {
+                ArticuloAS art = new ArticuloAS();
+                ddlArticulo.DataSource = art.listar();
+                ddlArticulo.DataValueField = "Id";
+                ddlArticulo.DataTextField = "Codigo";
+                ddlArticulo.DataBind();
+
+                // Agrega la opción "Todos"
+                ddlArticulo.Items.Insert(0, new ListItem("Todos", "0"));
+
+                ddlArticulo.SelectedValue = idArticulo.ToString();
+
                 lblNombreArt.Visible = true;
                 txtStock.Enabled = true;
                 btnAceptarPrecio.Enabled = true;
