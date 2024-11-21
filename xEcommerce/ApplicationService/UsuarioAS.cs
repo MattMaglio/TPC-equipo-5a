@@ -50,6 +50,78 @@ namespace ApplicationService
             }
         }
 
+        public void actualizarUsuario(Usuario user)
+        {
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+
+            try
+            {
+                query.configSqlQuery("UPDATE Catalogo.Usuarios SET nombre = @nombre, apellido = @apellido, dni = @dni, email = @email WHERE Usuario = @user");
+                query.configSqlParams("@user", user.User);
+                query.configSqlParams("@nombre", user.nombre);
+                query.configSqlParams("@apellido", user.apellido);
+                query.configSqlParams("@dni", user.dni);
+                query.configSqlParams("@email", user.email);
+
+                query.configSqlConexion(conexion.getConnection());
+
+                conexion.openConnection();
+
+                query.exectCommand();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
+        }
+        public Usuario ObtenerDatos(Usuario usuario)
+        {
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+            SqlDataReader result;
+
+            try
+            {
+                query.configSqlQuery("Select email, nombre, apellido, dni from Catalogo.Usuarios Where usuario = @user");
+                query.configSqlParams("@user", usuario.User);
+                //query.configSqlParams("@pass", usuario.Pass);
+
+                query.configSqlConexion(conexion.getConnection());
+
+                conexion.openConnection();
+                result = query.exectQuerry();
+
+                Usuario user = new Usuario();
+
+                //leo la DB y me completo el obj Usuario con id y TipoUser
+                while (result.Read())
+                {
+                    user.email = result["email"].ToString();
+                    user.nombre = result["nombre"].ToString();
+                    user.apellido = result["apellido"].ToString();
+                    user.dni = result["dni"].ToString();
+                    return user;
+                }
+
+                return user;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
+        }
 
         ///////////////////////////////////////////////////////////////////////////////
         public void insertUsuario(Usuario usuario)

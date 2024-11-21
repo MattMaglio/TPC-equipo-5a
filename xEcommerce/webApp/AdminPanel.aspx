@@ -16,11 +16,12 @@
     <asp:ScriptManager runat="server"></asp:ScriptManager>
     <style>
         /* Ajustes generales */
-        .container {
+
+        .container-AP {
             display: flex;
-            flex-wrap: wrap; /* SE ENVUELEN SI NO HAY SUFICIENTE ESPACIO */
-            justify-content: space-between;
-            padding: 10px;
+            flex-wrap: wrap;
+            /*justify-content: space-between;*/
+            padding: 10px 10px 10px 100px;
         }
 
         .left-panel, .right-panel {
@@ -35,7 +36,7 @@
 
         .right-panel {
             width: 100%; /* Ocupa EL 100% DE PANTALLAS CHICAS */
-            max-width: 700px; /* MAX PARA PANTALLAS GRANDES */
+            max-width: 900px; /* MAX PARA PANTALLAS GRANDES */
             margin-top: 20px;
         }
 
@@ -60,6 +61,8 @@
         .dgviewArticles {
             display: flex;
             flex-direction: column;
+            width: 100%;
+            /*gap: 50px;*/
         }
 
         .dgviewArticles .top-controls {
@@ -244,7 +247,7 @@
         }
     </style>
 
-    <div class="container mt-4">
+    <div class="container-AP mt-5">
         <%-- LEFT PANEL --%>
         <div class="left-panel">
             <h2 class="h2">Admin Panel</h2>
@@ -625,7 +628,6 @@
 
             <!-- Grilla de control de las ordenes -->
             <div class="dgviewArticles" id="div_gral_dgvOrden" visible="false" runat="server">
-
                 <div id="div_input_fnumcomp" visible="false" runat="server">
                     <h4> Carga de comprobante Fiscal</h4>
                     <asp:Label ID="lblComp" runat="server"></asp:Label>
@@ -675,6 +677,11 @@
                                 CommandName="Factura"
                                 CommandArgument='<%# Eval("Id") %>'
                                 runat="server" />
+                            
+                            <asp:Button Text="Ver detalle" CssClass="btn btn-primary"
+                                CommandName="Detalle"
+                                CommandArgument='<%# Eval("Id") %>'
+                                runat="server" />
 
                             <asp:Button Text="Eliminar" CssClass="btn btn-danger"
                                 CommandName="Delete"
@@ -686,9 +693,26 @@
                     </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
-                </div>
+                </div>              
             </div>   
         
+            <!-- Grilla de DETALLE ordenes -->
+             <div class="dgviewArticles" id="div_gral_dgvDetalleOrden" visible="false" runat="server">
+ 
+                 <asp:GridView ID="dgvDetOrden" runat="server" CssClass="table table-dark table-striped-columns" 
+                     DataKeyNames="Id" AutoGenerateColumns="False">
+                     <Columns>
+                         <asp:BoundField DataField="Id" HeaderText="Id" />
+                         <asp:BoundField DataField="IdOrden" HeaderText="Orden Nro°" />
+                         <asp:BoundField DataField="Articulo" HeaderText="Articulo" />
+                         <asp:BoundField DataField="Color" HeaderText="Color" />
+                         <asp:BoundField DataField="Talle" HeaderText="Talle" />
+                         <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+                         <asp:BoundField DataField="Precio" HeaderText="Precio" />
+                     </Columns>
+                 </asp:GridView>
+ 
+              </div>
         </div>
     </div>
     <%-- FIN de RIGHT PANEL --%>

@@ -55,6 +55,51 @@ namespace ApplicationService
                 conexion.closeConnection();
             }
         }
+        public List<Orden> listarMisCompras(string user)
+        {
+            List<Orden> lista = new List<Orden>();
+            DataAccess conexion = new DataAccess();
+            DataManipulator query = new DataManipulator();
+            SqlDataReader result;
+
+
+            try
+            {
+                query.configSqlProcedure("Facturacion.SP_ListarOrdenesMisCompras");
+                query.configSqlParams("@Usuario", user);
+                query.configSqlConexion(conexion.getConnection());
+                conexion.openConnection();
+                result = query.exectQuerry();
+                while (result.Read())
+                {
+                    Orden aux = new Orden();
+
+                    aux.Id = (int)result["Id"];
+                    aux.Fecha = ((DateTime)result["Fecha"]).ToString("dd/MM/yyyy");
+                    aux.Usuario = result["Usuario"].ToString();
+                    aux.TieneEnvio = (bool)result["TieneEnvio"] ? "SI" : "NO";
+                    aux.TieneRetiro = (bool)result["TieneRetiro"] ? "SI" : "NO";
+                    aux.Entregado = (bool)result["Entregado"] ? "SI" : "NO";
+                    aux.ComprobanteFiscal = result["ComprobanteFiscal"].ToString();
+                    aux.MontoTotal = Convert.ToSingle(result["MontoTotal"]);
+                    aux.Pagado = (bool)result["Pagado"] ? "SI" : "NO";
+
+                    lista.Add(aux);
+
+                }
+                return lista;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conexion.closeConnection();
+            }
+        }
         public void DeleteOrden(int idOrden)
         {
             DataAccess conexion = new DataAccess();

@@ -1684,3 +1684,37 @@ BEGIN
     END CATCH
 END;
 GO
+
+CREATE OR ALTER PROCEDURE Facturacion.SP_ObtenerDetalleOrden
+    @IdOrden INT
+AS
+BEGIN
+    SELECT Id,
+    IdOrden,
+    Articulo,
+    Color,
+    Talle,
+    Cantidad,
+    Precio
+    FROM Facturacion.DetallesOrdenes
+    WHERE IdOrden = @IdOrden;
+END;
+GO
+
+CREATE OR ALTER PROCEDURE Facturacion.SP_ListarOrdenesMisCompras
+    @Usuario VARCHAR(50)
+AS
+BEGIN
+    SELECT Id,
+        Fecha,
+        Usuario,
+        TieneEnvio,
+        TieneRetiro,
+        Entregado,
+        ComprobanteFiscal,
+        MontoTotal,
+        Pagado
+    FROM Facturacion.Ordenes
+    WHERE Usuario = @Usuario
+END;
+GO

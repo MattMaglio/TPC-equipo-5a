@@ -121,6 +121,7 @@
     <Compile Include="Currier.cs" />
     <Compile Include="DetalleDeFactura.cs" />
     <Compile Include="DetalleDePago.cs" />
+    <Compile Include="DetalleOrden.cs" />
     <Compile Include="Direccion.cs" />
     <Compile Include="Email.cs" />
     <Compile Include="EntidadFinanciera.cs" />

@@ -106,6 +106,7 @@
     <Compile Include="CiudadAS.cs" />
     <Compile Include="ClientAS.cs" />
     <Compile Include="ColorAS.cs" />
+    <Compile Include="DetalleOrdenAS.cs" />
     <Compile Include="MarcaAS.cs" />
     <Compile Include="OrdenAS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
