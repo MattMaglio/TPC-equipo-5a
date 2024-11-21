@@ -248,7 +248,7 @@
 
                             <!-- Grilla de ordenes -->
                             <div runat="server" id="div_compras" visible="false">
-                            <asp:GridView ID="dgvOrden" runat="server" CssClass="table table-dark table-striped-columns"
+                            <asp:GridView ID="dgvOrden" runat="server" CssClass="table table-light table-striped-columns"
                                     DataKeyNames="Id" AutoGenerateColumns="False" OnRowCommand="dgvOrden_RowCommand">
                                 <Columns>
                                     <asp:BoundField DataField="Id" HeaderText="Id" />
@@ -279,7 +279,7 @@
                                 <asp:Button cssClass="btn btn-dark" ID="btnVerOrdenes" runat="server" Text="Volver a las compras"
                                     OnClick="btnVerOrdenes_Click"/>
 
-                                <asp:GridView ID="dgvDetOrden" runat="server" CssClass="table table-dark table-striped-columns" 
+                                <asp:GridView ID="dgvDetOrden" runat="server" CssClass="table table-light table-striped-columns" 
                                     DataKeyNames="Id" AutoGenerateColumns="False">
                                     <Columns>
                                         <asp:BoundField DataField="Id" HeaderText="Id" />

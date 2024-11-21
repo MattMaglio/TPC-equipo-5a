@@ -130,7 +130,7 @@ DROP TABLE IF EXISTS Catalogo.Usuarios;
 CREATE TABLE Catalogo.Usuarios (
     Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     Usuario VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NULL,
     Pass VARCHAR(50) NOT NULL,
     nombre VARCHAR(50) NULL,
     apellido VARCHAR(50) NULL,
