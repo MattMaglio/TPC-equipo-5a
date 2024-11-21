@@ -1,6 +1,17 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProductDetail.aspx.cs" Inherits="webApp.ProductDetail" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+        
+    <script type="text/javascript">
+        function showSuccessMessage() {
+            $('#successModal').modal('show');
+        }
+
+        function redirectToSales() {
+            window.location.href = "Sales.aspx";
+        }
+
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -99,6 +110,7 @@
 
                                 <br />
                                 <br />
+                                <asp:DropDownList ID="ddlCant" runat="server" Enabled="false" class="form-control" ></asp:DropDownList>
                                 <asp:Button ID="btnAgregarACarrito" class="btn btn-secondary mt-3" runat="server" OnClick="btnAgregarACarrito_Click" Text="Agregar al carrito" />
 
                             </div>
@@ -115,6 +127,27 @@
         <br />
     </div>
 
+
+        <%--    SUCCESS ALERT--%>
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">¡Producto agregado al carrito exitosamente!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ¿Deseas seguir comprando?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Si</button>
+                    <button type="button" class="btn btn-secondary" onclick="redirectToSales()">Finalizar comrpa</button>
+                </div>
+            </div>
+        </div>
+        </div>
 
     <!-- Bootstrap JS (optional, for carousel functionality) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

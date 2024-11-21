@@ -28,12 +28,8 @@ namespace webApp
                     litCarrito.Visible = true; // veo el cart
                     lnkSalir.Visible = true;//veo SALIR
                     litAdminPanel.Visible = true; //veo AdminPanel
-
-
                     litUserGreeting.Text = "Hola, " + nombreUsuario;//veo nombre de user
                     litUserGreeting.Visible = true;
-
-
 
 
                 }

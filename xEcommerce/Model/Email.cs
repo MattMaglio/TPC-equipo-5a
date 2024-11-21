@@ -16,7 +16,7 @@ namespace Model
             public Email()
             {
                 Server = new SmtpClient();       // aca va email y contraseña del correo a utilizar la pagina
-                Server.Credentials = new NetworkCredential("xcomeerce.grupos5a@gmail.com", "12345grupoa");
+                Server.Credentials = new NetworkCredential("xEcommerce", "aehbcmnwztxlwcmf");
                 Server.EnableSsl = true;
                 Server.Port = 587;
                 Server.Host = "smtp.gmail.com";

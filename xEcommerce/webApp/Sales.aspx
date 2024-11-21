@@ -488,7 +488,9 @@
                 <p>
                     <asp:Literal ID="lblFormaDePago" runat="server" Text=""></asp:Literal>
                 </p>
-
+                <p>
+                    <asp:Button ID="btn_CancelarGral" runat="server" Text="Cancelar la Compra" OnClick="btnCancelarArticulos_Click" Visible="true" OnClientClick="return confirm('¿Estás seguro de que deseas cancelar la compra?');" CssClass="btn btn-success" />
+                </p>
         </div>
             <!-- FALTA CERRAR EL div DE confirmationDetails -->
     </div>
@@ -497,7 +499,7 @@
     <%--BLOQUE DE CARGA DE DATOS / ELECCIONES--%>
     <div class="cart-container">
         <h2 class="tracking-in-expand" id="articulosAgregados1" runat="server" style="color: white;">Tus compras</h2>
-
+        
         <!-- Sección de Artículos en el Carrito -->
         <div class="section-title" id="articulosAgregados2" runat="server">Artículos en carrito</div>
         <!-- productos deL carrito -->
@@ -531,13 +533,13 @@
             </FooterTemplate>
             </asp:Repeater>
             <!-- CIERRE DEL DIV cart-item-details -->
-            <button>Delete</button>
+            <asp:Button ID="btnBorrarCarrito" runat="server" Text="Vaciar Carrito" onclick="btnBorrarCarrito_Click" class="btn btn-danger" OnClientClick="disableUnloadWarning();"/>
          </div>
         <!-- CIERRE DEL DIV cart-item -->
 
         <!-- Botón para continuar y cancelar -->
         <div class="mt-4 text-center" id="grupoBtnArticulos" runat="server">
-            <asp:Button ID="btnConfirmarArticulos" runat="server" class="bn5" OnClick="btnConfirmarArticulos_Click" Text="Continuar compra" OnClientClick="disableUnloadWarning();" />
+            <asp:Button ID="btnConfirmarArticulos" runat="server" class="bn5" OnClick="btnConfirmarArticulos_Click" Text="Continuar compra" OnClientClick="disableUnloadWarning();"/>
             <asp:Button ID="btnCancelarArticulos" runat="server" class="bn5" OnClick="btnCancelarArticulos_Click" Text="Cancelar compra" OnClientClick="disableUnloadWarning();" />
 
         </div>

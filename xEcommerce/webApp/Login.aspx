@@ -42,7 +42,7 @@
 
                 <div class="contenedor mb-4 d-flex justify-content-center">
                     <asp:Button ID="btnLogin" runat="server" CssClass="btn btn-dark" OnClick="btnLogin_Click" Text="Ingresar" />
-                    <asp:Button ID="btnOlvido" runat="server" CssClass="btn btn-link text-muted" Text="Olvidaste la contraseña?" />
+                    <%--<asp:Button ID="btnOlvido" runat="server" CssClass="btn btn-link text-muted" Text="Olvidaste la contraseña?" />--%>
 
                
                     <asp:Button ID="btnCreateUser" runat="server" CssClass="btn btn-outline-secondary" OnClick="btnCreateUser_Click" Text="Crear una cuenta" />
