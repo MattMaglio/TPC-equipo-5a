@@ -73,6 +73,8 @@ namespace webApp
             DetalleOrdenAS data = new DetalleOrdenAS();
             dgvDetOrden.DataSource = data.listarDetalleFiltrado(idOrden);
             dgvDetOrden.DataBind();
+
+            dgvDetOrden.Columns[0].Visible = false;
             
         }
         protected void loadOrders()

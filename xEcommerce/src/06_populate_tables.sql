@@ -65,3 +65,6 @@ INSERT INTO Catalogo.EntidadesFinancieras ( Codigo, Descripcion) VALUES
 INSERT INTO Catalogo.MediosPago ( IdEntidadFinanciera, Codigo, Descripcion) VALUES
 (NULL, 'EFEC', 'Efectivo'),
 (NULL, 'MPAG', 'Mercado Pago');
+
+INSERT INTO Catalogo.Usuarios (Usuario, Pass, Estado, TipoUser) VALUES
+('Admin', 'Admin123', 1, 2);
