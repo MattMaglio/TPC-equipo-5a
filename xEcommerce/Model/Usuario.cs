@@ -17,7 +17,10 @@ namespace Model
         public int Id { get; set; }
         public string User { get; set; }
         public string Pass { get; set; }
-
+        public string email { get; set; }
+        public string nombre { get; set; }
+        public string apellido { get; set; }
+        public string dni { get; set; }
         public TipoUsuario TipoUsuario { get; set; }
 
         //public NivelDeAccesso NivAcceso { get; set; }
@@ -31,5 +34,4 @@ namespace Model
         }
     }
 
-    
 }

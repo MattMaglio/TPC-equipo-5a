@@ -9,42 +9,34 @@
         .mt-5, .my-5 {
             margin-top: 0.1rem !important;
         }
-
         .decorative-border {
             border: 5px solid black;
             border-radius: 10px;
             padding: 15px;
             box-shadow: 0 4px 10px rgba(128, 128, 128, 0.5);
         }
-
         .card-title {
             font-size: 2.5rem;
             color: #343a40;
             margin-bottom: 15px;
         }
-
         .font-weight-bold {
             font-weight: bold;
-            .font-italic
-
+        }
+        .font-italic
         {
             font-style: italic;
         }
-
         .text-muted {
             color: #6c757d;
         }
-
         .mt-3 {
             margin-top: 1rem;
         }
-
         .mb-2 {
             margin-bottom: 0.5rem;
         }
     </style>
-
-
 
     <br />
     <br />
@@ -104,8 +96,6 @@
 
                                 <%--MENSAJE DE ELEGIR UNA OPCIÓN--%>
                                 <asp:Label ID="lblEligeUnaOpcion" runat="server" Visible="false" Text="Elegí talle y color del artículo!" Font-Bold="True" Font-Size="Large"></asp:Label>
-
-                                
 
                                 <br />
                                 <br />

@@ -38,16 +38,13 @@ namespace webApp
             {
                 if (!IsPostBack)
                 {
-                   
-                    /*// Inicializa el formulario como no visible al cargar la página
-                    addArticleForm.Visible = false;
-                    if (Request.QueryString["id"]!= null)
+                    // Verificar si la sesión del usuario está activa y si tiene permisos de ADMIN
+                    if (Session["usuario"] == null ||
+                       ((Usuario)Session["usuario"]).TipoUsuario != TipoUsuario.ADMIN)
                     {
-                        string id = Request.QueryString["id"];
-                        ArticuloAS data = new ArticuloAS();
-                        Articulo articuloSeleccionado = (data.ObtenerIdXModificacion())[0];
+                        Session.Add("error", "Debes loguearte con permisos de Admin para ingresar a esta sección");
+                        Response.Redirect("ErrorLogueoAdmin.aspx");
                     }
-                    */
                 }
 
             }

@@ -16,11 +16,12 @@
     <asp:ScriptManager runat="server"></asp:ScriptManager>
     <style>
         /* Ajustes generales */
-        .container {
+
+        .container-AP {
             display: flex;
-            flex-wrap: wrap; /* SE ENVUELEN SI NO HAY SUFICIENTE ESPACIO */
-            justify-content: space-between;
-            padding: 10px;
+            flex-wrap: wrap;
+            /*justify-content: space-between;*/
+            padding: 10px 10px 10px 100px;
         }
 
         .left-panel, .right-panel {
@@ -35,7 +36,7 @@
 
         .right-panel {
             width: 100%; /* Ocupa EL 100% DE PANTALLAS CHICAS */
-            max-width: 700px; /* MAX PARA PANTALLAS GRANDES */
+            max-width: 900px; /* MAX PARA PANTALLAS GRANDES */
             margin-top: 20px;
         }
 
@@ -60,6 +61,8 @@
         .dgviewArticles {
             display: flex;
             flex-direction: column;
+            width: 100%;
+            /*gap: 50px;*/
         }
 
         .dgviewArticles .top-controls {
@@ -244,7 +247,7 @@
         }
     </style>
 
-    <div class="container mt-4">
+    <div class="container-AP mt-5">
         <%-- LEFT PANEL --%>
         <div class="left-panel">
             <h2 class="h2">Admin Panel</h2>

@@ -28,6 +28,9 @@ namespace webApp
                 // Agregar la opción de "Seleccioná Talle" en ddlTalle
                 ddlTalle.Items.Insert(0, new ListItem("Seleccioná Talle", "0"));
 
+                // Carga el btn des.
+                btnAgregarACarrito.Enabled = false;
+
             }
         }
 
@@ -182,6 +185,11 @@ namespace webApp
                         // Obtengo la cantidad
                         int cantidad = Convert.ToInt32(precioReader["Cantidad"]);
 
+                        if (precio == 0 || cantidad == 0)
+                        {
+                            btnAgregarACarrito.Enabled = false;
+                        }
+
                         // Muestro u oculto segun al cantidad
                         if (cantidad > 0)
                         {
@@ -191,6 +199,10 @@ namespace webApp
                             lblStock.Text = "Cantidad disponible: " + cantidad.ToString();
                             lblNoStock.Visible = false;
                             lblEligeUnaOpcion.Visible = false;
+                            if(precio > 0)
+                            {
+                                btnAgregarACarrito.Enabled = true;
+                            }
                         }
                         else
                         {
@@ -213,6 +225,8 @@ namespace webApp
                     lblStock.Visible = false;
                     lblNoStock.Visible = true;
                     lblEligeUnaOpcion.Visible = false;
+                    btnAgregarACarrito.Enabled = false;
+
                 }
 
                 dataAccess.closeConnection();
