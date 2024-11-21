@@ -150,6 +150,15 @@ namespace webApp
         protected global::System.Web.UI.WebControls.Literal lblFormaDePago;
 
         /// <summary>
+        /// Control btn_CancelarGral.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_CancelarGral;
+
+        /// <summary>
         /// Control articulosAgregados1.
         /// </summary>
         /// <remarks>
@@ -184,6 +193,15 @@ namespace webApp
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptCarrito;
+
+        /// <summary>
+        /// Control btnBorrarCarrito.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBorrarCarrito;
 
         /// <summary>
         /// Control grupoBtnArticulos.

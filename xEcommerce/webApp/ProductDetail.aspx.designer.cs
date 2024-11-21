@@ -123,6 +123,15 @@ namespace webApp
         protected global::System.Web.UI.WebControls.Label lblEligeUnaOpcion;
 
         /// <summary>
+        /// Control ddlCant.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCant;
+
+        /// <summary>
         /// Control btnAgregarACarrito.
         /// </summary>
         /// <remarks>

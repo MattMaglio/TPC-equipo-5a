@@ -32,6 +32,12 @@ namespace webApp
                 lblProvincia.Visible = false;
                 lblCP.Visible = false;
 
+                var carrito = (List<Carrito>)Session["Carrito"] ?? new List<Carrito>();
+                if (carrito.Count <= 0)
+                {
+                    btnConfirmarArticulos.Enabled = false;
+                }
+
             }
         }
 
@@ -407,6 +413,8 @@ namespace webApp
         protected void btnCancelarArticulos_Click(object sender, EventArgs e)
         {
             Response.Redirect("Default.aspx");
+            Session["Carrito"] = new List<Carrito>();
+            CargarCarrito();
         }
         protected void btnConfirmaEfectivo_Click(object sender, EventArgs e)
         {
@@ -584,6 +592,10 @@ namespace webApp
             float montoTotal = carrito.Sum(item => item.Precio * item.Cantidad);
             lblAmountToPay.Text = montoTotal.ToString("C");
         }
-
+        protected void btnBorrarCarrito_Click(object sender, EventArgs e)
+        {
+            Session["Carrito"] = new List<Carrito>();
+            CargarCarrito();
+        }
     }
 }

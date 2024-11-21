@@ -14,9 +14,13 @@ namespace webApp
 {
     public partial class ProductDetail : System.Web.UI.Page
     {
+        public class CantidadStock
+        {
+            public int Id { get; set; }
+            public int Cantidad { get; set; }
+        }
         private DataAccess dataAccess = new DataAccess();
         private DataManipulator dataManipulator = new DataManipulator();
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -33,8 +37,6 @@ namespace webApp
 
             }
         }
-
-
         private void LoadProductDetails()
         {
             int productId;
@@ -140,21 +142,14 @@ namespace webApp
             }
 
         }
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////
         protected void ddlColor_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadPrecio();
         }
-
         protected void ddlTalle_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadPrecio();
         }
-
-
-        /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
         private void LoadPrecio()
         {
             int productId = Convert.ToInt32(Request.QueryString["ProductId"]);
@@ -187,12 +182,14 @@ namespace webApp
 
                         if (precio == 0 || cantidad == 0)
                         {
+                            ddlCant.Enabled = false;
                             btnAgregarACarrito.Enabled = false;
                         }
 
                         // Muestro u oculto segun al cantidad
                         if (cantidad > 0)
                         {
+                            
                             // Si hay stock, muestro el precio y la cantidad
                             lblPrecio.Visible = true;
                             lblStock.Visible = true;
@@ -201,8 +198,16 @@ namespace webApp
                             lblEligeUnaOpcion.Visible = false;
                             if(precio > 0)
                             {
+                                ddlCant.Enabled = true;
                                 btnAgregarACarrito.Enabled = true;
                             }
+
+                            List<CantidadStock> dropdownCantidad = GenerateDropdownList(cantidad);
+
+                            ddlCant.DataSource = dropdownCantidad;
+                            ddlCant.DataValueField = "Id";
+                            ddlCant.DataTextField = "Cantidad";
+                            ddlCant.DataBind();
                         }
                         else
                         {
@@ -225,6 +230,7 @@ namespace webApp
                     lblStock.Visible = false;
                     lblNoStock.Visible = true;
                     lblEligeUnaOpcion.Visible = false;
+                    ddlCant.Enabled = false;
                     btnAgregarACarrito.Enabled = false;
 
                 }
@@ -236,10 +242,6 @@ namespace webApp
                 Response.Write("Error al cargar el precio: " + ex.Message);
             }
         }
-
-
-
-        
         protected void btnAgregarACarrito_Click(object sender, EventArgs e)
         {
             if (Session["usuario"] != null && ((lblPrecio.Visible == true) || (lblStock.Visible == true)))////////AGREGADO
@@ -253,7 +255,8 @@ namespace webApp
                 string color = ddlColor.SelectedItem.Text;
                 int talleId = int.Parse(ddlTalle.SelectedValue);
                 string talle = ddlTalle.SelectedItem.Text;
-                int cantidad = 1; // Cantidad seleccionada por el usuario, hay que poner un selector de cantidad
+
+                int cantidad = Convert.ToInt32(ddlCant.SelectedValue);
 
                 // tratamiento de precio 
                 string textoPrecio = lblPrecio.Text;
@@ -287,7 +290,9 @@ namespace webApp
                 }
 
                 Session["Carrito"] = carrito;
-                
+                // Mostrar mensaje de éxito
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "showSuccessMessage();", true);
+
             }
             else if(((lblPrecio.Visible != true) && (lblStock.Visible == true) || (lblStock.Visible != true) && (lblPrecio.Visible == true)))
             {
@@ -310,6 +315,19 @@ namespace webApp
                 Response.Redirect("Login.aspx", false);
                 
             }
+        }
+        protected static List<CantidadStock> GenerateDropdownList(int maxCantidad)
+        {
+            var items = new List<CantidadStock>();
+            for (int i = 1; i <= maxCantidad; i++)
+            {
+                items.Add(new CantidadStock
+                {
+                    Id = i,
+                    Cantidad = i // La cantidad es igual al ID
+                });
+            }
+            return items;
         }
     }
 
