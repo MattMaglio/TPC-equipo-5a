@@ -101,20 +101,22 @@
                 <div class="col-md-6 col-xs-12">
                     <div class="contact-us-form">
                         <div class="section-heading">
-                            <h3>Contactanos!</h3>
+                            <h3>Formulario de contacto</h3>
                         </div>  
                         <div class="contact-form">
                             <form action="mail.php" method="post">
                                 <p>Nombre</p>
-                                <asp:TextBox runat="server" ID="TextBox2" placeholder="Escribí tu nombre acá..." CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
+                                <asp:TextBox runat="server" ID="txtNombre" placeholder="Nombre" CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
                                 
                                 <p>E-mail</p>
-                                <asp:TextBox runat="server" ID="TextBox1" placeholder="Escribí tu mail acá..." CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
+                                <asp:TextBox runat="server" ID="txtEmailContacto" placeholder="Tu email" CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
+                                
+                                <p>Asunto</p>
+                                <asp:TextBox runat="server" ID="txtAsunto" placeholder="Asunto" CssClass="form-control" style="border: none;"></asp:TextBox>
                                 
                                 <p>Mensaje</p>
-                                <textarea id="message" rows="4" name="message" required></textarea>
-                                
-                                <input type="submit" value="Enviar">
+                                <asp:TextBox runat="server" ID="txtMensaje" TextMode="MultiLine"></asp:TextBox>
+                                <asp:Button Text="Enviar" ID="btnEnviar" OnClick="btnEnviar_Click" CssClass="form-control" runat="server" />
                             </form>
                         </div>
                     </div>    
@@ -124,7 +126,7 @@
     </div>  
 </div>
 
-
+  
 
 
     
