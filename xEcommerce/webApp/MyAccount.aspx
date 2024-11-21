@@ -184,21 +184,37 @@
         <div class="card overflow-hidden">
             <div class="row no-gutters row-bordered row-border-light">
                 <div class="col-md-3 pt-0">
-                    <div class="list-group list-group-flush account-settings-links">
-                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
+                    <div class="accordion-item"> 
+                        <h2 class="accordion-header" id="headingArticles"></h2>
+  
+                        <div class="accordion-body">
+                            <ul class="list-group mb-3">
+                                
+                                <li class="list-group-item">
+                                    <asp:Button Text="Mis datos" CssClass="btn btn-dark w-100" ID="btnDatos" OnClick="btnDatos_Click" runat="server" />
+                                </li>
+                                
+                                <li class="list-group-item">
+                                    <asp:Button Text="Ver mis compras" CssClass="btn btn-dark w-100" ID="btnMisCompras" OnClick="btnMisCompras_Click" runat="server" />
+                                </li> 
+                                
+                            </ul>
+                        </div>
                     </div>
+
                 </div>
+               
                 <div class="col-md-9">
                     <div class="tab-content">
-                        <div class="tab-pane fade active show" id="account-general">
-                            <hr class="border-light m-0">
 
-                            <div class="card-body">
+                        <div class="tab-pane fade active show" id="tab_datos">
+                            <hr class="border-light m-0">
+                            <div class="card-body" runat="server" id="tb_datos">
                                 <div class="form-group">
                                     <label class="form-label">Nombre de usuario</label>
                                     <asp:TextBox CssClass="form-control" ID="txtUsuario" runat="server"></asp:TextBox>
                                 </div>
-     
+
                                 <div class="form-group">
                                     <label class="form-label">E-mail</label>
                                     <asp:TextBox CssClass="form-control" ID="txtEmail" runat="server"></asp:TextBox>
@@ -213,7 +229,7 @@
                                     <label class="form-label">Apellido</label>
                                     <asp:TextBox CssClass="form-control" ID="txtApellido" runat="server"></asp:TextBox>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="form-label">DNI</label>
                                     <asp:TextBox CssClass="form-control" ID="txtDni" runat="server"></asp:TextBox>
@@ -225,26 +241,71 @@
                                 </div>
 
                             </div>
-
                         </div>
-                      
+                       
+                        <%--<div class="tab-pane fade show" id="tab_misCompras">--%>
+                        <div class="card-body pb-2" runat="server" id="tb_compras">
+
+                            <!-- Grilla de ordenes -->
+                            <div runat="server" id="div_compras" visible="false">
+                            <asp:GridView ID="dgvOrden" runat="server" CssClass="table table-dark table-striped-columns"
+                                    DataKeyNames="Id" AutoGenerateColumns="False" OnRowCommand="dgvOrden_RowCommand">
+                                <Columns>
+                                    <asp:BoundField DataField="Id" HeaderText="Id" />
+                                    <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
+                                    <asp:BoundField DataField="Usuario" HeaderText="Usuario" />
+                                    <asp:BoundField DataField="TieneEnvio" HeaderText="Tiene Envio" />
+                                    <asp:BoundField DataField="TieneRetiro" HeaderText="Tiene Retiro" />
+                                    <asp:BoundField DataField="Pagado" HeaderText="Pagado" />
+                                    <asp:BoundField DataField="Entregado" HeaderText="Entregado" />
+                                    <asp:BoundField DataField="MontoTotal" HeaderText="Monto Total" />
+                                    <asp:BoundField DataField="ComprobanteFiscal" HeaderText="Comprobante Fiscal" />
+                                    <asp:TemplateField HeaderText="Acción">
+                                    <ItemTemplate>
+                 
+                                        <asp:Button Text="Ver detalle" CssClass="btn btn-primary"
+                                            CommandName="Detalle"
+                                            CommandArgument='<%# Eval("Id") %>'
+                                            runat="server" />
+
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
+                            </div>
+
+                            <!-- Grilla de detalle de ordenes -->
+                            <div runat="server" id="div_detalle_compras" visible="false">
+                                <asp:Button cssClass="btn btn-dark" ID="btnVerOrdenes" runat="server" Text="Volver a las compras"
+                                    OnClick="btnVerOrdenes_Click"/>
+
+                                <asp:GridView ID="dgvDetOrden" runat="server" CssClass="table table-dark table-striped-columns" 
+                                    DataKeyNames="Id" AutoGenerateColumns="False">
+                                    <Columns>
+                                        <asp:BoundField DataField="Id" HeaderText="Id" />
+                                        <asp:BoundField DataField="IdOrden" HeaderText="Orden Nro°" />
+                                        <asp:BoundField DataField="Articulo" HeaderText="Articulo" />
+                                        <asp:BoundField DataField="Color" HeaderText="Color" />
+                                        <asp:BoundField DataField="Talle" HeaderText="Talle" />
+                                        <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+                                        <asp:BoundField DataField="Precio" HeaderText="Precio" />
+                                    </Columns>
+                                </asp:GridView>
+                            </div>
+                                
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
 
         <div class="text-right mt-3">
-            
-      <asp:Button ID="btnVolver" runat="server" Text="Volver a Inicio" OnClick="btnVolver_Click" class="btn btn-secondary"/>
+
+            <asp:Button ID="btnVolver" runat="server" Text="Volver a Inicio" OnClick="btnVolver_Click" class="btn btn-secondary" />
         </div>
         <br />
         <br />
     </div>
-
-
-
-
-
-
 
 </asp:Content>

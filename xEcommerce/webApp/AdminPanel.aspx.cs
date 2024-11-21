@@ -70,6 +70,8 @@ namespace webApp
                 div_gral_dgvTip.Visible = false;
                 // Grilla de Ordenes
                 div_gral_dgvOrden.Visible = false;
+                // Grilla de Detalle de ordenes
+                div_gral_dgvDetalleOrden.Visible = false;
 
                 switch (grupo)
                 {
@@ -95,6 +97,10 @@ namespace webApp
 
                     case "div_gral_dgvOrden":
                         div_gral_dgvOrden.Visible = true;
+                        break;
+
+                    case "div_gral_dgvDetalleOrden":
+                        div_gral_dgvDetalleOrden.Visible = true;
                         break;
 
                     default:
@@ -894,10 +900,15 @@ namespace webApp
 
                 Session.Add("IdOrdenFnumcomp", IdOrden);
 
-                lblComp.Text = "Ingrese el Numero de comprobante para la orden " + IdOrden + ":";
-                
-
+                lblComp.Text = "Ingrese el Numero de comprobante para la orden " + IdOrden + ":";  
             }
+            else if (e.CommandName == "Detalle")
+            {
+                int IdOrden = Convert.ToInt32(e.CommandArgument);
+                MostarElentoSelecionado("div_gral_dgvDetalleOrden");
+                loadDetOrders(IdOrden);
+            }
+
         }
         protected void btnfnumcomp_aceptar_Click(object sender, EventArgs e)
         {
@@ -919,6 +930,13 @@ namespace webApp
             data.DeleteOrden(IdOrden);
             loadOrders();
         }
+        protected void loadDetOrders(int idOrden)
+        {
+            DetalleOrdenAS data = new DetalleOrdenAS();
+            dgvDetOrden.DataSource = data.listarDetalleFiltrado(idOrden);
+            dgvDetOrden.DataBind();
+            dgvDetOrden.Visible = true;
+        }
         protected void loadOrders()
         {
             // Carga el GridView con las ordenes
@@ -928,6 +946,7 @@ namespace webApp
             dgvOrden.Visible = true;
             
         }
+        
         /* SECCION DE REPORTES*/
         protected void btnReportStockPorArticulo_Click(object sender, EventArgs e)
         {
