@@ -17,7 +17,7 @@ namespace webApp
 
         }
 
-        /*protected void btnEnviar_Click(object sender, EventArgs e)
+        protected void btnEnviar_Click(object sender, EventArgs e)
         {   // capturamos los valores del formulario de contacto
             string nombre = txtNombre.Text;
             string asunto = txtAsunto.Text;
@@ -51,7 +51,7 @@ namespace webApp
                 return;
             }
 
-            //EmailAS emailData = new EmailAS();
+            EmailAS emailData = new EmailAS();
 
 
            try

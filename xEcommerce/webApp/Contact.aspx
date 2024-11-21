@@ -119,26 +119,6 @@
                         </div>
                     </div>    
                 </div>    
-
-                <div class="col-md-6 col-xs-12">
-                    <div class="newsletter-area">
-                        <div class="section-heading">
-                            <h3>Boletín de novedades</h3>
-                        </div>
-                        <div class="newsletter-box">
-                            <form action="#">
-                                <asp:TextBox runat="server" ID="txtEmail" placeholder="Dejá acá tu e-mail para que te enviemos nuestras novedades" CssClass="form-control" style="border: none; border-bottom: 1px solid #ccc; background: transparent; height: auto;" />
-
-                                <button type="submit">Suscribir</button>
-                            </form>
-                            <div class="subscribing">
-                                <label class="checkbox-title">
-                                    <input type="checkbox" name="subscribe" value="bank" id="transfer"> Al suscribirte a nuestro boletín, aceptas recibir correos electrónicos de nuestra parte. 
-                                </label>
-                            </div>
-                        </div>
-                    </div>                                
-                </div>
             </div>    
         </div>
     </div>  
